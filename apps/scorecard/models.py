@@ -5,7 +5,7 @@ class Game(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)    
     
     class Meta:
-        db_table = 'game'    
+        db_table = 'scorecard_game'    
     
 class ScoreCard(models.Model):
     user = models.ManyToManyField(User)
@@ -14,7 +14,7 @@ class ScoreCard(models.Model):
     rank = models.PositiveSmallIntegerField(blank=True )
     
     class Meta:
-        db_table = 'score_card'
+        db_table = 'scorecard_card'
 
 class Frame(models.Model):
     score_card = models.ForeignKey(ScoreCard)
@@ -25,5 +25,5 @@ class Frame(models.Model):
     is_spare = models.BooleanField(default = False)
     score = models.PositiveSmallIntegerField(default=0)
     class Meta:
-        db_table = 'frame'
+        db_table = 'scorecard_frame'
         
