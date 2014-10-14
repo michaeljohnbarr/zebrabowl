@@ -71,3 +71,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATE_LOADERS = (
+    #'tenant_schemas.template_loaders.FilesystemLoader',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+)
+TEMPLATE_DIRS = (
+    #always use absolute URLs
+    os.path.join(os.path.dirname(__file__),'../templates').replace('\\','/'),    
+)
+
