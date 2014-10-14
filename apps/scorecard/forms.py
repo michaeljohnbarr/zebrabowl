@@ -16,3 +16,10 @@ class NewScoreCardForm(forms.ModelForm):
     class Meta:
         model = ScoreCard
         fields = ['player_name',]
+    
+    def save(self, game):
+        
+        mydict = {'game':game,
+                  'player_name':self.clean_data['player_name']}
+        
+        return ScoreCard.objects.create(*mydict).save()

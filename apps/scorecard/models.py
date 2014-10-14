@@ -2,7 +2,7 @@ from django.db import models
 
 class Game(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)    
-    
+    hash = models.CharField()
     class Meta:
         db_table = 'scorecard_game'    
     
