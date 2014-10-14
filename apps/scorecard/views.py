@@ -4,6 +4,10 @@ from django.core.urlresolvers import reverse
 from .models import *
 from .forms import *
 
+def home(request):
+    """foo"""
+    return render(request,'base.html')
+
 def new_game(request):
     """foo"""
 
