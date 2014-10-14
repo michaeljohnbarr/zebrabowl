@@ -1,7 +1,18 @@
 from django.db import models
 
+class GameManager(models.Manager):
+    
+    def active(self):
+        try:
+            self.last()
+        except DoesNotExist:
+            self.create().save()
+            
+        return self.last()
+
 class Game(models.Model):
-    date_created = models.DateTimeField(auto_now_add=True)    
+    date_created = models.DateTimeField(auto_now_add=True)
+    objects = GameManager()    
     class Meta:
         db_table = 'scorecard_game'    
 
@@ -9,7 +20,7 @@ class ScoreCardManager(models.Manager):
     """foo"""
     def active(self, game, ):
         """foo"""
-        q = self.filter(game,).order_by('-rank', 'player_name')
+        q = self.filter(game=game,).order_by('-rank', 'player_name')
         
         return  q 
     
@@ -18,7 +29,7 @@ class ScoreCard(models.Model):
     game = models.ForeignKey(Game)
     total_score = models.PositiveSmallIntegerField(default = 0, )
     rank = models.PositiveSmallIntegerField(default = 0)
-    
+    objects = ScoreCardManager()
     class Meta:
         db_table = 'scorecard_card'
 
