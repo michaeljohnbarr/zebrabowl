@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}"
+<div class='row'>
+    <div class='col-lg-5'>
+        <h1>Add Your Friends to Play!</h1>
+    </div>
+    {% if scorecards %}
+    <div class='col-lg-3 pull-right' style="margin-top:-40px;">
+        <a href = "{% url 'startgame' %}" class="btn-primary btn-lg" role="button">Start Bowling!!!</a>
+    </div>
+    {% endif %}
+</div>
+<div class="row">
+    {% crispy form %}
+</div>
+<h1>Current Players</h1>
+
+{% if scorecards %}
+{% for p in scorecards %}
+
+<div class='row'>
+    <div class='col-lg-4'?>
+        <h3>{{p.player_name}}</h3>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% if not scorecards %}
+<div class='row'>
+    <div class='col-lg-4'?>
+        <p>You haven't added anyone yet...</p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
