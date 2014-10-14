@@ -38,5 +38,8 @@ def add_players(request):
     return render(request,'addplayers.html',{'form':form,
                                           'scorecards':scorecards})
     
-def start_game(request):
+def game_board(request):
+    
+    
+    
     return render(request,'base.html')
