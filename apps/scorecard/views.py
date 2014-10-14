@@ -8,23 +8,11 @@ def new_game(request):
     """foo"""
 
     if request.method == 'POST':
-        form = NewGameForm(request.POST)
+        form = NewScoreCardForm(request.POST)
         return redirect(reverse('newgame'))
      
     else:
-        form = NewGameForm()
+        form = NewScoreCardForm()
     
-    return render(request,'base.html',{'form':form})
+    return render(request,'newgame.html',{'form':form})
 
-def new_user(request):
-    """foo"""
-    
-    if request.method =='POST':
-        form = NewUserForm(request.POST)
-        if form.is_valid():
-            return redirect(reverse('newuser'))
-    
-    else:
-        form = NewUserForm()
-        
-    return render(request,'base.html',{'form':form})

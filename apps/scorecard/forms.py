@@ -1,16 +1,13 @@
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 from .models import *
 
-class NewUserForm(forms.ModelForm):
+class NewScoreCardForm(forms.ModelForm):
     class Meta:
-        model = User
-        
-class NewGameForm(forms.ModelForm):
-    class Meta:
-        model = Game
-        exclude = ['date_created']
+        model = ScoreCard
+        fields = ['player_name',]
         
     
-    
-    
         
+    
