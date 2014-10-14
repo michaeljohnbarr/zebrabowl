@@ -2,7 +2,6 @@ from django.db import models
 
 class Game(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)    
-    hash = models.CharField()
     class Meta:
         db_table = 'scorecard_game'    
     
@@ -10,11 +9,11 @@ class ScoreCard(models.Model):
     player_name = models.CharField(max_length=50L)
     game = models.ForeignKey(Game)
     total_score = models.PositiveSmallIntegerField(default = 0, )
-    rank = models.PositiveSmallIntegerField(blank=True )
+    rank = models.PositiveSmallIntegerField(default = 0)
     
     class Meta:
         db_table = 'scorecard_card'
-
+        
 class Frame(models.Model):
     score_card = models.ForeignKey(ScoreCard)
     number = models.PositiveSmallIntegerField()

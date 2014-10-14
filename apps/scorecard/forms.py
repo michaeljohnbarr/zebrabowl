@@ -20,6 +20,6 @@ class NewScoreCardForm(forms.ModelForm):
     def save(self, game):
         
         mydict = {'game':game,
-                  'player_name':self.clean_data['player_name']}
+                  'player_name':self.cleaned_data['player_name']}
         
-        return ScoreCard.objects.create(*mydict).save()
+        return ScoreCard.objects.create(**mydict).save()

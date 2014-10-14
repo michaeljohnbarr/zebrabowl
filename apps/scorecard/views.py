@@ -6,27 +6,30 @@ from .forms import *
 
 def new_game(request):
     """foo"""
-    try:
-        current_game = request.session['current_game']
-    except KeyError:
-        current_game = Game.objects.create().save()
-        request.session['current_game'] = current_game
 
-    else:
-        current_game = request.session['current_game']
-        scorecards = ScoreCard.objects.get(game=current_game.id, )
-        
-            
+    new_game = Game.objects.create().save()              
+    
+    return render(request,'newgame.html')
+
+
+def add_players(request):
+    """Foo"""
+    
+    try:
+        Game.objects.last()
+    except DoesNotExist:
+        Game.objects.create().save()
+    
+    current_game = Game.objects.last()
+    scorecards = ScoreCard.objects.filter(game=current_game) 
+    
     if request.method == 'POST':
         form = NewScoreCardForm(request.POST)
         if form.is_valid():
-            new_player = form.save(current_game)
-                  
-        return redirect(reverse('newgame'))
+            form.save(current_game)      
+            return redirect(reverse('addplayers'))
      
     else:
-        form = NewScoreCardForm()
-    
-    return render(request,'newgame.html',{'form':form,
+        form = NewScoreCardForm()        
+    return render(request,'addplayers.html',{'form':form,
                                           'scorecards':scorecards})
-
