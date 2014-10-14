@@ -30,11 +30,13 @@ def add_players(request):
     if request.method == 'POST':
         form = NewScoreCardForm(request.POST)
         if form.is_valid():
-            form.save(current_game)      
+            score_card =  form.save(current_game)
+            Frame.objects.make_frames(score_card)      
             return redirect(reverse('addplayers'))
      
     else:
         form = NewScoreCardForm()        
+    
     return render(request,'addplayers.html',{'form':form,
                                           'scorecards':scorecards})
     
@@ -42,4 +44,4 @@ def game_board(request):
     
     
     
-    return render(request,'base.html')
+    return render(request,'gameboard.html')

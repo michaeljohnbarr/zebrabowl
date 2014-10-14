@@ -18,8 +18,12 @@ class NewScoreCardForm(forms.ModelForm):
         fields = ['player_name',]
     
     def save(self, game):
+        """ Saves new score card created and returns the database object"""
+        params = {'game':game,
+                  'player_name':self.cleaned_data['player_name']
+                  }
         
-        mydict = {'game':game,
-                  'player_name':self.cleaned_data['player_name']}
+        ScoreCard.objects.create(**params).save()
+        score_card = ScoreCard.objects.get(**params)
         
-        return ScoreCard.objects.create(**mydict).save()
+        return score_card
