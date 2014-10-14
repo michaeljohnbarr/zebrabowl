@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+class User(models.Model):
+    name = models.CharField(max_length=30L)
 
 class Game(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)    
@@ -18,9 +20,9 @@ class ScoreCard(models.Model):
 
 class Frame(models.Model):
     score_card = models.ForeignKey(ScoreCard)
-    number = models.PositiveSmallIntegerField(min_value = 1, max_value = 10)
-    down_pins1 = models.PositiveSmallIntegerField(min_value=0, max_value = 10)
-    down_pins2 = models.PositiveSmallIntegerField(min_value=0, max_value = 10, blank=True)    
+    number = models.PositiveSmallIntegerField()
+    down_pins1 = models.PositiveSmallIntegerField()
+    down_pins2 = models.PositiveSmallIntegerField(blank=True)    
     is_strike = models.BooleanField(default=False)
     is_spare = models.BooleanField(default = False)
     score = models.PositiveSmallIntegerField(default=0)
