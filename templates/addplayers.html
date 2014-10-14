@@ -2,17 +2,22 @@
 {% load crispy_forms_tags %}
 {% block content %}"
 <div class='row'>
-    <div class='col-lg-5'>
+    <div class='col-lg-6 pull-left'>
         <h1>Add Your Friends to Play!</h1>
     </div>
+    
     {% if scorecards %}
-    <div class='col-lg-3 pull-right' style="margin-top:-40px;">
-        <a href = "{% url 'startgame' %}" class="btn-primary btn-lg" role="button">Start Bowling!!!</a>
-    </div>
+
+        <div class='col-lg-6 pull-right' style="padding-top: 3%">
+            <a href = "{% url 'startgame' %}" class="btn-lg btn-success" role="button">Start Bowling!!!</a>
+        </div>
+
     {% endif %}
 </div>
 <div class="row">
-    {% crispy form %}
+    <div class='col-lg-5'>
+        {% crispy form %}
+    </div>
 </div>
 <h1>Current Players</h1>
 
@@ -32,6 +37,7 @@
         <p>You haven't added anyone yet...</p>
     </div>
 </div>
+
 {% endif %}
 
 {% endblock %}
