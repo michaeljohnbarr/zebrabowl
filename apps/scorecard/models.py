@@ -25,3 +25,11 @@ class Frame(models.Model):
     class Meta:
         db_table = 'scorecard_frame'
         
+class FrameManager(models.Manager):
+    """foo"""
+    
+    def make_frames(self, score_card):
+        i = 0
+        while i < 10:
+            """foo"""
+    
