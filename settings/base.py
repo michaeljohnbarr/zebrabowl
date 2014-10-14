@@ -83,10 +83,10 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-######################## SITES #######################
+######################## TEMPLATES #######################
 
 TEMPLATE_LOADERS = (
     #'tenant_schemas.template_loaders.FilesystemLoader',
@@ -102,4 +102,14 @@ TEMPLATE_DIRS = (
     #always use absolute URLs
     os.path.join(os.path.dirname(__file__),'../templates').replace('\\','/'),    
 )
+
+######################## SITES #######################
+SITE_ID = 1
+BASE_URL = 'localhost'
+
+######################## URL CONFS #######################
+ROOT_URLCONF = 'zebrabowl.urls'
+SUBDOMAIN_URLCONFS = {
+                      
+}
 
