@@ -1,0 +1,11 @@
+#virtualenv directory
+env/
+
+#binaries
+*.pyc
+
+# hidden dirs and files
+.settings/
+.project
+.pydevproject
+
