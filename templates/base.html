@@ -1,5 +1,36 @@
-<h3>Zebra Bowl!!!</h3>
+{% load staticfiles %}
+{% load url from future %}
+<!DOCTYPE html>
+<html lang='en' class="no-js">
+<!-- BEGIN HEAD -->
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zebra Bowl</title>
 
-{% for field in form %}
-    {{field}}
-{% endfor %}
+<!-- MANDATORY STYLES -->
+<link href = "{% static "theme.css" %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'home' %}">Zebra Bowl</a>
+    </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'newgame' %}">New Game</a></li>
+                <li><a href="{% url 'newuser' %}">New User</a></li>
+            </ul>     
+        </div>
+</div>
+<div class="container">
+    <div class="col-lg-12">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>
