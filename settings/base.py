@@ -74,7 +74,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+######################## STATIC #######################
+STATIC_ROOT = '/home/scott/Documents/zebrabowl/static/'
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(os.path.dirname(__file__),'../zebrabowl/static').replace('\\','/'),    
+)
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+######################## SITES #######################
 
 TEMPLATE_LOADERS = (
     #'tenant_schemas.template_loaders.FilesystemLoader',
