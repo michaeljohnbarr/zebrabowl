@@ -14,7 +14,7 @@ def new_game(request):
     else:
         form = NewGameForm()
     
-    return render(request,'template.html',{'form':form})
+    return render(request,'base.html',{'form':form})
 
 def new_user(request):
     """foo"""
@@ -27,4 +27,4 @@ def new_user(request):
     else:
         form = NewUserForm()
         
-    return render(request,'template.html',{'form':form})
+    return render(request,'base.html',{'form':form})
