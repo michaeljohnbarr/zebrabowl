@@ -33,3 +33,6 @@ def add_players(request):
         form = NewScoreCardForm()        
     return render(request,'addplayers.html',{'form':form,
                                           'scorecards':scorecards})
+    
+def start_game(request):
+    return render(request,'base.html')
