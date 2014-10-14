@@ -41,7 +41,9 @@ def add_players(request):
                                           'scorecards':scorecards})
     
 def game_board(request):
+    """foo"""
     
+    current_game = Game.objects.last()
     
     
     return render(request,'gameboard.html')

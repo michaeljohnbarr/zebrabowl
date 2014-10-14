@@ -4,6 +4,14 @@ class Game(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)    
     class Meta:
         db_table = 'scorecard_game'    
+
+class ScoreCardManager(models.Manager):
+    """foo"""
+    def active(self, game, ):
+        """foo"""
+        q = self.filter(game,).order_by('-rank', 'player_name')
+        
+        return  q 
     
 class ScoreCard(models.Model):
     player_name = models.CharField(max_length=50L)
