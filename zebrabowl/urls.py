@@ -9,5 +9,4 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/',include('apps.accounts.urls')),
-    url(r'^scorecard/',include('apps.accounts.urls')),
 )
