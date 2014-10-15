@@ -4,5 +4,11 @@
 {% block content %}"
 <h1>Score Board</h1>
 
+{% for card in scorecards %}
+<h3>{{card.player_name}}</h3><br>
 
+    {% for frame in card.frame_set.all %}
+        <p>frame number {{frame.number}}</p>  <p>score: {{frame.score}} </p>
+    {% endfor %} 
+{% endfor %}
 {% endblock %}
