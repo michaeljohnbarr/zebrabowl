@@ -42,7 +42,8 @@ def game_board(request):
     scorecards = ScoreCard.objects.active(game)
     if request.method == 'POST':
         form = BowlForm(request.POST)
-        return redirect(reverse('gameboard'))
+        if form.is_valid():
+            return redirect(reverse('gameboard'))
     
     else: 
         form = BowlForm()
