@@ -19,27 +19,26 @@ def new_game(request):
 def add_players(request):
     """Foo"""
     
-    try:
-        Game.objects.last()
-    except DoesNotExist:
-        Game.objects.create().save()
-    
-    current_game = Game.objects.last()
-    scorecards = ScoreCard.objects.filter(game=current_game) 
+    game = Game.objects.active()
+    scorecards = ScoreCard.objects.active(game) 
     
     if request.method == 'POST':
         form = NewScoreCardForm(request.POST)
         if form.is_valid():
-            form.save(current_game)      
+            score_card =  form.save(game)
+            Frame.objects.make_frames(score_card)      
             return redirect(reverse('addplayers'))
      
     else:
         form = NewScoreCardForm()        
+    
     return render(request,'addplayers.html',{'form':form,
                                           'scorecards':scorecards})
     
 def game_board(request):
+    """foo"""
     
+    game = Game.objects.active()
+    scorecards = ScoreCard.objects.active(game)
     
-    
-    return render(request,'base.html')
+    return render(request,'gameboard.html', {'scorecards':scorecards,})
