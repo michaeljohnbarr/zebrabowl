@@ -5,10 +5,39 @@
 <h1>Score Board</h1>
 
 {% for card in scorecards %}
-<h3>{{card.player_name}}</h3><br>
-
-    {% for frame in card.frame_set.all %}
-        <p>frame number {{frame.number}}</p>  <p>score: {{frame.score}} </p>
-    {% endfor %} 
+<div class = "row">
+<table class="table table-bordered table-striped table-hover">
+    <div class = "row">
+    <div class = "col-lg-12">
+        <h3>{{card.player_name}}</h3>
+        <p>Total Score: <strong>{{card.total_score}}</strong></p> 
+    </div>
+</div>
+    <thead>
+        <tr>
+            <th>Frame 1</th>
+            <th>Frame 2</th>
+            <th>Frame 3</th>
+            <th>Frame 4</th>
+            <th>Frame 5</th>
+            <th>Frame 6</th>
+            <th>Frame 7</th>
+            <th>Frame 8</th>
+            <th>Frame 9</th>
+            <th>Frame 10</th>           
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        {% for frame in card.frame_set.all %}
+        
+            <td>{{frame.score}} </td>
+        
+        {% endfor %}
+        </tr>
+    </tbody> 
+</div>
 {% endfor %}
+
+</table>
 {% endblock %}
