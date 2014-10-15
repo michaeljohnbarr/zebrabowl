@@ -37,8 +37,17 @@
     <tbody>
         <tr>
         {% for frame in card.frame_set.all %}
-        
-            <td>{{frame.score}} </td>
+        {% if frame.is_strike %}
+            <td class="bgalert-success">
+        {% elif frame.is_spare %}
+            <td class='bg-info'>
+        {% else %}
+            <td>
+        {% endif %}
+                First: {{frame.down_pins1}}<br>
+                Second: {{frame.down_pins2}}<br>
+                <strong>Points: {{frame.score}} </strong>
+            </td>
         
         {% endfor %}
         </tr>
