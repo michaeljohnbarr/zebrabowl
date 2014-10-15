@@ -2,6 +2,13 @@
 {% load crispy_forms_tags %}
 {% load render_table from django_tables2 %}
 {% block content %}"
+
+<div class="row">
+    <div class="col-md-5">
+        {% crispy form %}        
+    </div>
+</div>
+
 <h1>Score Board</h1>
 
 {% for card in scorecards %}

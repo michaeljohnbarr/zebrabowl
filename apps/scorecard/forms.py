@@ -27,3 +27,18 @@ class NewScoreCardForm(forms.ModelForm):
         score_card = ScoreCard.objects.get(**params)
         
         return score_card
+    
+class BowlForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(BowlForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-bowl-from'
+        self.helper.form_class = 'horizontal-form'
+        self.helper.form_action = ''
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Submit'))
+        
+    class Meta:
+        model = Frame
+        fields = ['down_pins1','down_pins2']
