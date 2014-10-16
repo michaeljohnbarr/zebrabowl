@@ -40,11 +40,20 @@ def game_board(request, player_num, frame_num):
     """foo"""
     
     #get the active game and the scorecards
-    game = Game.objects.active()
+    game = Game.objects.active()    
     scorecards = ScoreCard.objects.players(game)
+    last_frame=False 
     
+    # must convert back to int before performing math operations!!
+    player_num = int(player_num)
+    frame_num = int(frame_num)
+    #pick out the active player's card from the array 
+    # calculated as  order -1 b/c of index 0
+    active_card = scorecards[player_num-1]
+    active_frame = Frame.objects.get(score_card = active_card, number=frame_num) 
+      
     #handle a variety of cases depnding on what frame and who's turn it is
-    if player_num < len(scorecards) and frame_num < 10:
+    if player_num < len(scorecards) and frame_num <= 10:
         player_num += 1        
         
     elif player_num == len(scorecards) and frame_num < 10:
@@ -53,22 +62,17 @@ def game_board(request, player_num, frame_num):
     
     elif player_num == len(scorecards) and frame_num == 10:
         last_frame = True
-    
-    #pick out the active player's card from the array 
-    # calculated as  order -1 b/c of index 0
-    active_card = scorecards[player_num-1]
-    active_frame = Frame.objects.get(score_card = active_card, number=frame_num)
-    
+  
     if request.method == 'POST':
         form = BowlForm(request.POST)
         if form.is_valid():
             form.save(active_frame)
             if last_frame is True:
-                return redirect(reverse('gameover'))
+                return redirect(reverse('addplayers'))
             else:
-                return redirect(reverse('gameboard'), kwargs= {'player_num':player_num,
-                                                               'frame_num':frame_num})
-    
+                return redirect(reverse('gameboard', kwargs= {'player_num':player_num,
+                                                               'frame_num':frame_num
+                                                               }))    
     else: 
         form = BowlForm()
     
