@@ -51,12 +51,23 @@ class FrameManager(models.Manager):
             i += 1
             
         return True
-        
+
+class IntegerRangeField(models.IntegerField):
+    """Custom field type to support max/min integer values"""
+    def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        models.IntegerField.__init__(self, verbose_name, name, **kwargs)
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value, 'max_value':self.max_value}
+        defaults.update(kwargs)
+        return super(IntegerRangeField, self).formfield(**defaults)
+    
+            
 class Frame(models.Model):
     score_card = models.ForeignKey(ScoreCard)
     number = models.PositiveSmallIntegerField()
-    down_pins1 = models.PositiveSmallIntegerField(default=0)
-    down_pins2 = models.PositiveSmallIntegerField(default=0)    
+    down_pins1 = IntegerRangeField(default=0, max_value=10, min_value=0)
+    down_pins2 = IntegerRangeField(default=0, max_value=10, min_value=0)    
     is_strike = models.BooleanField(default=False)
     is_spare = models.BooleanField(default = False)
     is_active = models.BooleanField(default = False)
