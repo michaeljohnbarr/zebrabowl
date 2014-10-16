@@ -18,15 +18,17 @@ class Game(models.Model):
 
 class ScoreCardManager(models.Manager):
     """foo"""
-    def active(self, game, ):
+    def players(self, game, ):
         """foo"""
-        q = self.filter(game=game,).order_by('-rank', 'player_name')
+        q = self.filter(game=game,).order_by('order', 'player_name')
         
-        return  q 
+        return  q
+          
     
 class ScoreCard(models.Model):
     player_name = models.CharField(max_length=50L)
     game = models.ForeignKey(Game)
+    order = models.PositiveSmallIntegerField(default = 1)
     total_score = models.PositiveSmallIntegerField(default = 0, )
     rank = models.PositiveSmallIntegerField(default = 0)
     objects = ScoreCardManager()

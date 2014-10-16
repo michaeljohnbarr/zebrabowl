@@ -17,10 +17,11 @@ class NewScoreCardForm(forms.ModelForm):
         model = ScoreCard
         fields = ['player_name',]
     
-    def save(self, game):
+    def save(self, game, order):
         """ Saves new score card created and returns the database object"""
         params = {'game':game,
-                  'player_name':self.cleaned_data['player_name']
+                  'player_name':self.cleaned_data['player_name'],
+                  'order':order
                   }
         
         ScoreCard.objects.create(**params).save()
@@ -42,3 +43,17 @@ class BowlForm(forms.ModelForm):
     class Meta:
         model = Frame
         fields = ['down_pins1','down_pins2']
+        
+        
+        
+    def save(self, active_frame):
+        
+        active_frame.down_pins1 = self.cleaned_data['down_pins1']
+        active_frame.down_pins2 = self.cleaned_data['down_pins2']
+        
+        active_frame.save()
+        
+        return active_frame
+        
+        
+        
