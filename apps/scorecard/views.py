@@ -20,7 +20,7 @@ def add_players(request):
     """Foo"""
     
     game = Game.objects.active()
-    scorecards = ScoreCard.objects.active(game) 
+    scorecards = ScoreCard.objects.players(game) 
     
     if request.method == 'POST':
         form = NewScoreCardForm(request.POST)
@@ -33,20 +33,46 @@ def add_players(request):
         form = NewScoreCardForm()        
     
     return render(request,'addplayers.html',{'form':form,
-                                          'scorecards':scorecards})
+                                             'scorecards':scorecards
+                                             })
     
-def game_board(request):
+def game_board(request, player_num, frame_num):
     """foo"""
     
+    #get the active game and the scorecards
     game = Game.objects.active()
-    scorecards = ScoreCard.objects.active(game)
+    scorecards = ScoreCard.objects.players(game)
+    
+    #handle a variety of cases depnding on what frame and who's turn it is
+    if player_num < len(scorecards) and frame_num < 10:
+        player_num += 1        
+        
+    elif player_num == len(scorecards) and frame_num < 10:
+        player_num = 1 
+        frame_num += 1
+    
+    elif player_num == len(scorecards) and frame_num == 10:
+        last_frame = True
+    
+    #pick out the active player's card from the array 
+    # calculated as  order -1 b/c of index 0
+    active_card = scorecards[player_num-1]
+    active_frame = Frame.objects.get(score_card = active_card, number=frame_num)
+    
     if request.method == 'POST':
         form = BowlForm(request.POST)
         if form.is_valid():
-            return redirect(reverse('gameboard'))
+            form.save(active_frame)
+            if last_frame is True:
+                return redirect(reverse('gameover'))
+            else:
+                return redirect(reverse('gameboard'), kwargs= {'player_num':player_num,
+                                                               'frame_num':frame_num})
     
     else: 
         form = BowlForm()
     
     return render(request,'gameboard.html', {'scorecards':scorecards,
-                                             'form':form})
+                                             'form':form,
+                                             'active_card':active_card,
+                                             'active_frame':active_frame})

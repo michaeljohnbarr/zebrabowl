@@ -43,3 +43,17 @@ class BowlForm(forms.ModelForm):
     class Meta:
         model = Frame
         fields = ['down_pins1','down_pins2']
+        
+        
+        
+    def save(self, active_frame):
+        
+        active_frame.down_pins1 = self.cleaned_data['down_pins1']
+        active_frame.down_pins2 = self.cleaned_data['down_pins2']
+        
+        active_frame.save()
+        
+        return active_frame
+        
+        
+        
