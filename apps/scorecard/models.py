@@ -31,6 +31,7 @@ class ScoreCard(models.Model):
     order = models.PositiveSmallIntegerField(default = 1)
     total_score = models.PositiveSmallIntegerField(default = 0, )
     rank = models.PositiveSmallIntegerField(default = 0)
+    is_active = models.BooleanField(default = False)
     objects = ScoreCardManager()
     class Meta:
         db_table = 'scorecard_card'
