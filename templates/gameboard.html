@@ -39,14 +39,12 @@
         {% for frame in card.frame_set.all %}
         <td>
         {% if frame.is_active %}
-                <h3>Yaya!</h3>
+                <h3>Bowl!</h3>
         {% endif %}
                 First: {{frame.down_pins1}}<br>
                 Second: {{frame.down_pins2}}<br>
                 <strong>Points: {{frame.score}} </strong>
-                <i class='fa fa-remove'>Strike</i>
-                <i class='fa fa-expand'>Spare</i>
-                
+                <br><br>
                 {% if frame.is_strike %}
                 <i class='fa fa-remove'>Strike</i>
                 {% elif frame.is_spare %}
