@@ -55,9 +55,12 @@ class BowlForm(forms.ModelForm):
         return self.cleaned_data
         
     def save(self, active_frame):
-        active_frame.down_pins1 = self.cleaned_data['down_pins1']
-        active_frame.down_pins2 = self.cleaned_data['down_pins2']
-        active_frame.is_active = False
+        
+        p1 = active_frame.down_pins1 = self.cleaned_data['down_pins1']
+        p2 = active_frame.down_pins2 = self.cleaned_data['down_pins2']
+        active_frame.is_active = False        
+        active_frame.score = p1+p2                
         active_frame.save()
+        # then, run managers that tally up total scores!
         
         
