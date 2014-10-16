@@ -52,9 +52,8 @@ def game_board(request, player_num, frame_num):
     active_card = scorecards[player_num-1]
     
     active_frame = Frame.objects.get(score_card = active_card, number=frame_num)
-    active_frame.is_active = True 
+    active_frame.is_active = True
     active_frame.save()
-      
     #handle a variety of cases depnding on what frame and who's turn it is
     if player_num < len(scorecards) and frame_num <= 10:
         player_num += 1        
@@ -67,7 +66,7 @@ def game_board(request, player_num, frame_num):
         last_frame = True
   
     if request.method == 'POST':
-        form = BowlForm(request.POST)
+        form = BowlForm(request.POST,)
         if form.is_valid():
             form.save(active_frame)
             if last_frame is True:
