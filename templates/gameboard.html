@@ -37,19 +37,21 @@
     <tbody>
         <tr>
         {% for frame in card.frame_set.all %}
-        {% if frame.is_strike %}
-            <td class="bgalert-success">
-        {% elif frame.is_spare %}
-            <td class='bg-info'>
-        {% elif frame.is_active %}
-            <td class="bgalert-success">
+        <td>
+        {% if frame.is_active %}
                 <h3>Yaya!</h3>
-        {% else %}
-            <td>
         {% endif %}
                 First: {{frame.down_pins1}}<br>
                 Second: {{frame.down_pins2}}<br>
                 <strong>Points: {{frame.score}} </strong>
+                <i class='fa fa-remove'>Strike</i>
+                <i class='fa fa-expand'>Spare</i>
+                
+                {% if frame.is_strike %}
+                <i class='fa fa-remove'>Strike</i>
+                {% elif frame.is_spare %}
+                <i class='fa fa-expand'>Spare</i>
+                {% endif %}
             </td>
         
         {% endfor %}
