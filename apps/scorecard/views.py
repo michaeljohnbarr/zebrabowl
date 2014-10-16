@@ -50,7 +50,10 @@ def game_board(request, player_num, frame_num):
     #pick out the active player's card from the array 
     # calculated as  order -1 b/c of index 0
     active_card = scorecards[player_num-1]
-    active_frame = Frame.objects.get(score_card = active_card, number=frame_num) 
+    
+    active_frame = Frame.objects.get(score_card = active_card, number=frame_num)
+    active_frame.is_active = True 
+    active_frame.save()
       
     #handle a variety of cases depnding on what frame and who's turn it is
     if player_num < len(scorecards) and frame_num <= 10:

@@ -59,6 +59,7 @@ class Frame(models.Model):
     down_pins2 = models.PositiveSmallIntegerField(default=0)    
     is_strike = models.BooleanField(default=False)
     is_spare = models.BooleanField(default = False)
+    is_active = models.BooleanField(default = False)
     score = models.PositiveSmallIntegerField(default=0)
     objects = FrameManager()
     class Meta:

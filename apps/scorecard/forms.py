@@ -50,6 +50,7 @@ class BowlForm(forms.ModelForm):
         
         active_frame.down_pins1 = self.cleaned_data['down_pins1']
         active_frame.down_pins2 = self.cleaned_data['down_pins2']
+        active_frame.is_active = False
         
         active_frame.save()
         

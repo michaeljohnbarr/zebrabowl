@@ -41,6 +41,9 @@
             <td class="bgalert-success">
         {% elif frame.is_spare %}
             <td class='bg-info'>
+        {% elif frame.is_active %}
+            <td class="bgalert-success">
+                <h3>Yaya!</h3>
         {% else %}
             <td>
         {% endif %}
