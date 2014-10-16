@@ -25,7 +25,7 @@ def add_players(request):
     if request.method == 'POST':
         form = NewScoreCardForm(request.POST)
         if form.is_valid():
-            score_card =  form.save(game)
+            score_card =  form.save(game, len(scorecards)+1)
             Frame.objects.make_frames(score_card)      
             return redirect(reverse('addplayers'))
      

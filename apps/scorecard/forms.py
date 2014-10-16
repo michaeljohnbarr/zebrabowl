@@ -17,10 +17,11 @@ class NewScoreCardForm(forms.ModelForm):
         model = ScoreCard
         fields = ['player_name',]
     
-    def save(self, game):
+    def save(self, game, order):
         """ Saves new score card created and returns the database object"""
         params = {'game':game,
-                  'player_name':self.cleaned_data['player_name']
+                  'player_name':self.cleaned_data['player_name'],
+                  'order':order
                   }
         
         ScoreCard.objects.create(**params).save()

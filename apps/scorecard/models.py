@@ -27,6 +27,7 @@ class ScoreCardManager(models.Manager):
 class ScoreCard(models.Model):
     player_name = models.CharField(max_length=50L)
     game = models.ForeignKey(Game)
+    order = models.PositiveSmallIntegerField(default = 1)
     total_score = models.PositiveSmallIntegerField(default = 0, )
     rank = models.PositiveSmallIntegerField(default = 0)
     objects = ScoreCardManager()
