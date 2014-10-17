@@ -5,10 +5,6 @@ from .models import *
 from .forms import *
 from .decorators import session_required, flush_session
 
-def home(request):
-    """foo"""
-    return render(request,'base.html')
-
 @flush_session
 def new_game(request):
     """foo"""
@@ -80,6 +76,7 @@ def game_board(request,):
             session_context = Frame.objects.next_player_and_frame(request, player_num, frame_num, active_card)
             
             if session_context['last_frame'] is True:
+                # calculate the rankings and flush the session
                 ScoreCard.objects.calc_rankings()
                 request.session.flush()
                 return redirect(reverse('gamestats'))
