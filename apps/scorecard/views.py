@@ -3,19 +3,21 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from .models import *
 from .forms import *
+from .decorators import session_required, flush_session
 
 def home(request):
     """foo"""
     return render(request,'base.html')
 
+@flush_session
 def new_game(request):
     """foo"""
-
+    request.session.flush()
     new_game = Game.objects.create().save()              
     
     return render(request,'newgame.html')
 
-
+@flush_session
 def add_players(request):
     """Foo"""
     
@@ -35,18 +37,17 @@ def add_players(request):
     return render(request,'addplayers.html',{'form':form,
                                              'scorecards':scorecards
                                              })
-    
-def game_board(request, player_num, frame_num):
+@session_required   
+def game_board(request,):
     """foo"""
     
     #get the active game and all the scorecards for the game
     game = Game.objects.active()    
     scorecards = ScoreCard.objects.players(game)
     
-    # must convert numeric params back to int before performing math operations!!
-    # http sends numeric params as strings
-    player_num = int(player_num)
-    frame_num = int(frame_num)
+    # get the current player and frame from the session
+    player_num = int(request.session['player_num'])
+    frame_num = int(request.session['frame_num'])
         
     # pick out the active player's card from the array 
     # calculated as  order -1 b/c of index 0
@@ -67,24 +68,22 @@ def game_board(request, player_num, frame_num):
             # if there's a strike or a spare in the 10th frame, we'll have to create
             # a bonus frame to calculate the final score
             
-            if active_frame.is_strike:
-                if 10 <= frame_num < 11:
+            if active_frame.is_strike or active_frame.is_spare:
+                if 10 <= frame_num <= 11:
                     Frame.objects.create(score_card = active_card, number=frame_num +1).save()
                 else:
                     pass
                             
-            Frame.objects.calculate_frames(active_frame)            
-            context = Frame.objects.next_player_and_frame(player_num, frame_num, active_card)
+            Frame.objects.calculate_frames(active_frame) 
             
-            redirect_params = {
-                               'frame_num':context['frame_num'],
-                               'player_num':context['player_num']}            
+            # find out which player and which frame number come next in the game                       
+            session_context = Frame.objects.next_player_and_frame(request, player_num, frame_num, active_card)
             
-            
-            if context['last_frame'] is True:
+            if session_context['last_frame'] is True:
+                request.session.flush()
                 return redirect(reverse('addplayers'))
             else:
-                return redirect(reverse('gameboard', kwargs=redirect_params))    
+                return redirect(reverse('gameboard'))    
     else: 
         form = BowlForm()
     
