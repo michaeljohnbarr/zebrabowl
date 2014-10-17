@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}"
 <h1>Add Your Friends to Play!</h1>
-<a href= "{% url 'addplayers' %}">Start Adding Players</a>
-
+        <div class='col-lg-6 pull-left' style="padding-top: 3%">
+            <a href = "{% url 'addplayers' %}" class="btn-lg btn-primary" role="button">Start Adding Players</a>
+        </div>
 {% endblock %}

@@ -2,8 +2,9 @@ from django.conf.urls import patterns, url
 from .views import *
 
 urlpatterns = patterns('apps.scorecard.views',
-    url(r'^home/$',new_game, name='home'),
-    url(r'^newgame/$',new_game, name='newgame'),
-    url(r'^newgame/players/$',add_players, name='addplayers'),
-    url(r'^gameboard/$',game_board, name='gameboard'),
+    url(r'^home/$', new_game, name='home'),
+    url(r'^newgame/$', new_game, name='newgame'),
+    url(r'^newgame/players/$', add_players, name='addplayers'),
+    url(r'^gameboard/$', game_board, name='gameboard'),
+    url(r'^gamestats/$', game_stats, name='gamestats')
 )
