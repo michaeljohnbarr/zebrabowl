@@ -23,6 +23,14 @@ class ScoreCardManager(models.Manager):
         q = self.filter(game=game,).order_by('order', 'player_name')
         
         return  q
+    
+    def player_count(self):
+        """ 
+        Returns number of players in the active game
+        """
+        game = Game.objects.active()
+        self.filter(game=game).count()
+        
           
     
 class ScoreCard(models.Model):
@@ -102,9 +110,35 @@ class FrameManager(models.Manager):
         sc.total_score = ts
         sc.save()
         
-
         return qs
-                    
+    def next_player_and_frame(self, player_num, frame_num, active_card):
+        
+        frame_count = Frame.objects.filter(score_card = active_card).count() 
+        player_count = ScoreCard.objects.player_count()     
+        # last frame is false until proven otherwise
+        last_frame=False
+
+        ############################################################################# 
+        #handle a variety of cases depnding on what frame it is and who's turn it is..        
+        
+        # it's not the last player's turn
+        # incraese the player number but not the frame number 
+        if player_num < player_count:
+            player_num += 1        
+            
+        # it's the last player's turn, but not the final frame.
+        # return to player 1, and increase frame num by 1
+        elif player_num == player_count and frame_num < frame_count:
+            player_num = 1 
+            frame_num += 1
+        
+        # it's  the last player of the his/her last frame. so the game is over
+        elif player_num == player_count and frame_num == frame_count:
+            last_frame = True
+            
+        return {'player_num':player_num,
+                'frame_num':frame_num,
+                'last_frame':last_frame}
         
 class IntegerRangeField(models.IntegerField):
     """Custom field type to support max/min integer values"""

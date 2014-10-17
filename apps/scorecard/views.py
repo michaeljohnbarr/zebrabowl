@@ -42,45 +42,29 @@ def game_board(request, player_num, frame_num):
     #get the active game and all the scorecards for the game
     game = Game.objects.active()    
     scorecards = ScoreCard.objects.players(game)
-    player_count = len(scorecards)
-    
-    # last frame is false until proven otherwise
-    last_frame=False 
     
     # must convert numeric params back to int before performing math operations!!
     # http sends numeric params as strings
     player_num = int(player_num)
     frame_num = int(frame_num)
-    
-    #pick out the active player's card from the array 
+        
+    # pick out the active player's card from the array 
     # calculated as  order -1 b/c of index 0
     active_card = scorecards[player_num-1]
     
+    # retrieve the requested frame from the db and mark it as active
     active_frame = Frame.objects.get(score_card = active_card, number=frame_num)
     active_frame.is_active = True
     active_frame.save()
   
     if request.method == 'POST':
-        frame_count = Frame.objects.filter(score_card = active_card).count()
+    
+        context = Frame.objects.next_player_and_frame(player_num, frame_num, active_card)
         
-        #handle a variety of cases depnding on what frame it is and who's turn it is..        
+        player_num = context['player_num']
+        frame_num = context['frame_num']
+        last_frame = context['last_frame']
         
-        # it's not the last player's turn
-        # incraese the player number but not the frame number 
-        if player_num < player_count:
-            player_num += 1        
-            
-        # it's the last player's turn, but not the final frame.
-        # return to player 1, and increase frame num by 1
-        elif player_num == player_count and frame_num < frame_count:
-            player_num = 1 
-            frame_num += 1
-        
-        # it's  the last player of the last frame. so the game is over
-        elif player_num == player_count and frame_num == frame_count:
-            last_frame = True
-        
-
         form = BowlForm(request.POST,)
         
         if form.is_valid():
@@ -104,5 +88,4 @@ def game_board(request, player_num, frame_num):
     
     return render(request,'gameboard.html', {'scorecards':scorecards,
                                              'form':form,
-                                             'active_card':active_card,
-                                             'active_frame':active_frame})
+                                             })
