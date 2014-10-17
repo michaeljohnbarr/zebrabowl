@@ -68,7 +68,7 @@ def game_board(request, player_num, frame_num):
             # a bonus frame to calculate the final score
             
             if active_frame.is_strike:
-                if 10 <= frame_num < 11:
+                if 10 <= frame_num <= 11:
                     Frame.objects.create(score_card = active_card, number=frame_num +1).save()
                 else:
                     pass
