@@ -10,15 +10,15 @@ Local Installation on Unix
 ### Virtual Environment Setup
 
 - cd to the application
-'''$ cd /path/to/zebrabowl '''
+```$ cd /path/to/zebrabowl ```
 - Create a virtual environment
-''' $ virtualenv env'''
+``` $ virtualenv env```
 - activate the environment
-''' source env/bin/activate'''
+``` source env/bin/activate```
 - make dependency installation script executable:
-''' $ chmod ug+x sbin/mkenv.sh '''
+``` $ chmod ug+x sbin/mkenv.sh ```
 - run dependency installation script
-''' $ ./sbin/mkenv.sh '''
+``` $ ./sbin/mkenv.sh ```
 
 *(the mkenv script is a more fail-safe way to install dependencies)*
 
@@ -28,28 +28,28 @@ Local Installation on Unix
 **If your local MySQL installation allows root access without a passowrd:**
 
 - Make nukedb script executable
-''' chmod ug+x ./sbin/nukedb.sh '''
+``` chmod ug+x ./sbin/nukedb.sh ```
 - Run nukedb script
-''' $ ./sbin/nukedb.sh '''
+``` $ ./sbin/nukedb.sh ```
 
 **Otherwise...**
 
 - Modify mysql database settings in the django setting module
 - Then, run:
-'''$ python manage.py syncdb '''
+```$ python manage.py syncdb ```
 
 
 **If you don't have MySQL installed**
 
 - Change Django settings module to use the Django.db.backends.sqlite.
 - run syncdb
-'''$ python ./manage.py syncdb''' 
+```$ python ./manage.py syncdb``` 
  
 
 
 ### Start the Development Server
 - at the command prompt:
-''' $ python manage.py runserver'''
+``` $ python manage.py runserver```
 
 - navigate to http://localhost:8000
 
