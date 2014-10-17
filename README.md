@@ -20,26 +20,26 @@ Local Installation on Unix
 - run dependency installation script
 ''' $ ./sbin/mkenv.sh '''
 
-(the mkenv script is a more fail-safe way to install dependencies)
+*(the mkenv script is a more fail-safe way to install dependencies)*
 
 
-### Database Access
+### Database Access and Syncdb
 
-If your local MySQL installation allows root access without a passowrd:
+**If your local MySQL installation allows root access without a passowrd:**
 
 - Make nukedb script executable
 ''' chmod ug+x ./sbin/nukedb.sh '''
 - Run nukedb script
 ''' $ ./sbin/nukedb.sh '''
 
-Otherwise...
+**Otherwise...**
 
 - Modify mysql database settings in the django setting module
 - Then, run:
 '''$ python manage.py syncdb '''
 
 
-If you don't have MySQL installed
+**If you don't have MySQL installed**
 
 - Change Django settings module to use the Django.db.backends.sqlite.
 - run syncdb
