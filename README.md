@@ -46,3 +46,12 @@ Local Installation on Unix
 '''$ python ./manage.py syncdb''' 
  
 
+
+### Start the Development Server
+- at the command prompt:
+''' $ python manage.py runserver'''
+
+- navigate to http://localhost:8000
+
+- The application should be running!
+
