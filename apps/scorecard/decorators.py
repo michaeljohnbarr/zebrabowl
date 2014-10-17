@@ -1,4 +1,9 @@
 def session_required(_view):
+    """
+    Ensures that the proper session data exists. If if doesn't
+    this decorator will create the initial session data required for the game.
+    """
+    
     def _wrap(request, *args, **kwargs):
         # try to get vars from Django session. If they don't exist (KeyError), then the game just started
         # and we need to create intial session values. 
@@ -14,7 +19,9 @@ def session_required(_view):
 
 
 def flush_session(_view):
-    """Ensures session is wiped out for starting new games"""
+    """
+    Ensures session is wiped out before entering a particular view.
+    """
     
     def _wrap(request, *args, **kwargs):
         request.session.flush()
