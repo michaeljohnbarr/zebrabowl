@@ -43,10 +43,19 @@ def game_board(request,):
     game = Game.objects.active()    
     scorecards = ScoreCard.objects.players(game)
     
-    # must convert numeric params back to int before performing math operations!!
-    # http sends numeric params as strings
-    player_num = int(request.session['player_num'])
-    frame_num = int(request.session['frame_num'])
+    # try to get vars from Django session. If they don't exist (KeyError), then the game just started
+    # and we need to create intial session values. 
+    try:        
+        player_num = request.session['player_num'] 
+        frame_num = request.session['frame_num']
+    except KeyError:
+        request.session['player_num'] = 1
+        request.session['frame_num'] = 1
+    else:
+        # Since Django 1.6, sessions are stored as JSON and only return strings.
+        # So, we must convert numeric session values back to integers
+        player_num = int(request.session['player_num'])
+        frame_num = int(request.session['frame_num'])
         
     # pick out the active player's card from the array 
     # calculated as  order -1 b/c of index 0
