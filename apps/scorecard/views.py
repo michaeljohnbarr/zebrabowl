@@ -81,7 +81,7 @@ def game_board(request,):
             
             if session_context['last_frame'] is True:
                 request.session.flush()
-                return redirect(reverse('addplayers'))
+                return redirect(reverse('gamestats'))
             else:
                 return redirect(reverse('gameboard'))    
     else: 
@@ -90,3 +90,10 @@ def game_board(request,):
     return render(request,'gameboard.html', {'scorecards':scorecards,
                                              'form':form,
                                              })
+    
+def game_stats(request):
+    """
+    Displays stats and rankings for the game that has just been completed
+    """
+    return render(request,'gamestats.html',)
+        
