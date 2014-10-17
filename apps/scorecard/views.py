@@ -36,7 +36,7 @@ def add_players(request):
                                              'scorecards':scorecards
                                              })
     
-def game_board(request, player_num, frame_num):
+def game_board(request,):
     """foo"""
     
     #get the active game and all the scorecards for the game
@@ -45,8 +45,8 @@ def game_board(request, player_num, frame_num):
     
     # must convert numeric params back to int before performing math operations!!
     # http sends numeric params as strings
-    player_num = int(player_num)
-    frame_num = int(frame_num)
+    player_num = int(request.session['player_num'])
+    frame_num = int(request.session['frame_num'])
         
     # pick out the active player's card from the array 
     # calculated as  order -1 b/c of index 0
@@ -67,24 +67,21 @@ def game_board(request, player_num, frame_num):
             # if there's a strike or a spare in the 10th frame, we'll have to create
             # a bonus frame to calculate the final score
             
-            if active_frame.is_strike:
+            if active_frame.is_strike or active_frame.is_spare:
                 if 10 <= frame_num <= 11:
                     Frame.objects.create(score_card = active_card, number=frame_num +1).save()
                 else:
                     pass
                             
-            Frame.objects.calculate_frames(active_frame)            
-            context = Frame.objects.next_player_and_frame(player_num, frame_num, active_card)
+            Frame.objects.calculate_frames(active_frame) 
             
-            redirect_params = {
-                               'frame_num':context['frame_num'],
-                               'player_num':context['player_num']}            
+            # find out which player and which frame number come next in the game                       
+            session_context = Frame.objects.next_player_and_frame(request, player_num, frame_num, active_card)
             
-            
-            if context['last_frame'] is True:
+            if session_context['last_frame'] is True:
                 return redirect(reverse('addplayers'))
             else:
-                return redirect(reverse('gameboard', kwargs=redirect_params))    
+                return redirect(reverse('gameboard'))    
     else: 
         form = BowlForm()
     

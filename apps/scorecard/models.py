@@ -75,9 +75,8 @@ class FrameManager(models.Manager):
             # if on the last frame (10 or 11), break because we don't need to look further ahead
             # This also saves a trip to the db because we arleady tallied the frame's internal score
             # as down_pins1 + down_pins2
-            if i == frame_count -1:
-                break
             
+            # calculate frames 1-10
             if i <= 9:      
             #when only one frame remains                        
                 if i == frame_count-2:
@@ -100,9 +99,11 @@ class FrameManager(models.Manager):
                     
                 elif frame1.is_spare:
                     score += frame2.down_pins1 + frame2.down_pins2
-                    
+            
+            # The values of bonus frames are added to frame 10 -> Bonus frames don't add one-another.
+            # for example, if a strike is made on frame 11, it does not get to add the value of frame 12.        
             if i > 9:
-                """foo"""
+                break
                 
             frame1.score = score
             frame1.save()
@@ -117,7 +118,7 @@ class FrameManager(models.Manager):
         return qs
     
     
-    def next_player_and_frame(self, player_num, frame_num, active_card):
+    def next_player_and_frame(self, request, player_num, frame_num, active_card):
         
         frame_count = Frame.objects.filter(score_card = active_card).count() 
         player_count = ScoreCard.objects.player_count()     
@@ -141,10 +142,12 @@ class FrameManager(models.Manager):
         # it's  the last player of the his/her last frame. so the game is over
         elif player_num == player_count and frame_num == frame_count:
             last_frame = True
+        
+        request.session['player_num'] = player_num
+        request.session['frame_num'] = frame_num
+        request.session['last_frame'] = last_frame
             
-        return {'player_num':player_num,
-                'frame_num':frame_num,
-                'last_frame':last_frame}
+        return request.session
         
 class IntegerRangeField(models.IntegerField):
     """Custom field type to support max/min integer values"""
