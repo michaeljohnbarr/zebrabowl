@@ -3,19 +3,21 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from .models import *
 from .forms import *
+from .decorators import session_required, flush_session
 
 def home(request):
     """foo"""
     return render(request,'base.html')
 
+@flush_session
 def new_game(request):
     """foo"""
-
+    request.session.flush()
     new_game = Game.objects.create().save()              
     
     return render(request,'newgame.html')
 
-
+@flush_session
 def add_players(request):
     """Foo"""
     
@@ -35,7 +37,7 @@ def add_players(request):
     return render(request,'addplayers.html',{'form':form,
                                              'scorecards':scorecards
                                              })
-    
+@session_required   
 def game_board(request,):
     """foo"""
     
@@ -43,19 +45,9 @@ def game_board(request,):
     game = Game.objects.active()    
     scorecards = ScoreCard.objects.players(game)
     
-    # try to get vars from Django session. If they don't exist (KeyError), then the game just started
-    # and we need to create intial session values. 
-    try:        
-        player_num = request.session['player_num'] 
-        frame_num = request.session['frame_num']
-    except KeyError:
-        request.session['player_num'] = 1
-        request.session['frame_num'] = 1
-    else:
-        # Since Django 1.6, sessions are stored as JSON and only return strings.
-        # So, we must convert numeric session values back to integers
-        player_num = int(request.session['player_num'])
-        frame_num = int(request.session['frame_num'])
+    # get the current player and frame from the session
+    player_num = int(request.session['player_num'])
+    frame_num = int(request.session['frame_num'])
         
     # pick out the active player's card from the array 
     # calculated as  order -1 b/c of index 0
@@ -88,6 +80,7 @@ def game_board(request,):
             session_context = Frame.objects.next_player_and_frame(request, player_num, frame_num, active_card)
             
             if session_context['last_frame'] is True:
+                request.session.flush()
                 return redirect(reverse('addplayers'))
             else:
                 return redirect(reverse('gameboard'))    
