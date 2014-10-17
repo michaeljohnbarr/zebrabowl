@@ -58,12 +58,6 @@ def game_board(request, player_num, frame_num):
     active_frame.save()
   
     if request.method == 'POST':
-    
-        context = Frame.objects.next_player_and_frame(player_num, frame_num, active_card)
-        
-        player_num = context['player_num']
-        frame_num = context['frame_num']
-        last_frame = context['last_frame']
         
         form = BowlForm(request.POST,)
         
@@ -71,18 +65,26 @@ def game_board(request, player_num, frame_num):
             active_frame = form.save(active_frame)
             
             # if there's a strike or a spare in the 10th frame, we'll have to create
-            # a bonus frame to calculate the final score 
-            if frame_num >= 10 and active_frame.is_strike or active_frame.is_spare:
-                Frame.objects.create(score_card = active_card, number=frame_num +1).save()
+            # a bonus frame to calculate the final score
             
-            Frame.objects.calculate_frames(active_frame)
+            if active_frame.is_strike:
+                if 10 <= frame_num < 11:
+                    Frame.objects.create(score_card = active_card, number=frame_num +1).save()
+                else:
+                    pass
+                            
+            Frame.objects.calculate_frames(active_frame)            
+            context = Frame.objects.next_player_and_frame(player_num, frame_num, active_card)
             
-            if last_frame is True:
+            redirect_params = {
+                               'frame_num':context['frame_num'],
+                               'player_num':context['player_num']}            
+            
+            
+            if context['last_frame'] is True:
                 return redirect(reverse('addplayers'))
             else:
-                return redirect(reverse('gameboard', kwargs= {'player_num':player_num,
-                                                               'frame_num':frame_num
-                                                               }))    
+                return redirect(reverse('gameboard', kwargs=redirect_params))    
     else: 
         form = BowlForm()
     

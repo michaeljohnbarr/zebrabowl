@@ -49,6 +49,7 @@ class BowlForm(forms.ModelForm):
 
         p1 = self.cleaned_data['down_pins1']
         p2 = self.cleaned_data['down_pins2']
+        
         if (p1 + p2) > 10:
             raise forms.ValidationError ("Can't knock down more than 10 pins in a frame")
         
