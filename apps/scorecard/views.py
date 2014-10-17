@@ -39,14 +39,19 @@ def add_players(request):
 def game_board(request, player_num, frame_num):
     """foo"""
     
-    #get the active game and the scorecards
+    #get the active game and all the scorecards for the game
     game = Game.objects.active()    
     scorecards = ScoreCard.objects.players(game)
+    player_count = len(scorecards)
+    
+    # last frame is false until proven otherwise
     last_frame=False 
     
-    # must convert back to int before performing math operations!!
+    # must convert numeric params back to int before performing math operations!!
+    # http sends numeric params as strings
     player_num = int(player_num)
     frame_num = int(frame_num)
+    
     #pick out the active player's card from the array 
     # calculated as  order -1 b/c of index 0
     active_card = scorecards[player_num-1]
@@ -54,24 +59,40 @@ def game_board(request, player_num, frame_num):
     active_frame = Frame.objects.get(score_card = active_card, number=frame_num)
     active_frame.is_active = True
     active_frame.save()
-    #handle a variety of cases depnding on what frame and who's turn it is
-    if player_num < len(scorecards) and frame_num <= 10:
-        player_num += 1        
-        
-    elif player_num == len(scorecards) and frame_num < 10:
-        player_num = 1 
-        frame_num += 1
-    
-    elif player_num == len(scorecards) and frame_num == 10:
-        last_frame = True
   
     if request.method == 'POST':
+        frame_count = Frame.objects.filter(score_card = active_card).count()
+        
+        #handle a variety of cases depnding on what frame it is and who's turn it is..        
+        
+        # it's not the last player's turn
+        # incraese the player number but not the frame number 
+        if player_num < player_count:
+            player_num += 1        
+            
+        # it's the last player's turn, but not the final frame.
+        # return to player 1, and increase frame num by 1
+        elif player_num == player_count and frame_num < frame_count:
+            player_num = 1 
+            frame_num += 1
+        
+        # it's  the last player of the last frame. so the game is over
+        elif player_num == player_count and frame_num == frame_count:
+            last_frame = True
+        
+
         form = BowlForm(request.POST,)
+        
         if form.is_valid():
             active_frame = form.save(active_frame)
-            if active_frame.is_strike or active_frame.is_spare:
-                Frame.objects.create(score_card = active_card, number= 11).save()
+            
+            # if there's a strike or a spare in the 10th frame, we'll have to create
+            # a bonus frame to calculate the final score 
+            if frame_num >= 10 and active_frame.is_strike or active_frame.is_spare:
+                Frame.objects.create(score_card = active_card, number=frame_num +1).save()
+            
             Frame.objects.calculate_frames(active_frame)
+            
             if last_frame is True:
                 return redirect(reverse('addplayers'))
             else:

@@ -60,14 +60,23 @@ class FrameManager(models.Manager):
         
         # calc total score of the frames to pass to ScoreCard
         ts = 0
+        frame_count = len(qs)
         for i, frame1 in enumerate(qs):
             score = frame1.down_pins1 + frame1.down_pins2
-            if i == len(qs)-1:
-                break            
-            elif i == len(qs)-2:
+            
+            # if on the last frame (10 or 11), break because we don't need to look further ahead
+            # This also saves a trip to the db because we arleady tallied the frame's internal score
+            # as down_pins1 + down_pins2
+            if i == frame_count -1:
+                break
+                    
+            #when only one frame remains                        
+            if i == frame_count-2:
                 frame2 = qs[i+1]
                 frame3 = None
-            elif i < len(qs-2):                
+                
+            # when two or more frames remain
+            elif i < frame_count-2:                
                 frame2 = qs[i+1]
                 frame3 = qs[i+2]
             
