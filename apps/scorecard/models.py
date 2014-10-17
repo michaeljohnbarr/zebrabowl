@@ -20,18 +20,18 @@ class ScoreCardManager(models.Manager):
     """foo"""
     def players(self, game, ):
         """foo"""
-        q = self.filter(game=game,).order_by('order', 'player_name')
+        qs = self.filter(game=game,).order_by('order', 'player_name')
         
-        return  q
+        return  qs
     
     def player_count(self):
         """ 
         Returns number of players in the active game
         """
         game = Game.objects.active()
-        self.filter(game=game).count()
+        qs = self.filter(game=game).count()
         
-          
+        return qs
     
 class ScoreCard(models.Model):
     player_name = models.CharField(max_length=50L)
