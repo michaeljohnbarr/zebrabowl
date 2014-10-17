@@ -56,19 +56,35 @@ class FrameManager(models.Manager):
         """foo"""
         
         qs = self.filter(score_card = active_frame.score_card).order_by('number')
+        
+        
         # calc total score of the frames to pass to ScoreCard
         ts = 0
-        for i, frame in enumerate(qs):
-            score = frame.down_pins1 + frame.down_pins2
-            if i == len(qs)-1: # watch out for the count vs. index discrepency (0 vs 1)
-                break
-            if frame.is_strike:
-                score += qs[i+1].down_pins1 + qs[i+1].down_pins2
+        for i, frame1 in enumerate(qs):
+            score = frame1.down_pins1 + frame1.down_pins2
+            if i == 9:
+                break            
+            elif i == 8:
+                frame2 = qs[i+1]
+                frame3 = None
+            elif i < 8:                
+                frame2 = qs[i+1]
+                frame3 = qs[i+2]
+            
+            if frame1.is_strike and not frame3:
+                score += frame2.down_pins1 + frame2.down_pins2
+                    
+            elif frame1.is_strike and frame3:
+                if frame2.is_strike:
+                    score += frame2.down_pins1 + frame3.down_pins1
+                else:
+                    score += frame2.down_pins1 + frame2.down_pins2
                 
-            elif frame.is_spare:
-                score += qs[i+1].down_pins1
-            frame.score = score
-            frame.save()
+            elif frame1.is_spare:
+                score += frame2.down_pins1 + frame2.down_pins2
+                
+            frame1.score = score
+            frame1.save()
             ts += score
         # instead of using signal, just going to manually call ScoreCard's method 
         # to update its score. can get to scorecard through any of frames in the queryset,
