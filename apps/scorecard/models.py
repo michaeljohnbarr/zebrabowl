@@ -20,18 +20,34 @@ class ScoreCardManager(models.Manager):
     """foo"""
     def players(self, game, ):
         """foo"""
-        qs = self.filter(game=game,).order_by('order', 'player_name')
+        query = self.filter(game=game,).order_by('order', 'player_name')
         
-        return  qs
+        return  query
     
     def player_count(self):
         """ 
         Returns number of players in the active game
         """
         game = Game.objects.active()
-        qs = self.filter(game=game).count()
+        query = self.filter(game=game).count()
         
-        return qs
+        return query
+    
+    def calc_rankings(self):
+        game = Game.objects.active()
+        query = self.filter(game=game).order_by('-total_score', 'player_name')
+        
+        for i, item in enumerate(query):
+            item.rank = i+1
+            item.save()
+            
+        return True
+    
+    def player_ranking(self):
+        game = Game.objects.active()
+        query = self.filter(game=game).order_by('-total_score', 'player_name')
+        
+        return query
     
 class ScoreCard(models.Model):
     player_name = models.CharField(max_length=50L)
@@ -63,13 +79,13 @@ class FrameManager(models.Manager):
     def calculate_frames(self, active_frame):
         """foo"""
         
-        qs = self.filter(score_card = active_frame.score_card).order_by('number')
+        query = self.filter(score_card = active_frame.score_card).order_by('number')
         
         
         # calc total score of the frames to pass to ScoreCard
         ts = 0
-        frame_count = len(qs)
-        for i, frame1 in enumerate(qs):
+        frame_count = len(query)
+        for i, frame1 in enumerate(query):
             score = frame1.down_pins1 + frame1.down_pins2
             
             # if on the last frame (10 or 11), break because we don't need to look further ahead
@@ -80,13 +96,13 @@ class FrameManager(models.Manager):
             if i <= 9:      
             #when only one frame remains                        
                 if i == frame_count-2:
-                    frame2 = qs[i+1]
+                    frame2 = query[i+1]
                     frame3 = None
                     
                 # when two or more frames remain
                 elif i < frame_count-2:                
-                    frame2 = qs[i+1]
-                    frame3 = qs[i+2]
+                    frame2 = query[i+1]
+                    frame3 = query[i+2]
                 
                 if frame1.is_strike and not frame3:
                     score += frame2.down_pins1 + frame2.down_pins2
@@ -111,11 +127,11 @@ class FrameManager(models.Manager):
         # instead of using signal, just going to manually call ScoreCard's method 
         # to update its score. can get to scorecard through any of frames in the queryset,
         # so the index used below is arbitrary
-        sc = qs[0].score_card
+        sc = query[0].score_card
         sc.total_score = ts
         sc.save()
         
-        return qs
+        return query
     
     
     def next_player_and_frame(self, request, player_num, frame_num, active_card):

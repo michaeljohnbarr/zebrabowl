@@ -80,6 +80,7 @@ def game_board(request,):
             session_context = Frame.objects.next_player_and_frame(request, player_num, frame_num, active_card)
             
             if session_context['last_frame'] is True:
+                ScoreCard.objects.calc_rankings()
                 request.session.flush()
                 return redirect(reverse('gamestats'))
             else:
@@ -95,5 +96,8 @@ def game_stats(request):
     """
     Displays stats and rankings for the game that has just been completed
     """
-    return render(request,'gamestats.html',)
+    
+    scorecards = ScoreCard.objects.player_ranking()
+    
+    return render(request,'gamestats.html',{'scorecards':scorecards})
         
