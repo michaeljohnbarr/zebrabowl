@@ -51,9 +51,39 @@ class FrameManager(models.Manager):
             i += 1
             
         return True
+    
+    def calculate_frames(self, active_frame):
+        """foo"""
+        
+        qs = self.filter(score_card = active_frame.score_card).order_by('number')
+        # calc total score of the frames to pass to ScoreCard
+        ts = 0
+        for i, frame in enumerate(qs):
+            score = frame.down_pins1 + frame.down_pins2
+            if i == len(qs)-1: # watch out for the count vs. index discrepency (0 vs 1)
+                break
+            if frame.is_strike:
+                score += qs[i+1].down_pins1 + qs[i+1].down_pins2
+                
+            elif frame.is_spare:
+                score += qs[i+1].down_pins1
+            frame.score = score
+            frame.save()
+            ts += score
+        # instead of using signal, just going to manually call ScoreCard's method 
+        # to update its score. can get to scorecard through any of frames in the queryset,
+        # so the index used below is arbitrary
+        sc = qs[0].score_card
+        sc.total_score = ts
+        sc.save()
+        
 
+        return qs
+                    
+        
 class IntegerRangeField(models.IntegerField):
     """Custom field type to support max/min integer values"""
+    
     def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
         self.min_value, self.max_value = min_value, max_value
         models.IntegerField.__init__(self, verbose_name, name, **kwargs)

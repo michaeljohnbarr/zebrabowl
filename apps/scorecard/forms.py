@@ -58,9 +58,17 @@ class BowlForm(forms.ModelForm):
         
         p1 = active_frame.down_pins1 = self.cleaned_data['down_pins1']
         p2 = active_frame.down_pins2 = self.cleaned_data['down_pins2']
+        
+        # determine if frame is a strike or spare
+        if p1 == 10:
+            active_frame.is_strike = True
+        elif p1 + p2 == 10:
+            active_frame.is_spare = True
+                
         active_frame.is_active = False        
         active_frame.score = p1+p2                
         active_frame.save()
+                
         # then, run managers that tally up total scores!
         
-        
+        return active_frame
