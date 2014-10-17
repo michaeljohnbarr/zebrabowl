@@ -77,28 +77,32 @@ class FrameManager(models.Manager):
             # as down_pins1 + down_pins2
             if i == frame_count -1:
                 break
-                    
-            #when only one frame remains                        
-            if i == frame_count-2:
-                frame2 = qs[i+1]
-                frame3 = None
-                
-            # when two or more frames remain
-            elif i < frame_count-2:                
-                frame2 = qs[i+1]
-                frame3 = qs[i+2]
             
-            if frame1.is_strike and not frame3:
-                score += frame2.down_pins1 + frame2.down_pins2
+            if i <= 9:      
+            #when only one frame remains                        
+                if i == frame_count-2:
+                    frame2 = qs[i+1]
+                    frame3 = None
                     
-            elif frame1.is_strike and frame3:
-                if frame2.is_strike:
-                    score += frame2.down_pins1 + frame3.down_pins1
-                else:
-                    score += frame2.down_pins1 + frame2.down_pins2
+                # when two or more frames remain
+                elif i < frame_count-2:                
+                    frame2 = qs[i+1]
+                    frame3 = qs[i+2]
                 
-            elif frame1.is_spare:
-                score += frame2.down_pins1 + frame2.down_pins2
+                if frame1.is_strike and not frame3:
+                    score += frame2.down_pins1 + frame2.down_pins2
+                        
+                elif frame1.is_strike and frame3:
+                    if frame2.is_strike:
+                        score += frame2.down_pins1 + frame3.down_pins1
+                    else:
+                        score += frame2.down_pins1 + frame2.down_pins2
+                    
+                elif frame1.is_spare:
+                    score += frame2.down_pins1 + frame2.down_pins2
+                    
+            if i > 9:
+                """foo"""
                 
             frame1.score = score
             frame1.save()
@@ -111,6 +115,8 @@ class FrameManager(models.Manager):
         sc.save()
         
         return qs
+    
+    
     def next_player_and_frame(self, player_num, frame_num, active_card):
         
         frame_count = Frame.objects.filter(score_card = active_card).count() 
