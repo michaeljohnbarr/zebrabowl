@@ -62,12 +62,12 @@ class FrameManager(models.Manager):
         ts = 0
         for i, frame1 in enumerate(qs):
             score = frame1.down_pins1 + frame1.down_pins2
-            if i == 9:
+            if i == len(qs)-1:
                 break            
-            elif i == 8:
+            elif i == len(qs)-2:
                 frame2 = qs[i+1]
                 frame3 = None
-            elif i < 8:                
+            elif i < len(qs-2):                
                 frame2 = qs[i+1]
                 frame3 = qs[i+2]
             

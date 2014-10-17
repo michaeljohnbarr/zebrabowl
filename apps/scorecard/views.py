@@ -68,7 +68,9 @@ def game_board(request, player_num, frame_num):
     if request.method == 'POST':
         form = BowlForm(request.POST,)
         if form.is_valid():
-            form.save(active_frame)
+            active_frame = form.save(active_frame)
+            if active_frame.is_strike or active_frame.is_spare:
+                Frame.objects.create(score_card = active_card, number= 11).save()
             Frame.objects.calculate_frames(active_frame)
             if last_frame is True:
                 return redirect(reverse('addplayers'))

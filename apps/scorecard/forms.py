@@ -67,8 +67,6 @@ class BowlForm(forms.ModelForm):
                 
         active_frame.is_active = False        
         active_frame.score = p1+p2                
-        active_frame.save()
-                
-        # then, run managers that tally up total scores!
+        active_frame.save()            
         
         return active_frame
