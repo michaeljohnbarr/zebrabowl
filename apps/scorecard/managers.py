@@ -96,7 +96,7 @@ class FrameManager(models.Manager):
                         score += frame2.down_pins1 + frame2.down_pins2
                     
                 elif frame1.is_spare:
-                    score += frame2.down_pins1 + frame2.down_pins2
+                    score += frame2.down_pins1
             
             # The values of bonus frames are added to frame 10 -> Bonus frames don't add one-another.
             # for example, if a strike is made on frame 11, it does not get to add the value of frame 12.        
