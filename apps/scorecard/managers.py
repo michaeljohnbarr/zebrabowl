@@ -13,7 +13,7 @@ class GameManager(models.Manager):
 
 class ScoreCardManager(models.Manager):
     """foo"""
-    def players(self, game, ):
+    def players(self, game,):
         """foo"""
         query = self.filter(game=game,).order_by('order', 'player_name')
         
