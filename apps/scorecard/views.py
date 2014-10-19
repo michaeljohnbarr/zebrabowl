@@ -7,7 +7,9 @@ from .decorators import session_required, flush_session
 
 @flush_session
 def new_game(request):
-    """foo"""
+    """Creates a new game object in the database
+    that is ready to be populated with players.    
+    """
     request.session.flush()
     new_game = Game.objects.create().save()              
     
@@ -15,7 +17,9 @@ def new_game(request):
 
 @flush_session
 def add_players(request):
-    """Foo"""
+    """View that enables users to enter the players of the game.
+    An infinite number of players can be added to the game. once at least one player
+    is added to the game, the game is ready to start."""
     
     game = Game.objects.active()
     scorecards = ScoreCard.objects.players(game) 
@@ -35,7 +39,9 @@ def add_players(request):
                                              })
 @session_required   
 def game_board(request,):
-    """foo"""
+    """The Game Board view is the primary view for the application. It dislpays player's
+    scores for each frame and tallies up their total game score. This view also highlights which player
+    and frame are active and ready to bowl."""
     
     #get the active game and all the scorecards for the game
     game = Game.objects.active()    
@@ -92,7 +98,7 @@ def game_board(request,):
 @session_required    
 def game_stats(request):
     """
-    Displays stats and rankings for the game that has just been completed
+    Displays final score and rankings for the game that just completed.
     """
     
     scorecards = ScoreCard.objects.player_ranking(
