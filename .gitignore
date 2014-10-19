@@ -9,3 +9,8 @@ env/
 .project
 .pydevproject
 
+
+# rendered doc files
+_build
+_static
+_templates
