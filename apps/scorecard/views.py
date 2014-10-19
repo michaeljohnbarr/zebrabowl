@@ -62,14 +62,14 @@ def game_board(request,):
             active_frame = form.save(active_frame)
             
             # if there's a strike or a spare in the 10th frame, we'll have to create
-            # a bonus frame to calculate the final score
-            
-            if active_frame.is_strike or active_frame.is_spare:
-                if 10 <= frame_num <= 11:
-                    Frame.objects.create(score_card = active_card, number=frame_num +1).save()
-                else:
-                    pass
-                            
+            # a bonus frame to calculate the final score            
+            if frame_num == 10 or frame_num == 11:
+                if active_frame.is_strike:
+                    Frame.objects.create_bonus_frame(request, active_frame, active_card)
+                elif active_frame.is_spare:
+                    if frame_num == 10:
+                        Frame.objects.create_bonus_frame(request, active_frame, active_card)
+                                            
             Frame.objects.calculate_frames(active_frame) 
             
             # find out which player and which frame number come next in the game
@@ -98,6 +98,7 @@ def game_stats(request):
     scorecards = ScoreCard.objects.player_ranking(
                                                   Game.objects.active()
                                                   )
+    # flush the current session
     request.session.flush()
     return render(request,'gamestats.html',{'scorecards':scorecards})
         

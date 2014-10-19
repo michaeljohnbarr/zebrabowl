@@ -156,3 +156,11 @@ class FrameManager(models.Manager):
         request.session['last_frame'] = last_frame
             
         return request.session    
+    
+    def create_bonus_frame(self, request, active_frame, active_card):
+        
+        frame_num = request.session['frame_num']
+                        
+        bonus = self.create(score_card = active_card, number=frame_num +1).save()
+        
+        return bonus
