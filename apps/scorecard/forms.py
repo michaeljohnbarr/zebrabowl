@@ -4,7 +4,11 @@ from crispy_forms.layout import Submit
 from .models import *
 
 class NewScoreCardForm(forms.ModelForm):
-            
+
+    # For those not familiar, this is a crispy form's implementation, which requires some of 
+    # the form's display logic be handled in Form.__init__(). For more info, check the docs at 
+    # http://django-crispy-forms.readthedocs.org/en/latest/
+                
     def __init__(self, *args, **kwargs):
         super(NewScoreCardForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
