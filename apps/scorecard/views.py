@@ -72,8 +72,9 @@ def game_board(request,):
                             
             Frame.objects.calculate_frames(active_frame) 
             
-            # find out which player and which frame number come next in the game                       
-            session_context = Frame.objects.next_player_and_frame(request, player_num, frame_num, active_card)
+            # find out which player and which frame number come next in the game
+            player_count = ScoreCard.objects.player_count(game)                       
+            session_context = Frame.objects.next_player_and_frame(request, player_num, player_count, frame_num, active_card)
             
             if session_context['last_frame'] is True:
                 # calculate the rankings and flush the session
