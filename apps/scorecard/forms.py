@@ -34,9 +34,8 @@ class NewScoreCardForm(forms.ModelForm):
         :param game: The current game being set up
         :type game: object
         :param order: The order the player will be in the game
-        :type int: 
-        :returns: Newly created scorecard object
-        :type: object
+        :type order: int 
+        :returns: object -- Newly-created scorecard object
         """
         params = {'game':game,
                   'player_name':self.cleaned_data['player_name'],
@@ -94,7 +93,7 @@ class BowlForm(forms.ModelForm):
         
         :param self: the form
         :param active_frame: The frame currently being bowled by the player
-        :type object
+        :type active_frame: object
         :returns: object -- the updated active frame 
         """
         p1 = active_frame.down_pins1 = self.cleaned_data['down_pins1']
