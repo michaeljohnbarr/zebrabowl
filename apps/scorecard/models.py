@@ -2,6 +2,9 @@ from django.db import models
 from .managers import *
 
 class Game(models.Model):
+    """The game model is essentially the root model of the application, and represents 
+    a bowling game"""
+    
     date_created = models.DateTimeField(auto_now_add=True)
     objects = GameManager()    
     class Meta:
@@ -9,6 +12,9 @@ class Game(models.Model):
     
     
 class ScoreCard(models.Model):
+    """A model representing a score card, or player with aggregated metrics about a player's
+    performance in a game"""
+    
     player_name = models.CharField(max_length=50L)
     game = models.ForeignKey(Game)
     order = models.PositiveSmallIntegerField(default = 1)
@@ -25,13 +31,15 @@ class IntegerRangeField(models.IntegerField):
     def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
         self.min_value, self.max_value = min_value, max_value
         models.IntegerField.__init__(self, verbose_name, name, **kwargs)
-    def formfield(self, **kwargs):
+    def formfield(self, **kwargs):        
         defaults = {'min_value': self.min_value, 'max_value':self.max_value}
         defaults.update(kwargs)
         return super(IntegerRangeField, self).formfield(**defaults)
     
             
 class Frame(models.Model):
+    """Represents a bowling frame, which consists of two turns per frame. A scorecard will have
+    between 10 and 12 frames"""
     score_card = models.ForeignKey(ScoreCard)
     number = models.PositiveSmallIntegerField()
     down_pins1 = IntegerRangeField(default=0, max_value=10, min_value=0)
