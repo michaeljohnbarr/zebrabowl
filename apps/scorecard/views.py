@@ -95,7 +95,9 @@ def game_stats(request):
     Displays stats and rankings for the game that has just been completed
     """
     
-    scorecards = ScoreCard.objects.player_ranking(Game.objects.active())
+    scorecards = ScoreCard.objects.player_ranking(
+                                                  Game.objects.active()
+                                                  )
     request.session.flush()
     return render(request,'gamestats.html',{'scorecards':scorecards})
         
