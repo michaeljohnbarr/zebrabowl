@@ -1,3 +1,5 @@
+from .models import Game
+
 def session_required(_view):
     """
     Ensures that the proper session data exists. If if doesn't
