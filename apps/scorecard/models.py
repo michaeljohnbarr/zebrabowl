@@ -12,7 +12,7 @@ class Game(models.Model):
     
     
 class ScoreCard(models.Model):
-    """A model representing a score card, or player with aggregated metrics about a player's
+    """Represents a score card (i.e.player) with aggregated metrics about a player's
     performance in a game"""
     
     player_name = models.CharField(max_length=50L)
