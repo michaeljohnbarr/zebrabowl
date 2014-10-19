@@ -1,9 +1,18 @@
+"""
+.. module:: decorators.py
+    :synopsis:: A module containing custom view decorators.
+"""
+
 from .models import Game
 
 def session_required(_view):
     """
-    Ensures that the proper session data exists. If if doesn't
+    Ensures that the proper session data exists. If if doesn't,
     this decorator will create the initial session data required for the game.
+    
+    :param name: _view
+    :type name: function
+    :returns: wrapper function        
     """
     
     def _wrap(request, *args, **kwargs):
@@ -23,6 +32,10 @@ def session_required(_view):
 def flush_session(_view):
     """
     Ensures session is wiped out before entering a particular view.
+    
+    :param name: _view
+    :type name: function
+    :returns: wrapper function    
     """
     
     def _wrap(request, *args, **kwargs):
