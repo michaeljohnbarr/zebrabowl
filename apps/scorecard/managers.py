@@ -1,3 +1,9 @@
+"""
+.. module:: managers.py
+    :Synopsis: This is where app's heavy lifing takes place
+
+"""
+
 from django.db import models
 
 class GameManager(models.Manager):
