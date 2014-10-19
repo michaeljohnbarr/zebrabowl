@@ -1,3 +1,8 @@
+"""
+.. module:: models.py
+    :synopsis: Contains models representing key application objects, which represent aspects of a bowling game.
+"""
+
 from django.db import models
 from .managers import *
 
