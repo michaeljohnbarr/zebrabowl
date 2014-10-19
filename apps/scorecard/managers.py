@@ -74,9 +74,15 @@ class ScoreCardManager(models.Manager):
         return query
     
 class FrameManager(models.Manager):
-    """foo"""
+    """Provides table-level functionality to the Frame model.    
+    """
     
     def make_frames(self, score_card):
+        """Auto-creates 10 frame objects related to a given ScoreCard
+        :param score_card: The Score Card each new frame will relate to
+        :type score_card: object
+        :returns: True
+        """
         i = 1
         while i <= 10:
             """foo"""
@@ -89,7 +95,12 @@ class FrameManager(models.Manager):
         return True
     
     def calculate_frames(self, active_frame):
-        """foo"""
+        """Runs through all frames related to a particular score card, and calculates the score for 
+        each frame.
+        :param active_frame: The active frame being bowled
+        :type active_frame: object
+        :returns: queryset - list of Frame objects for a particular scorecard, ordered according to framenumber
+        """
         
         query = self.filter(score_card = active_frame.score_card).order_by('number')
         
@@ -147,13 +158,27 @@ class FrameManager(models.Manager):
     
     
     def frame_count(self, active_card):
+        """Counts number of frames related to a particular scorecard. 
+        :param active_card: The active scorecard being bowled
+        :type active_card: object
+        :returns: int - count of frames related to active_card
+        """
         
         query = self.filter(score_card = active_card).count()
     
         return query
     
     def next_player_and_frame(self, request, player_count, active_card):
-        
+        """This function determines which scorecard and frame objects are the next to 
+        be active. Save these values to the session.
+        :param request: the htt prequest object
+        :request type: http request object
+        :player_count: the number of players (scorecards) in the game
+        :type player_count: int
+        :param active_card: the active scorecard being bowled
+        :type active_card: object
+        :returns: object -- returns the session object
+        """
         frame_count = self.frame_count(active_card)
         # last frame is false until proven otherwise
         last_frame=False
@@ -188,7 +213,15 @@ class FrameManager(models.Manager):
         return request.session    
     
     def create_bonus_frame(self, request, active_frame, active_card):
-        
+        """creates a bonus frame, where frame_num > 10.
+        :param request: the http request object
+        :type requset: object
+        :param active_frame: the current frame being bowled
+        :type active_frame: object
+        :param active_card: the current card being bowled
+        :type active_card: object
+        :returns: object - the newly created bonus frame
+        """
         frame_num = request.session['frame_num']
                         
         bonus = self.create(score_card = active_card, number=frame_num +1).save()
