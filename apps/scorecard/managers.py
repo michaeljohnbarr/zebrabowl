@@ -122,11 +122,16 @@ class FrameManager(models.Manager):
     
         return query
     
-    def next_player_and_frame(self, request, player_num, player_count, frame_num, active_card):
+    def next_player_and_frame(self, request, player_count, active_card):
         
         frame_count = self.frame_count(active_card)
         # last frame is false until proven otherwise
         last_frame=False
+        
+        # re-instantiating player_num and frame_num in the manager (even though it could be passed from the view)
+        # I favor decoupling functionality over DRY 
+        player_num = int(request.session['player_num'])
+        frame_num = int(request.session['frame_num'])
 
         ############################################################################# 
         #handle a variety of cases depnding on what frame it is and who's turn it is..        
