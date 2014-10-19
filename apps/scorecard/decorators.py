@@ -10,7 +10,7 @@ def session_required(_view):
     Ensures that the proper session data exists. If if doesn't,
     this decorator will create the initial session data required for the game.
     
-    :param name: _view
+    :param _view: the view function to be wrapped
     :type name: function
     :returns: wrapper function        
     """
@@ -33,8 +33,8 @@ def flush_session(_view):
     """
     Ensures session is wiped out before entering a particular view.
     
-    :param name: _view
-    :type name: function
+    :param _view:the view function to be wrapped
+    :type _view: function
     :returns: wrapper function    
     """
     
