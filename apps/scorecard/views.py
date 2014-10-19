@@ -1,3 +1,7 @@
+"""
+.. module:: views.py
+    :synopsis: Contains primary view modules for application.
+"""
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
