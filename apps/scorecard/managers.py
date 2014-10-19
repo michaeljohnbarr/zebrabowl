@@ -7,8 +7,14 @@
 from django.db import models
 
 class GameManager(models.Manager):
-    
+    """ Provides table-level functionality to the Game model.
+    """
     def active(self):
+        """Returns the current (active) game being played. This is kind of a cheap
+        trick because the active game is determined by the most recently created game in the database,
+        which leverages the built-in last() manager function. In the future, a better implementation is
+        to tie a game to a particular user and cache that game and a unique ID in the session.
+        """
         try:
             self.last()
         except DoesNotExist:
@@ -18,24 +24,38 @@ class GameManager(models.Manager):
     
 
 class ScoreCardManager(models.Manager):
-    """foo"""
+    """Provides table-level functionality to the ScoreCard model.    
+    """
     def players(self, game,):
-        """foo"""
+        """Returns the sorecards of all the players in the active game.
+        :param game: The game we want the scorecards from
+        :type game: object
+        :returns: queryset -- a list of ScoreCard objects
+        """
         query = self.filter(game=game,).order_by('order', 'player_name')
         
         return  query
     
     def player_count(self, game):
         """ 
-        Returns number of players in the active game
+        Returns number of players in the game.
+        :param game: The game we want information about
+        :type game: object
+        :returns: int -- the number of players in the game
         """
         query = self.filter(game=game).count()
         
         return query
     
     def calc_rankings(self, game):
+        """
+        Calculates each player's ranking and updates players' scorecards accordingly
+        :param game: The game we want information about
+        :type game: object
+        :returns: bool -- True if the function executed completely
+        """
 
-        query = self.filter(game=game).order_by('-total_score', 'player_name')
+        query = self.player_ranking(game)
         
         for i, item in enumerate(query):
             item.rank = i+1
@@ -44,7 +64,11 @@ class ScoreCardManager(models.Manager):
         return True
     
     def player_ranking(self, game):
-
+        """Returns a queryset of the game's players in order of their total scores and player name
+        :param: The game we want information about
+        :type game: object
+        :returns: queryset - A list of ScoreCard objects in order of their total scores
+        """
         query = self.filter(game=game).order_by('-total_score', 'player_name')
         
         return query
