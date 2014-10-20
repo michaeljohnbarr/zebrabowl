@@ -6,6 +6,8 @@
 Welcome to ZebraBowl's documentation!
 =====================================
 
+.. automodule:: zebrabowl
+
 Contents:
 
 .. toctree::
@@ -13,7 +15,7 @@ Contents:
 
 Indices and tables
 ==================
-+
+
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
