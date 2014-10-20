@@ -28,6 +28,7 @@ class ScoreCardManager(models.Manager):
     """
     def players(self, game,):
         """Returns the sorecards of all the players in the active game.
+        
         :param game: The game we want the scorecards from
         :type game: object
         :returns: queryset -- a list of ScoreCard objects
@@ -39,6 +40,7 @@ class ScoreCardManager(models.Manager):
     def player_count(self, game):
         """ 
         Returns number of players in the game.
+        
         :param game: The game we want information about
         :type game: object
         :returns: int -- the number of players in the game
@@ -50,6 +52,7 @@ class ScoreCardManager(models.Manager):
     def calc_rankings(self, game):
         """
         Calculates each player's ranking and updates players' scorecards accordingly
+        
         :param game: The game we want information about
         :type game: object
         :returns: bool -- True if the function executed completely
@@ -65,6 +68,7 @@ class ScoreCardManager(models.Manager):
     
     def player_ranking(self, game):
         """Returns a queryset of the game's players in order of their total scores and player name
+        
         :param: The game we want information about
         :type game: object
         :returns: queryset - A list of ScoreCard objects in order of their total scores
@@ -79,6 +83,7 @@ class FrameManager(models.Manager):
     
     def make_frames(self, score_card):
         """Auto-creates 10 frame objects related to a given ScoreCard
+        
         :param score_card: The Score Card each new frame will relate to
         :type score_card: object
         :returns: True
@@ -97,6 +102,7 @@ class FrameManager(models.Manager):
     def calculate_frames(self, active_frame):
         """Runs through all frames related to a particular score card, and calculates the score for 
         each frame.
+        
         :param active_frame: The active frame being bowled
         :type active_frame: object
         :returns: queryset - list of Frame objects for a particular scorecard, ordered according to framenumber
@@ -159,6 +165,7 @@ class FrameManager(models.Manager):
     
     def frame_count(self, active_card):
         """Counts number of frames related to a particular scorecard. 
+        
         :param active_card: The active scorecard being bowled
         :type active_card: object
         :returns: int - count of frames related to active_card
@@ -171,6 +178,7 @@ class FrameManager(models.Manager):
     def next_player_and_frame(self, request, player_count, active_card):
         """This function determines which scorecard and frame objects are the next to 
         be active. Save these values to the session.
+        
         :param request: the htt prequest object
         :request type: http request object
         :player_count: the number of players (scorecards) in the game
@@ -214,6 +222,7 @@ class FrameManager(models.Manager):
     
     def create_bonus_frame(self, request, active_frame, active_card):
         """creates a bonus frame, where frame_num > 10.
+        
         :param request: the http request object
         :type requset: object
         :param active_frame: the current frame being bowled

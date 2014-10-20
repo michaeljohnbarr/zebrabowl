@@ -31,6 +31,7 @@ class NewScoreCardForm(forms.ModelForm):
     
     def save(self, game, order):
         """ Saves the newly-created ScoreCard object
+        
         :param game: The current game being set up
         :type game: object
         :param order: The order the player will be in the game
