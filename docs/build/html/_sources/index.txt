@@ -24,12 +24,12 @@ Indices and tables
 Models.py
 =============
 
-.. automodule:: apps.scorecard.models
+.. automodule:: zebrabowl.apps.scorecard.models
 	:members:
 	
 Managers.py
 ==============
 
-.. automodule:: apps.scorecard.managers
+.. automodule:: zebrabowl.apps.scorecard.managers
 	:members:	
 
