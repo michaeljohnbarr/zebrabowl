@@ -55,7 +55,7 @@
 <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="kn">from</span> <span class="nn">.managers</span> <span class="kn">import</span> <span class="o">*</span>
 
-<div class="viewcode-block" id="Game"><a class="viewcode-back" href="../../../index.html#apps.scorecard.models.Game">[docs]</a><span class="k">class</span> <span class="nc">Game</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="viewcode-block" id="Game"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.models.Game">[docs]</a><span class="k">class</span> <span class="nc">Game</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The game model is essentially the root model of the application, and represents </span>
 <span class="sd">    a bowling game&quot;&quot;&quot;</span>
     
@@ -65,7 +65,7 @@
         <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;scorecard_game&#39;</span>    
     
     </div>
-<div class="viewcode-block" id="ScoreCard"><a class="viewcode-back" href="../../../index.html#apps.scorecard.models.ScoreCard">[docs]</a><span class="k">class</span> <span class="nc">ScoreCard</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="viewcode-block" id="ScoreCard"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.models.ScoreCard">[docs]</a><span class="k">class</span> <span class="nc">ScoreCard</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Represents a score card (i.e.player) with aggregated metrics about a player&#39;s</span>
 <span class="sd">    performance in a game&quot;&quot;&quot;</span>
     
@@ -79,7 +79,7 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;scorecard_card&#39;</span>
         </div>
-<div class="viewcode-block" id="IntegerRangeField"><a class="viewcode-back" href="../../../index.html#apps.scorecard.models.IntegerRangeField">[docs]</a><span class="k">class</span> <span class="nc">IntegerRangeField</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">):</span>
+<div class="viewcode-block" id="IntegerRangeField"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.models.IntegerRangeField">[docs]</a><span class="k">class</span> <span class="nc">IntegerRangeField</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Custom field type to support max/min integer values&quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -91,7 +91,7 @@
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">IntegerRangeField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">formfield</span><span class="p">(</span><span class="o">**</span><span class="n">defaults</span><span class="p">)</span>
     
             </div>
-<div class="viewcode-block" id="Frame"><a class="viewcode-back" href="../../../index.html#apps.scorecard.models.Frame">[docs]</a><span class="k">class</span> <span class="nc">Frame</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="viewcode-block" id="Frame"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.models.Frame">[docs]</a><span class="k">class</span> <span class="nc">Frame</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Represents a bowling frame, which consists of two turns per frame. A scorecard will have</span>
 <span class="sd">    between 10 and 12 frames&quot;&quot;&quot;</span>
     <span class="n">score_card</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">ScoreCard</span><span class="p">)</span>
