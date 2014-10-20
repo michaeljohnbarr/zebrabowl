@@ -11,6 +11,5 @@ env/
 
 
 # rendered doc files
-_build
 _static
 _templates
