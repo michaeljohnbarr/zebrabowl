@@ -30,6 +30,6 @@ Models.py
 Managers.py
 ==============
 
-.. automodule:: ..apps.scorecard.managers
+.. automodule:: ..zebrabowl.apps.scorecard.managers
 	:members:	
 
