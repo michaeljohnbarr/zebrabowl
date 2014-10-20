@@ -1,7 +1,4 @@
 #!/bin/bash
-mysql -u root << EOF
-drop database if exists zebrabowl;
-create database if not exists zebrabowl;
-EOF
 
+rm zebrabowldb
 python manage.py syncdb

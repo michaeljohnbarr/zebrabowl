@@ -11,6 +11,7 @@ class Game(models.Model):
     a bowling game"""
     
     date_created = models.DateTimeField(auto_now_add=True)
+    game_hash = models.CharField(max_length=255L, unique=True,)
     objects = GameManager()    
     class Meta:
         db_table = 'scorecard_game'    
