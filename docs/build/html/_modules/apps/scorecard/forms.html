@@ -52,7 +52,7 @@
 <span class="kn">from</span> <span class="nn">crispy_forms.layout</span> <span class="kn">import</span> <span class="n">Submit</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
 
-<div class="viewcode-block" id="NewScoreCardForm"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.forms.NewScoreCardForm">[docs]</a><span class="k">class</span> <span class="nc">NewScoreCardForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="NewScoreCardForm"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.NewScoreCardForm">[docs]</a><span class="k">class</span> <span class="nc">NewScoreCardForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A Model Form that allows users to add new score cards during initial game setup.</span>
 <span class="sd">    This form only asks user to input the new player&#39;s name</span>
 <span class="sd">    </span>
@@ -78,7 +78,7 @@
         <span class="n">model</span> <span class="o">=</span> <span class="n">ScoreCard</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;player_name&#39;</span><span class="p">,]</span>
     
-<div class="viewcode-block" id="NewScoreCardForm.save"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.forms.NewScoreCardForm.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+<div class="viewcode-block" id="NewScoreCardForm.save"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.NewScoreCardForm.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Saves the newly-created ScoreCard object</span>
 <span class="sd">        :param game: The current game being set up</span>
 <span class="sd">        :type game: object</span>
@@ -96,7 +96,7 @@
         
         <span class="k">return</span> <span class="n">score_card</span>
     </div></div>
-<div class="viewcode-block" id="BowlForm"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.forms.BowlForm">[docs]</a><span class="k">class</span> <span class="nc">BowlForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>        
+<div class="viewcode-block" id="BowlForm"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm">[docs]</a><span class="k">class</span> <span class="nc">BowlForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>        
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A model form used to record the number of pins knocked down by a player.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -112,7 +112,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s">&#39;post&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s">&#39;submit&#39;</span><span class="p">,</span> <span class="s">&#39;Submit&#39;</span><span class="p">))</span>
         
-<div class="viewcode-block" id="BowlForm.Meta"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.forms.BowlForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="BowlForm.Meta"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Specifies that the frame model is used.</span>
 <span class="sd">        Fields displayed: down_pins1, down_pins2</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -120,7 +120,7 @@
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;down_pins1&#39;</span><span class="p">,</span><span class="s">&#39;down_pins2&#39;</span><span class="p">]</span>
     
 </div>
-<div class="viewcode-block" id="BowlForm.clean"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.forms.BowlForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BowlForm.clean"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validates the combined of down_pins1 and down_pins2 in a frame. </span>
 <span class="sd">        Ensures that the total number of knocked-down pins in a frame does not</span>
@@ -136,7 +136,7 @@
         
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span>
         </div>
-<div class="viewcode-block" id="BowlForm.save"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.forms.BowlForm.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">):</span>
+<div class="viewcode-block" id="BowlForm.save"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the frame form, and updates the values of the active frame.</span>
 <span class="sd">        </span>

@@ -9,9 +9,9 @@ Welcome to ZebraBowl's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+	:maxdepth: 2
    
-   modules.rst
+	modules/modules.rst
 
 Indices and tables
 ==================

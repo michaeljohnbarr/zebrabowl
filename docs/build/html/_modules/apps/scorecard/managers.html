@@ -55,10 +55,10 @@
 
 <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 
-<div class="viewcode-block" id="GameManager"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.GameManager">[docs]</a><span class="k">class</span> <span class="nc">GameManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+<div class="viewcode-block" id="GameManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.GameManager">[docs]</a><span class="k">class</span> <span class="nc">GameManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Provides table-level functionality to the Game model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="GameManager.active"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.GameManager.active">[docs]</a>    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="GameManager.active"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.GameManager.active">[docs]</a>    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the current (active) game being played. This is kind of a cheap</span>
 <span class="sd">        trick because the active game is determined by the most recently created game in the database,</span>
 <span class="sd">        which leverages the built-in last() manager function. In the future, a better implementation is</span>
@@ -72,10 +72,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
     
 </div></div>
-<div class="viewcode-block" id="ScoreCardManager"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.ScoreCardManager">[docs]</a><span class="k">class</span> <span class="nc">ScoreCardManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+<div class="viewcode-block" id="ScoreCardManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager">[docs]</a><span class="k">class</span> <span class="nc">ScoreCardManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Provides table-level functionality to the ScoreCard model.    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ScoreCardManager.players"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.ScoreCardManager.players">[docs]</a>    <span class="k">def</span> <span class="nf">players</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,):</span>
+<div class="viewcode-block" id="ScoreCardManager.players"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.players">[docs]</a>    <span class="k">def</span> <span class="nf">players</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,):</span>
         <span class="sd">&quot;&quot;&quot;Returns the sorecards of all the players in the active game.</span>
 <span class="sd">        :param game: The game we want the scorecards from</span>
 <span class="sd">        :type game: object</span>
@@ -85,7 +85,7 @@
         
         <span class="k">return</span>  <span class="n">query</span>
     </div>
-<div class="viewcode-block" id="ScoreCardManager.player_count"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.ScoreCardManager.player_count">[docs]</a>    <span class="k">def</span> <span class="nf">player_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+<div class="viewcode-block" id="ScoreCardManager.player_count"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.player_count">[docs]</a>    <span class="k">def</span> <span class="nf">player_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">        Returns number of players in the game.</span>
 <span class="sd">        :param game: The game we want information about</span>
@@ -96,7 +96,7 @@
         
         <span class="k">return</span> <span class="n">query</span>
     </div>
-<div class="viewcode-block" id="ScoreCardManager.calc_rankings"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.ScoreCardManager.calc_rankings">[docs]</a>    <span class="k">def</span> <span class="nf">calc_rankings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+<div class="viewcode-block" id="ScoreCardManager.calc_rankings"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.calc_rankings">[docs]</a>    <span class="k">def</span> <span class="nf">calc_rankings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates each player&#39;s ranking and updates players&#39; scorecards accordingly</span>
 <span class="sd">        :param game: The game we want information about</span>
@@ -112,7 +112,7 @@
             
         <span class="k">return</span> <span class="bp">True</span>
     </div>
-<div class="viewcode-block" id="ScoreCardManager.player_ranking"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.ScoreCardManager.player_ranking">[docs]</a>    <span class="k">def</span> <span class="nf">player_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+<div class="viewcode-block" id="ScoreCardManager.player_ranking"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.player_ranking">[docs]</a>    <span class="k">def</span> <span class="nf">player_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a queryset of the game&#39;s players in order of their total scores and player name</span>
 <span class="sd">        :param: The game we want information about</span>
 <span class="sd">        :type game: object</span>
@@ -122,11 +122,11 @@
         
         <span class="k">return</span> <span class="n">query</span>
     </div></div>
-<div class="viewcode-block" id="FrameManager"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.FrameManager">[docs]</a><span class="k">class</span> <span class="nc">FrameManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+<div class="viewcode-block" id="FrameManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager">[docs]</a><span class="k">class</span> <span class="nc">FrameManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Provides table-level functionality to the Frame model.    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="FrameManager.make_frames"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.FrameManager.make_frames">[docs]</a>    <span class="k">def</span> <span class="nf">make_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score_card</span><span class="p">):</span>
+<div class="viewcode-block" id="FrameManager.make_frames"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.make_frames">[docs]</a>    <span class="k">def</span> <span class="nf">make_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score_card</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Auto-creates 10 frame objects related to a given ScoreCard</span>
 <span class="sd">        :param score_card: The Score Card each new frame will relate to</span>
 <span class="sd">        :type score_card: object</span>
@@ -143,7 +143,7 @@
             
         <span class="k">return</span> <span class="bp">True</span>
     </div>
-<div class="viewcode-block" id="FrameManager.calculate_frames"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.FrameManager.calculate_frames">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">):</span>
+<div class="viewcode-block" id="FrameManager.calculate_frames"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.calculate_frames">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Runs through all frames related to a particular score card, and calculates the score for </span>
 <span class="sd">        each frame.</span>
 <span class="sd">        :param active_frame: The active frame being bowled</span>
@@ -206,7 +206,7 @@
         <span class="k">return</span> <span class="n">query</span>
     
     </div>
-<div class="viewcode-block" id="FrameManager.frame_count"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.FrameManager.frame_count">[docs]</a>    <span class="k">def</span> <span class="nf">frame_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
+<div class="viewcode-block" id="FrameManager.frame_count"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.frame_count">[docs]</a>    <span class="k">def</span> <span class="nf">frame_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Counts number of frames related to a particular scorecard. </span>
 <span class="sd">        :param active_card: The active scorecard being bowled</span>
 <span class="sd">        :type active_card: object</span>
@@ -217,7 +217,7 @@
     
         <span class="k">return</span> <span class="n">query</span>
     </div>
-<div class="viewcode-block" id="FrameManager.next_player_and_frame"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.FrameManager.next_player_and_frame">[docs]</a>    <span class="k">def</span> <span class="nf">next_player_and_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">player_count</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
+<div class="viewcode-block" id="FrameManager.next_player_and_frame"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.next_player_and_frame">[docs]</a>    <span class="k">def</span> <span class="nf">next_player_and_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">player_count</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This function determines which scorecard and frame objects are the next to </span>
 <span class="sd">        be active. Save these values to the session.</span>
 <span class="sd">        :param request: the htt prequest object</span>
@@ -261,7 +261,7 @@
             
         <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span>    
     </div>
-<div class="viewcode-block" id="FrameManager.create_bonus_frame"><a class="viewcode-back" href="../../../modules.html#apps.scorecard.managers.FrameManager.create_bonus_frame">[docs]</a>    <span class="k">def</span> <span class="nf">create_bonus_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
+<div class="viewcode-block" id="FrameManager.create_bonus_frame"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.create_bonus_frame">[docs]</a>    <span class="k">def</span> <span class="nf">create_bonus_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;creates a bonus frame, where frame_num &gt; 10.</span>
 <span class="sd">        :param request: the http request object</span>
 <span class="sd">        :type requset: object</span>
