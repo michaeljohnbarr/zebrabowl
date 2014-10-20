@@ -32,6 +32,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -41,10 +44,37 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="api-documentation">
-<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="models-py">
-<h2>Models.py<a class="headerlink" href="#models-py" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-zebrabowl">
+<span id="api-documentation"></span><h1>API Documentation<a class="headerlink" href="#module-zebrabowl" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-apps.scorecard.models">
+<span id="models-py"></span><h2>Models.py<a class="headerlink" href="#module-apps.scorecard.models" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-models.py"></span><dl class="class">
+<dt id="apps.scorecard.models.Frame">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">Frame</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#Frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.Frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a bowling frame, which consists of two turns per frame. A scorecard will have
+between 10 and 12 frames</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.models.Game">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">Game</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#Game"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>The game model is essentially the root model of the application, and represents 
+a bowling game</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.models.IntegerRangeField">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">IntegerRangeField</tt><big>(</big><em>verbose_name=None</em>, <em>name=None</em>, <em>min_value=None</em>, <em>max_value=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#IntegerRangeField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.IntegerRangeField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom field type to support max/min integer values</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.models.ScoreCard">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">ScoreCard</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#ScoreCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.ScoreCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a score card (i.e.player) with aggregated metrics about a player&#8217;s
+performance in a game</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -57,7 +87,7 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">API Documentation</a><ul>
-<li><a class="reference internal" href="#models-py">Models.py</a></li>
+<li><a class="reference internal" href="#module-apps.scorecard.models">Models.py</a></li>
 </ul>
 </li>
 </ul>
@@ -90,6 +120,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

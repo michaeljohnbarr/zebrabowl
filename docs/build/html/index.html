@@ -32,6 +32,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="#">ZebraBowl 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -52,16 +55,164 @@
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
+<li></li>
+</ul>
+<ul class="simple">
 <li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
 <li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
 </div>
-<div class="section" id="models-py">
-<h1>Models.py<a class="headerlink" href="#models-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-apps.scorecard.models">
+<span id="models-py"></span><h1>Models.py<a class="headerlink" href="#module-apps.scorecard.models" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-models.py"></span><dl class="class">
+<dt id="apps.scorecard.models.Frame">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">Frame</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#Frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.Frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a bowling frame, which consists of two turns per frame. A scorecard will have
+between 10 and 12 frames</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.models.Game">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">Game</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#Game"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>The game model is essentially the root model of the application, and represents 
+a bowling game</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.models.IntegerRangeField">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">IntegerRangeField</tt><big>(</big><em>verbose_name=None</em>, <em>name=None</em>, <em>min_value=None</em>, <em>max_value=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#IntegerRangeField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.IntegerRangeField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom field type to support max/min integer values</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.models.ScoreCard">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.models.</tt><tt class="descname">ScoreCard</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/models.html#ScoreCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.models.ScoreCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a score card (i.e.player) with aggregated metrics about a player&#8217;s
+performance in a game</p>
+</dd></dl>
+
 </div>
-<div class="section" id="managers-py">
-<h1>Managers.py<a class="headerlink" href="#managers-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-apps.scorecard.managers">
+<span id="managers-py"></span><h1>Managers.py<a class="headerlink" href="#module-apps.scorecard.managers" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-managers.py"></span><dl class="class">
+<dt id="apps.scorecard.managers.FrameManager">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.managers.</tt><tt class="descname">FrameManager</tt><a class="reference internal" href="_modules/apps/scorecard/managers.html#FrameManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides table-level functionality to the Frame model.</p>
+<dl class="method">
+<dt id="apps.scorecard.managers.FrameManager.calculate_frames">
+<tt class="descname">calculate_frames</tt><big>(</big><em>active_frame</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#FrameManager.calculate_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.calculate_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs through all frames related to a particular score card, and calculates the score for 
+each frame.
+:param active_frame: The active frame being bowled
+:type active_frame: object
+:returns: queryset - list of Frame objects for a particular scorecard, ordered according to framenumber</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.managers.FrameManager.create_bonus_frame">
+<tt class="descname">create_bonus_frame</tt><big>(</big><em>request</em>, <em>active_frame</em>, <em>active_card</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#FrameManager.create_bonus_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.create_bonus_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a bonus frame, where frame_num &gt; 10.
+:param request: the http request object
+:type requset: object
+:param active_frame: the current frame being bowled
+:type active_frame: object
+:param active_card: the current card being bowled
+:type active_card: object
+:returns: object - the newly created bonus frame</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.managers.FrameManager.frame_count">
+<tt class="descname">frame_count</tt><big>(</big><em>active_card</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#FrameManager.frame_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.frame_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts number of frames related to a particular scorecard. 
+:param active_card: The active scorecard being bowled
+:type active_card: object
+:returns: int - count of frames related to active_card</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.managers.FrameManager.make_frames">
+<tt class="descname">make_frames</tt><big>(</big><em>score_card</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#FrameManager.make_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.make_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auto-creates 10 frame objects related to a given ScoreCard
+:param score_card: The Score Card each new frame will relate to
+:type score_card: object
+:returns: True</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.managers.FrameManager.next_player_and_frame">
+<tt class="descname">next_player_and_frame</tt><big>(</big><em>request</em>, <em>player_count</em>, <em>active_card</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#FrameManager.next_player_and_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.next_player_and_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function determines which scorecard and frame objects are the next to 
+be active. Save these values to the session.
+:param request: the htt prequest object
+:request type: http request object
+:player_count: the number of players (scorecards) in the game
+:type player_count: int
+:param active_card: the active scorecard being bowled
+:type active_card: object
+:returns: object &#8211; returns the session object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.managers.GameManager">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.managers.</tt><tt class="descname">GameManager</tt><a class="reference internal" href="_modules/apps/scorecard/managers.html#GameManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.GameManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides table-level functionality to the Game model.</p>
+<dl class="method">
+<dt id="apps.scorecard.managers.GameManager.active">
+<tt class="descname">active</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#GameManager.active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.GameManager.active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current (active) game being played. This is kind of a cheap
+trick because the active game is determined by the most recently created game in the database,
+which leverages the built-in last() manager function. In the future, a better implementation is
+to tie a game to a particular user and cache that game and a unique ID in the session.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.managers.ScoreCardManager">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.managers.</tt><tt class="descname">ScoreCardManager</tt><a class="reference internal" href="_modules/apps/scorecard/managers.html#ScoreCardManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides table-level functionality to the ScoreCard model.</p>
+<dl class="method">
+<dt id="apps.scorecard.managers.ScoreCardManager.calc_rankings">
+<tt class="descname">calc_rankings</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#ScoreCardManager.calc_rankings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.calc_rankings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates each player&#8217;s ranking and updates players&#8217; scorecards accordingly
+:param game: The game we want information about
+:type game: object
+:returns: bool &#8211; True if the function executed completely</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.managers.ScoreCardManager.player_count">
+<tt class="descname">player_count</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#ScoreCardManager.player_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.player_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns number of players in the game.
+:param game: The game we want information about
+:type game: object
+:returns: int &#8211; the number of players in the game</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.managers.ScoreCardManager.player_ranking">
+<tt class="descname">player_ranking</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#ScoreCardManager.player_ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.player_ranking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a queryset of the game&#8217;s players in order of their total scores and player name
+:param: The game we want information about
+:type game: object
+:returns: queryset - A list of ScoreCard objects in order of their total scores</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.managers.ScoreCardManager.players">
+<tt class="descname">players</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/managers.html#ScoreCardManager.players"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.players" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the sorecards of all the players in the active game.
+:param game: The game we want the scorecards from
+:type game: object
+:returns: queryset &#8211; a list of ScoreCard objects</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -74,8 +225,8 @@
   <ul>
 <li><a class="reference internal" href="#">Welcome to ZebraBowl&#8217;s documentation!</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-<li><a class="reference internal" href="#models-py">Models.py</a></li>
-<li><a class="reference internal" href="#managers-py">Managers.py</a></li>
+<li><a class="reference internal" href="#module-apps.scorecard.models">Models.py</a></li>
+<li><a class="reference internal" href="#module-apps.scorecard.managers">Managers.py</a></li>
 </ul>
 
   <h3>This Page</h3>
@@ -106,6 +257,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="#">ZebraBowl 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
