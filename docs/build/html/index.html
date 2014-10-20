@@ -69,6 +69,33 @@
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
 </div>
+<div class="section" id="local-installation-on-unix">
+<h1>Local Installation on Unix<a class="headerlink" href="#local-installation-on-unix" title="Permalink to this headline">¶</a></h1>
+<p>### Virtual Environment Setup</p>
+<ul class="simple">
+<li>cd to the application</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">`$</span> <span class="pre">cd</span> <span class="pre">/path/to/zebrabowl</span> <span class="pre">`</span></tt>
+- Create a virtual environment
+<tt class="docutils literal"><span class="pre">`</span> <span class="pre">$</span> <span class="pre">virtualenv</span> <span class="pre">env`</span></tt>
+- activate the environment
+<tt class="docutils literal"><span class="pre">`</span> <span class="pre">source</span> <span class="pre">env/bin/activate`</span></tt>
+- make dependency installation script executable:
+<tt class="docutils literal"><span class="pre">`</span> <span class="pre">$</span> <span class="pre">chmod</span> <span class="pre">ug+x</span> <span class="pre">sbin/mkenv.sh</span> <span class="pre">`</span></tt>
+- run dependency installation script
+<tt class="docutils literal"><span class="pre">`</span> <span class="pre">$</span> <span class="pre">./sbin/mkenv.sh</span> <span class="pre">`</span></tt></p>
+<p><em>(the mkenv script is a more fail-safe way to install dependencies)</em></p>
+<p>### Database Access and Syncdb</p>
+<p>We&#8217;re using SQLite3 for portability. To get the db running, simply enter
+<tt class="docutils literal"><span class="pre">`$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">syncdb`</span></tt></p>
+<p>### Start the Development Server
+- at the command prompt:
+<tt class="docutils literal"><span class="pre">`</span> <span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver`</span></tt></p>
+<ul class="simple">
+<li>navigate to <a class="reference external" href="http://localhost:8000">http://localhost:8000</a></li>
+<li>The application should be running!</li>
+</ul>
+</div>
 
 
           </div>
@@ -80,6 +107,7 @@
   <ul>
 <li><a class="reference internal" href="#">Welcome to ZebraBowl&#8217;s documentation!</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#local-installation-on-unix">Local Installation on Unix</a></li>
 </ul>
 
   <h4>Next topic</h4>
