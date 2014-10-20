@@ -6,8 +6,6 @@
 Welcome to ZebraBowl's documentation!
 =====================================
 
-.. automodule:: zebrabowl
-
 Contents:
 
 .. toctree::
@@ -24,27 +22,27 @@ Indices and tables
 Models.py
 =============
 
-.. automodule:: apps.scorecard.models
+.. 	automodule:: apps.scorecard.models
 	:members:
 	
 Managers.py
 ==============
 
-.. automodule:: apps.scorecard.managers
+..	automodule:: apps.scorecard.managers
 	:members:	
 	
 Views.py
 ==============
-.. automodule:: apps.scorecard.views
+.. 	automodule:: apps.scorecard.views
 	:members:
 	
 
 Forms.py
 ========
-.. automodule:: apps.scorecard.forms
+.. 	automodule:: apps.scorecard.forms
 	:members:
 
 Decorators.py
 =============
-.. automodule:: apps.scorecard.decorators
+.. 	automodule:: apps.scorecard.decorators
 	:members:
