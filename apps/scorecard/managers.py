@@ -10,13 +10,22 @@ class GameManager(models.Manager):
     """ Provides table-level functionality to the Game model.
     """
     def active(self, request):
-        """Returns the current (active) game being played. This is kind of a cheap
-        trick because the active game is determined by the most recently created game in the database,
-        which leverages the built-in last() manager function. In the future, a better implementation is
-        to tie a game to a particular user and cache that game and a unique ID in the session.
+        """Returns the current (active) game being played. The function first attempts
+        to pull the game_hash from the session. If that fails then it falls back to pulling the most-recently
+        created game in the database. For a more fail-safe implementation, a better approach is
+        to tie a game to a particular user and cache the game and user in the session. But, it goes beyond the
+        scope of this exercise.
+        
+        :param request: HTTP request
+        :request type: object
         """
         
-        active_game = self.get(game_hash = request.session['game_hash'])
+        try:
+            request.session['game_hash']
+        except KeyError:
+            active_game = self.last()
+        else:
+            active_game = self.get(game_hash = request.session['game_hash'])
         
         return active_game
     
