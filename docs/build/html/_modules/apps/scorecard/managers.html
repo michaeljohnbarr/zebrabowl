@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apps.scorecard.managers &mdash; ZebraBowl 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="ZebraBowl 0.0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apps.scorecard.managers</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: managers.py</span>
+<span class="sd">    :Synopsis: This is where app&#39;s heavy lifing takes place</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<div class="viewcode-block" id="GameManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.GameManager">[docs]</a><span class="k">class</span> <span class="nc">GameManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Provides table-level functionality to the Game model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="GameManager.active"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.GameManager.active">[docs]</a>    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current (active) game being played. This is kind of a cheap</span>
+<span class="sd">        trick because the active game is determined by the most recently created game in the database,</span>
+<span class="sd">        which leverages the built-in last() manager function. In the future, a better implementation is</span>
+<span class="sd">        to tie a game to a particular user and cache that game and a unique ID in the session.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+    
+</div></div>
+<div class="viewcode-block" id="ScoreCardManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager">[docs]</a><span class="k">class</span> <span class="nc">ScoreCardManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides table-level functionality to the ScoreCard model.    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ScoreCardManager.players"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.players">[docs]</a>    <span class="k">def</span> <span class="nf">players</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the sorecards of all the players in the active game.</span>
+<span class="sd">        :param game: The game we want the scorecards from</span>
+<span class="sd">        :type game: object</span>
+<span class="sd">        :returns: queryset -- a list of ScoreCard objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">game</span><span class="o">=</span><span class="n">game</span><span class="p">,)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;order&#39;</span><span class="p">,</span> <span class="s">&#39;player_name&#39;</span><span class="p">)</span>
+        
+        <span class="k">return</span>  <span class="n">query</span>
+    </div>
+<div class="viewcode-block" id="ScoreCardManager.player_count"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.player_count">[docs]</a>    <span class="k">def</span> <span class="nf">player_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Returns number of players in the game.</span>
+<span class="sd">        :param game: The game we want information about</span>
+<span class="sd">        :type game: object</span>
+<span class="sd">        :returns: int -- the number of players in the game</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">game</span><span class="o">=</span><span class="n">game</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">query</span>
+    </div>
+<div class="viewcode-block" id="ScoreCardManager.calc_rankings"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.calc_rankings">[docs]</a>    <span class="k">def</span> <span class="nf">calc_rankings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates each player&#39;s ranking and updates players&#39; scorecards accordingly</span>
+<span class="sd">        :param game: The game we want information about</span>
+<span class="sd">        :type game: object</span>
+<span class="sd">        :returns: bool -- True if the function executed completely</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">player_ranking</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            
+        <span class="k">return</span> <span class="bp">True</span>
+    </div>
+<div class="viewcode-block" id="ScoreCardManager.player_ranking"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager.player_ranking">[docs]</a>    <span class="k">def</span> <span class="nf">player_ranking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a queryset of the game&#39;s players in order of their total scores and player name</span>
+<span class="sd">        :param: The game we want information about</span>
+<span class="sd">        :type game: object</span>
+<span class="sd">        :returns: queryset - A list of ScoreCard objects in order of their total scores</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">game</span><span class="o">=</span><span class="n">game</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;-total_score&#39;</span><span class="p">,</span> <span class="s">&#39;player_name&#39;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">query</span>
+    </div></div>
+<div class="viewcode-block" id="FrameManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager">[docs]</a><span class="k">class</span> <span class="nc">FrameManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides table-level functionality to the Frame model.    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="FrameManager.make_frames"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.make_frames">[docs]</a>    <span class="k">def</span> <span class="nf">make_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score_card</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Auto-creates 10 frame objects related to a given ScoreCard</span>
+<span class="sd">        :param score_card: The Score Card each new frame will relate to</span>
+<span class="sd">        :type score_card: object</span>
+<span class="sd">        :returns: True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="sd">&quot;&quot;&quot;foo&quot;&quot;&quot;</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;score_card&#39;</span><span class="p">:</span><span class="n">score_card</span><span class="p">,</span>
+                      <span class="s">&#39;number&#39;</span><span class="p">:</span><span class="n">i</span><span class="p">,}</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+        <span class="k">return</span> <span class="bp">True</span>
+    </div>
+<div class="viewcode-block" id="FrameManager.calculate_frames"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.calculate_frames">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs through all frames related to a particular score card, and calculates the score for </span>
+<span class="sd">        each frame.</span>
+<span class="sd">        :param active_frame: The active frame being bowled</span>
+<span class="sd">        :type active_frame: object</span>
+<span class="sd">        :returns: queryset - list of Frame objects for a particular scorecard, ordered according to framenumber</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">score_card</span> <span class="o">=</span> <span class="n">active_frame</span><span class="o">.</span><span class="n">score_card</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;number&#39;</span><span class="p">)</span>
+        
+        
+        <span class="c"># calc total score of the frames to pass to ScoreCard</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">frame_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">frame1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="n">frame1</span><span class="o">.</span><span class="n">down_pins1</span> <span class="o">+</span> <span class="n">frame1</span><span class="o">.</span><span class="n">down_pins2</span>
+            
+            <span class="c"># if on the last frame (10 or 11), break because we don&#39;t need to look further ahead</span>
+            <span class="c"># This also saves a trip to the db because we arleady tallied the frame&#39;s internal score</span>
+            <span class="c"># as down_pins1 + down_pins2</span>
+            
+            <span class="c"># calculate frames 1-10</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">:</span>      
+            <span class="c">#when only one frame remains                        </span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">frame_count</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+                    <span class="n">frame2</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">frame3</span> <span class="o">=</span> <span class="bp">None</span>
+                    
+                <span class="c"># when two or more frames remain</span>
+                <span class="k">elif</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">frame_count</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span>                
+                    <span class="n">frame2</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">frame3</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+                
+                <span class="k">if</span> <span class="n">frame1</span><span class="o">.</span><span class="n">is_strike</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">frame3</span><span class="p">:</span>
+                    <span class="n">score</span> <span class="o">+=</span> <span class="n">frame2</span><span class="o">.</span><span class="n">down_pins1</span> <span class="o">+</span> <span class="n">frame2</span><span class="o">.</span><span class="n">down_pins2</span>
+                        
+                <span class="k">elif</span> <span class="n">frame1</span><span class="o">.</span><span class="n">is_strike</span> <span class="ow">and</span> <span class="n">frame3</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">frame2</span><span class="o">.</span><span class="n">is_strike</span><span class="p">:</span>
+                        <span class="n">score</span> <span class="o">+=</span> <span class="n">frame2</span><span class="o">.</span><span class="n">down_pins1</span> <span class="o">+</span> <span class="n">frame3</span><span class="o">.</span><span class="n">down_pins1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">score</span> <span class="o">+=</span> <span class="n">frame2</span><span class="o">.</span><span class="n">down_pins1</span> <span class="o">+</span> <span class="n">frame2</span><span class="o">.</span><span class="n">down_pins2</span>
+                    
+                <span class="k">elif</span> <span class="n">frame1</span><span class="o">.</span><span class="n">is_spare</span><span class="p">:</span>
+                    <span class="n">score</span> <span class="o">+=</span> <span class="n">frame2</span><span class="o">.</span><span class="n">down_pins1</span>
+            
+            <span class="c"># The values of bonus frames are added to frame 10 -&gt; Bonus frames don&#39;t add one-another.</span>
+            <span class="c"># for example, if a strike is made on frame 11, it does not get to add the value of frame 12.        </span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
+                <span class="k">break</span>
+                
+            <span class="n">frame1</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
+            <span class="n">frame1</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">ts</span> <span class="o">+=</span> <span class="n">score</span>
+        <span class="c"># instead of using signal, just going to manually call ScoreCard&#39;s method </span>
+        <span class="c"># to update its score. can get to scorecard through any of frames in the queryset,</span>
+        <span class="c"># so the index used below is arbitrary</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">score_card</span>
+        <span class="n">sc</span><span class="o">.</span><span class="n">total_score</span> <span class="o">=</span> <span class="n">ts</span>
+        <span class="n">sc</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">query</span>
+    
+    </div>
+<div class="viewcode-block" id="FrameManager.frame_count"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.frame_count">[docs]</a>    <span class="k">def</span> <span class="nf">frame_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Counts number of frames related to a particular scorecard. </span>
+<span class="sd">        :param active_card: The active scorecard being bowled</span>
+<span class="sd">        :type active_card: object</span>
+<span class="sd">        :returns: int - count of frames related to active_card</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">score_card</span> <span class="o">=</span> <span class="n">active_card</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    
+        <span class="k">return</span> <span class="n">query</span>
+    </div>
+<div class="viewcode-block" id="FrameManager.next_player_and_frame"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.next_player_and_frame">[docs]</a>    <span class="k">def</span> <span class="nf">next_player_and_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">player_count</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function determines which scorecard and frame objects are the next to </span>
+<span class="sd">        be active. Save these values to the session.</span>
+<span class="sd">        :param request: the htt prequest object</span>
+<span class="sd">        :request type: http request object</span>
+<span class="sd">        :player_count: the number of players (scorecards) in the game</span>
+<span class="sd">        :type player_count: int</span>
+<span class="sd">        :param active_card: the active scorecard being bowled</span>
+<span class="sd">        :type active_card: object</span>
+<span class="sd">        :returns: object -- returns the session object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span><span class="p">(</span><span class="n">active_card</span><span class="p">)</span>
+        <span class="c"># last frame is false until proven otherwise</span>
+        <span class="n">last_frame</span><span class="o">=</span><span class="bp">False</span>
+        
+        <span class="c"># re-instantiating player_num and frame_num in the manager (even though it could be passed from the view)</span>
+        <span class="c"># I favor decoupling functionality over DRY </span>
+        <span class="n">player_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;player_num&#39;</span><span class="p">])</span>
+        <span class="n">frame_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;frame_num&#39;</span><span class="p">])</span>
+
+        <span class="c">############################################################################# </span>
+        <span class="c">#handle a variety of cases depnding on what frame it is and who&#39;s turn it is..        </span>
+        
+        <span class="c"># it&#39;s not the last player&#39;s turn</span>
+        <span class="c"># incraese the player number but not the frame number </span>
+        <span class="k">if</span> <span class="n">player_num</span> <span class="o">&lt;</span> <span class="n">player_count</span><span class="p">:</span>
+            <span class="n">player_num</span> <span class="o">+=</span> <span class="mi">1</span>        
+            
+        <span class="c"># it&#39;s the last player&#39;s turn, but not the final frame.</span>
+        <span class="c"># return to player 1, and increase frame num by 1</span>
+        <span class="k">elif</span> <span class="n">player_num</span> <span class="o">==</span> <span class="n">player_count</span> <span class="ow">and</span> <span class="n">frame_num</span> <span class="o">&lt;</span> <span class="n">frame_count</span><span class="p">:</span>
+            <span class="n">player_num</span> <span class="o">=</span> <span class="mi">1</span> 
+            <span class="n">frame_num</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="c"># it&#39;s  the last player of the his/her last frame. so the game is over</span>
+        <span class="k">elif</span> <span class="n">player_num</span> <span class="o">==</span> <span class="n">player_count</span> <span class="ow">and</span> <span class="n">frame_num</span> <span class="o">==</span> <span class="n">frame_count</span><span class="p">:</span>
+            <span class="n">last_frame</span> <span class="o">=</span> <span class="bp">True</span>
+        
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;player_num&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">player_num</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;frame_num&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame_num</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;last_frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">last_frame</span>
+            
+        <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span>    
+    </div>
+<div class="viewcode-block" id="FrameManager.create_bonus_frame"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.FrameManager.create_bonus_frame">[docs]</a>    <span class="k">def</span> <span class="nf">create_bonus_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">,</span> <span class="n">active_card</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;creates a bonus frame, where frame_num &gt; 10.</span>
+<span class="sd">        :param request: the http request object</span>
+<span class="sd">        :type requset: object</span>
+<span class="sd">        :param active_frame: the current frame being bowled</span>
+<span class="sd">        :type active_frame: object</span>
+<span class="sd">        :param active_card: the current card being bowled</span>
+<span class="sd">        :type active_card: object</span>
+<span class="sd">        :returns: object - the newly created bonus frame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame_num</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;frame_num&#39;</span><span class="p">]</span>
+                        
+        <span class="n">bonus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">score_card</span> <span class="o">=</span> <span class="n">active_card</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">frame_num</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">bonus</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Scott Crespo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

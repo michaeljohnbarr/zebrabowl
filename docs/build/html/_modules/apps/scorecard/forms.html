@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apps.scorecard.forms &mdash; ZebraBowl 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="ZebraBowl 0.0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apps.scorecard.forms</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.layout</span> <span class="kn">import</span> <span class="n">Submit</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="NewScoreCardForm"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.NewScoreCardForm">[docs]</a><span class="k">class</span> <span class="nc">NewScoreCardForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Model Form that allows users to add new score cards during initial game setup.</span>
+<span class="sd">    This form only asks user to input the new player&#39;s name</span>
+<span class="sd">    </span>
+<span class="sd">    .. note:: </span>
+<span class="sd">        For those not familiar, this is a crispy form&#39;s implementation, which requires some of </span>
+<span class="sd">        the form&#39;s display logic be handled in Form.__init__(). For more info, check the docs at </span>
+<span class="sd">        http://django-crispy-forms.readthedocs.org/en/latest/    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+                
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The initialization function wraps some Bootstrap3 classes around the form, and</span>
+<span class="sd">        auto-adds a submit button to the form</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NewScoreCardForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s">&#39;id-scorecard-from&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s">&#39;horizontal-form&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s">&#39;post&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s">&#39;submit&#39;</span><span class="p">,</span> <span class="s">&#39;Submit&#39;</span><span class="p">))</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">ScoreCard</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;player_name&#39;</span><span class="p">,]</span>
+    
+<div class="viewcode-block" id="NewScoreCardForm.save"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.NewScoreCardForm.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Saves the newly-created ScoreCard object</span>
+<span class="sd">        :param game: The current game being set up</span>
+<span class="sd">        :type game: object</span>
+<span class="sd">        :param order: The order the player will be in the game</span>
+<span class="sd">        :type order: int </span>
+<span class="sd">        :returns: object -- Newly-created scorecard object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;game&#39;</span><span class="p">:</span><span class="n">game</span><span class="p">,</span>
+                  <span class="s">&#39;player_name&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;player_name&#39;</span><span class="p">],</span>
+                  <span class="s">&#39;order&#39;</span><span class="p">:</span><span class="n">order</span>
+                  <span class="p">}</span>
+        
+        <span class="n">ScoreCard</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">score_card</span> <span class="o">=</span> <span class="n">ScoreCard</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">score_card</span>
+    </div></div>
+<div class="viewcode-block" id="BowlForm"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm">[docs]</a><span class="k">class</span> <span class="nc">BowlForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>        
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model form used to record the number of pins knocked down by a player.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wraps Bootstrap3 classes around the form, and includes a submit button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BowlForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s">&#39;id-bowl-from&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s">&#39;horizontal-form&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s">&#39;post&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s">&#39;submit&#39;</span><span class="p">,</span> <span class="s">&#39;Submit&#39;</span><span class="p">))</span>
+        
+<div class="viewcode-block" id="BowlForm.Meta"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Specifies that the frame model is used.</span>
+<span class="sd">        Fields displayed: down_pins1, down_pins2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Frame</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;down_pins1&#39;</span><span class="p">,</span><span class="s">&#39;down_pins2&#39;</span><span class="p">]</span>
+    
+</div>
+<div class="viewcode-block" id="BowlForm.clean"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validates the combined of down_pins1 and down_pins2 in a frame. </span>
+<span class="sd">        Ensures that the total number of knocked-down pins in a frame does not</span>
+<span class="sd">        exceed 10</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: The form</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;down_pins1&#39;</span><span class="p">]</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;down_pins2&#39;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span> <span class="p">(</span><span class="s">&quot;Can&#39;t knock down more than 10 pins in a frame&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span>
+        </div>
+<div class="viewcode-block" id="BowlForm.save"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.forms.BowlForm.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the frame form, and updates the values of the active frame.</span>
+<span class="sd">        </span>
+<span class="sd">        :param self: the form</span>
+<span class="sd">        :param active_frame: The frame currently being bowled by the player</span>
+<span class="sd">        :type active_frame: object</span>
+<span class="sd">        :returns: object -- the updated active frame </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">active_frame</span><span class="o">.</span><span class="n">down_pins1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;down_pins1&#39;</span><span class="p">]</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">active_frame</span><span class="o">.</span><span class="n">down_pins2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;down_pins2&#39;</span><span class="p">]</span>
+        
+        <span class="c"># determine if frame is a strike or spare</span>
+        <span class="k">if</span> <span class="n">p1</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">active_frame</span><span class="o">.</span><span class="n">is_strike</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">active_frame</span><span class="o">.</span><span class="n">is_spare</span> <span class="o">=</span> <span class="bp">True</span>
+                
+        <span class="n">active_frame</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="bp">False</span>        
+        <span class="n">active_frame</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">p1</span><span class="o">+</span><span class="n">p2</span>                
+        <span class="n">active_frame</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>            
+        
+        <span class="k">return</span> <span class="n">active_frame</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Scott Crespo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
