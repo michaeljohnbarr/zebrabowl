@@ -20,3 +20,16 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+
+Models.py
+=============
+
+.. automodule:: apps.scorecard.models
+	:members:
+	
+Managers.py
+==============
+
+.. automodule:: apps.scorecard.managers
+	:members:	
+
