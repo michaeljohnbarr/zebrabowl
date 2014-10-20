@@ -9,18 +9,16 @@ from django.db import models
 class GameManager(models.Manager):
     """ Provides table-level functionality to the Game model.
     """
-    def active(self):
+    def active(self, request):
         """Returns the current (active) game being played. This is kind of a cheap
         trick because the active game is determined by the most recently created game in the database,
         which leverages the built-in last() manager function. In the future, a better implementation is
         to tie a game to a particular user and cache that game and a unique ID in the session.
         """
-        try:
-            self.last()
-        except DoesNotExist:
-            self.create().save()
-            
-        return self.last()
+        
+        active_game = self.get(game_hash = request.session['game_hash'])
+        
+        return active_game
     
 
 class ScoreCardManager(models.Manager):

@@ -9,24 +9,32 @@ from django.core.urlresolvers import reverse
 from .models import *
 from .forms import *
 from .decorators import session_required, flush_session
+from hashlib import sha1
+import random
 
 @flush_session
 def new_game(request):
     """Creates a new game object in the database
     that is ready to be populated with players.    
     """
-    request.session.flush()
-    new_game = Game.objects.create().save()              
+    
+    while True:
+        game_hash = sha1(str(random.random())).hexdigest()
+        try: 
+            Game.objects.get(game_hash = game_hash)
+        except Game.DoesNotExist:                
+            new_game = Game.objects.create(game_hash=game_hash).save()
+            request.session['game_hash'] = game_hash
+            break              
     
     return render(request,'newgame.html')
 
-@flush_session
 def add_players(request):
     """View that enables users to enter the players of the game.
     An infinite number of players can be added to the game. once at least one player
     is added to the game, the game is ready to start."""
     
-    game = Game.objects.active()
+    game = Game.objects.active(request)
     scorecards = ScoreCard.objects.players(game) 
     
     if request.method == 'POST':
@@ -49,7 +57,7 @@ def game_board(request,):
     and frame are active and ready to bowl."""
     
     #get the active game and all the scorecards for the game
-    game = Game.objects.active()    
+    game = Game.objects.active(request)    
     scorecards = ScoreCard.objects.players(game)
     
     # get the current player and frame from the session
@@ -107,7 +115,7 @@ def game_stats(request):
     """
     
     scorecards = ScoreCard.objects.player_ranking(
-                                                  Game.objects.active()
+                                                  Game.objects.active(request)
                                                   )
     # flush the current session
     request.session.flush()

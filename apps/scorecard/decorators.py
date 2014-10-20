@@ -24,6 +24,12 @@ def session_required(_view):
         except KeyError:
             request.session['player_num'] = 1
             request.session['frame_num'] = 1
+            
+        try: 
+            request.session['game_hash']
+        except KeyError:
+            game = Game.objects.last()
+            request.session['game_hash'] = game.game_hash 
         
         return _view(request,*args,**kwargs)
     return _wrap
