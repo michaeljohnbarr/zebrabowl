@@ -88,55 +88,99 @@ performance in a game</p>
 <dt id="apps.scorecard.managers.FrameManager.calculate_frames">
 <tt class="descname">calculate_frames</tt><big>(</big><em>active_frame</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#FrameManager.calculate_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.calculate_frames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs through all frames related to a particular score card, and calculates the score for 
-each frame.
-:param active_frame: The active frame being bowled
-:type active_frame: object
-:returns: queryset - list of Frame objects for a particular scorecard, ordered according to framenumber</p>
+each frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>active_frame</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The active frame being bowled</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">queryset - list of Frame objects for a particular scorecard, ordered according to framenumber</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="apps.scorecard.managers.FrameManager.create_bonus_frame">
 <tt class="descname">create_bonus_frame</tt><big>(</big><em>request</em>, <em>active_frame</em>, <em>active_card</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#FrameManager.create_bonus_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.create_bonus_frame" title="Permalink to this definition">¶</a></dt>
-<dd><p>creates a bonus frame, where frame_num &gt; 10.
-:param request: the http request object
-:type requset: object
-:param active_frame: the current frame being bowled
-:type active_frame: object
-:param active_card: the current card being bowled
-:type active_card: object
-:returns: object - the newly created bonus frame</p>
+<dd><p>creates a bonus frame, where frame_num &gt; 10.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> &#8211; the http request object</li>
+<li><strong>active_frame</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; the current frame being bowled</li>
+<li><strong>active_card</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; the current card being bowled</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">object - the newly created bonus frame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="apps.scorecard.managers.FrameManager.frame_count">
 <tt class="descname">frame_count</tt><big>(</big><em>active_card</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#FrameManager.frame_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.frame_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Counts number of frames related to a particular scorecard. 
-:param active_card: The active scorecard being bowled
-:type active_card: object
-:returns: int - count of frames related to active_card</p>
+<dd><p>Counts number of frames related to a particular scorecard.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>active_card</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The active scorecard being bowled</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int - count of frames related to active_card</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="apps.scorecard.managers.FrameManager.make_frames">
 <tt class="descname">make_frames</tt><big>(</big><em>score_card</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#FrameManager.make_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.make_frames" title="Permalink to this definition">¶</a></dt>
-<dd><p>Auto-creates 10 frame objects related to a given ScoreCard
-:param score_card: The Score Card each new frame will relate to
-:type score_card: object
-:returns: True</p>
+<dd><p>Auto-creates 10 frame objects related to a given ScoreCard</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>score_card</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The Score Card each new frame will relate to</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="apps.scorecard.managers.FrameManager.next_player_and_frame">
 <tt class="descname">next_player_and_frame</tt><big>(</big><em>request</em>, <em>player_count</em>, <em>active_card</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#FrameManager.next_player_and_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.FrameManager.next_player_and_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function determines which scorecard and frame objects are the next to 
-be active. Save these values to the session.
-:param request: the htt prequest object
-:request type: http request object
-:player_count: the number of players (scorecards) in the game
-:type player_count: int
-:param active_card: the active scorecard being bowled
-:type active_card: object
-:returns: object &#8211; returns the session object</p>
+be active. Save these values to the session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> &#8211; the htt prequest object</li>
+<li><strong>active_card</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; the active scorecard being bowled</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Request type:</th><td class="field-body"><p class="first">http request object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Player_count:</th><td class="field-body"><p class="first">the number of players (scorecards) in the game</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">object &#8211; returns the session object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -163,37 +207,65 @@ to tie a game to a particular user and cache that game and a unique ID in the se
 <dl class="method">
 <dt id="apps.scorecard.managers.ScoreCardManager.calc_rankings">
 <tt class="descname">calc_rankings</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#ScoreCardManager.calc_rankings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.calc_rankings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates each player&#8217;s ranking and updates players&#8217; scorecards accordingly
-:param game: The game we want information about
-:type game: object
-:returns: bool &#8211; True if the function executed completely</p>
+<dd><p>Calculates each player&#8217;s ranking and updates players&#8217; scorecards accordingly</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>game</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The game we want information about</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool &#8211; True if the function executed completely</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="apps.scorecard.managers.ScoreCardManager.player_count">
 <tt class="descname">player_count</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#ScoreCardManager.player_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.player_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns number of players in the game.
-:param game: The game we want information about
-:type game: object
-:returns: int &#8211; the number of players in the game</p>
+<dd><p>Returns number of players in the game.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>game</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The game we want information about</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int &#8211; the number of players in the game</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="apps.scorecard.managers.ScoreCardManager.player_ranking">
 <tt class="descname">player_ranking</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#ScoreCardManager.player_ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.player_ranking" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a queryset of the game&#8217;s players in order of their total scores and player name
-:param: The game we want information about
-:type game: object
-:returns: queryset - A list of ScoreCard objects in order of their total scores</p>
+<dd><p>Returns a queryset of the game&#8217;s players in order of their total scores and player name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">The game we want information about</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">queryset - A list of ScoreCard objects in order of their total scores</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="apps.scorecard.managers.ScoreCardManager.players">
 <tt class="descname">players</tt><big>(</big><em>game</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#ScoreCardManager.players"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.ScoreCardManager.players" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the sorecards of all the players in the active game.
-:param game: The game we want the scorecards from
-:type game: object
-:returns: queryset &#8211; a list of ScoreCard objects</p>
+<dd><p>Returns the sorecards of all the players in the active game.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>game</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The game we want the scorecards from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">queryset &#8211; a list of ScoreCard objects</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -274,12 +346,22 @@ the form&#8217;s display logic be handled in Form.__init__(). For more info, che
 <dl class="method">
 <dt id="apps.scorecard.forms.NewScoreCardForm.save">
 <tt class="descname">save</tt><big>(</big><em>game</em>, <em>order</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/forms.html#NewScoreCardForm.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.forms.NewScoreCardForm.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves the newly-created ScoreCard object
-:param game: The current game being set up
-:type game: object
-:param order: The order the player will be in the game
-:type order: int 
-:returns: object &#8211; Newly-created scorecard object</p>
+<dd><p>Saves the newly-created ScoreCard object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>game</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The current game being set up</li>
+<li><strong>order</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The order the player will be in the game</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">object &#8211; Newly-created scorecard object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
