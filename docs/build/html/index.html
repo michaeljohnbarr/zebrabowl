@@ -217,20 +217,88 @@ to tie a game to a particular user and cache that game and a unique ID in the se
 <div class="section" id="module-apps.scorecard.views">
 <span id="views-py"></span><h1>Views.py<a class="headerlink" href="#module-apps.scorecard.views" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-views.py"></span></div>
-<div class="section" id="forms-py">
-<h1>Forms.py<a class="headerlink" href="#forms-py" title="Permalink to this headline">¶</a></h1>
-<dl class="docutils">
-<dt>..automodule:: apps.scorecard.forms</dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
+<div class="section" id="module-apps.scorecard.forms">
+<span id="forms-py"></span><h1>Forms.py<a class="headerlink" href="#module-apps.scorecard.forms" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="apps.scorecard.forms.BowlForm">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.forms.</tt><tt class="descname">BowlForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/forms.html#BowlForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.forms.BowlForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model form used to record the number of pins knocked down by a player.</p>
+<dl class="class">
+<dt id="apps.scorecard.forms.BowlForm.Meta">
+<em class="property">class </em><tt class="descname">Meta</tt><a class="reference internal" href="_modules/apps/scorecard/forms.html#BowlForm.Meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.forms.BowlForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies that the frame model is used.
+Fields displayed: down_pins1, down_pins2</p>
+<dl class="attribute">
+<dt id="apps.scorecard.forms.BowlForm.Meta.model">
+<tt class="descname">model</tt><a class="headerlink" href="#apps.scorecard.forms.BowlForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">Frame</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.forms.BowlForm.clean">
+<tt class="descclassname">BowlForm.</tt><tt class="descname">clean</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/apps/scorecard/forms.html#BowlForm.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.forms.BowlForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the combined of down_pins1 and down_pins2 in a frame. 
+Ensures that the total number of knocked-down pins in a frame does not
+exceed 10</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">members:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; The form</td>
 </tr>
 </tbody>
 </table>
-</dd>
-</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.scorecard.forms.BowlForm.save">
+<tt class="descclassname">BowlForm.</tt><tt class="descname">save</tt><big>(</big><em>active_frame</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/forms.html#BowlForm.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.forms.BowlForm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the frame form, and updates the values of the active frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>self</strong> &#8211; the form</li>
+<li><strong>active_frame</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; The frame currently being bowled by the player</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">object &#8211; the updated active frame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.scorecard.forms.NewScoreCardForm">
+<em class="property">class </em><tt class="descclassname">apps.scorecard.forms.</tt><tt class="descname">NewScoreCardForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/forms.html#NewScoreCardForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.forms.NewScoreCardForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Model Form that allows users to add new score cards during initial game setup.
+This form only asks user to input the new player&#8217;s name</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For those not familiar, this is a crispy form&#8217;s implementation, which requires some of 
+the form&#8217;s display logic be handled in Form.__init__(). For more info, check the docs at 
+<a class="reference external" href="http://django-crispy-forms.readthedocs.org/en/latest/">http://django-crispy-forms.readthedocs.org/en/latest/</a></p>
+</div>
+<dl class="method">
+<dt id="apps.scorecard.forms.NewScoreCardForm.save">
+<tt class="descname">save</tt><big>(</big><em>game</em>, <em>order</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/forms.html#NewScoreCardForm.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.forms.NewScoreCardForm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the newly-created ScoreCard object
+:param game: The current game being set up
+:type game: object
+:param order: The order the player will be in the game
+:type order: int 
+:returns: object &#8211; Newly-created scorecard object</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-apps.scorecard.decorators">
 <span id="decorators-py"></span><h1>Decorators.py<a class="headerlink" href="#module-apps.scorecard.decorators" title="Permalink to this headline">¶</a></h1>
@@ -275,7 +343,7 @@ this decorator will create the initial session data required for the game.</p>
 <li><a class="reference internal" href="#module-apps.scorecard.models">Models.py</a></li>
 <li><a class="reference internal" href="#module-apps.scorecard.managers">Managers.py</a></li>
 <li><a class="reference internal" href="#module-apps.scorecard.views">Views.py</a></li>
-<li><a class="reference internal" href="#forms-py">Forms.py</a></li>
+<li><a class="reference internal" href="#module-apps.scorecard.forms">Forms.py</a></li>
 <li><a class="reference internal" href="#module-apps.scorecard.decorators">Decorators.py</a></li>
 </ul>
 

@@ -39,7 +39,7 @@ Views.py
 
 Forms.py
 ========
-..automodule:: apps.scorecard.forms
+.. automodule:: apps.scorecard.forms
 	:members:
 
 Decorators.py
