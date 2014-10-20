@@ -13,3 +13,7 @@ env/
 # rendered doc files
 _static
 _templates
+
+
+#the database
+zebrabowldb
