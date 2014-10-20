@@ -22,8 +22,9 @@ Indices and tables
 Models.py
 =============
 
-.. 	automodule:: apps.scorecard.models
+.. automodule:: apps.scorecard.models
 	:members:
+	
 	
 Managers.py
 ==============
