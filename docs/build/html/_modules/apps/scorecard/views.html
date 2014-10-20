@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apps.scorecard.views &mdash; ZebraBowl 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="ZebraBowl 0.0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apps.scorecard.views</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: views.py</span>
+<span class="sd">    :Synopsis: The applications primary views</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.decorators</span> <span class="kn">import</span> <span class="n">session_required</span><span class="p">,</span> <span class="n">flush_session</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="nd">@flush_session</span>
+<span class="k">def</span> <span class="nf">new_game</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a new game object in the database</span>
+<span class="sd">    that is ready to be populated with players.    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">game_hash</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span> 
+            <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">game_hash</span> <span class="o">=</span> <span class="n">game_hash</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Game</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>                
+            <span class="n">new_game</span> <span class="o">=</span> <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">game_hash</span><span class="o">=</span><span class="n">game_hash</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">game_hash</span>
+            <span class="k">break</span>              
+    
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s">&#39;newgame.html&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="add_players"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.views.add_players">[docs]</a><span class="k">def</span> <span class="nf">add_players</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;View that enables users to enter the players of the game.</span>
+<span class="sd">    An infinite number of players can be added to the game. once at least one player</span>
+<span class="sd">    is added to the game, the game is ready to start.&quot;&quot;&quot;</span>
+    
+    <span class="n">game</span> <span class="o">=</span> <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">scorecards</span> <span class="o">=</span> <span class="n">ScoreCard</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">players</span><span class="p">(</span><span class="n">game</span><span class="p">)</span> 
+    
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">NewScoreCardForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">score_card</span> <span class="o">=</span>  <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">game</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scorecards</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">Frame</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">make_frames</span><span class="p">(</span><span class="n">score_card</span><span class="p">)</span>      
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">&#39;addplayers&#39;</span><span class="p">))</span>
+     
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">NewScoreCardForm</span><span class="p">()</span>        
+    
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s">&#39;addplayers.html&#39;</span><span class="p">,{</span><span class="s">&#39;form&#39;</span><span class="p">:</span><span class="n">form</span><span class="p">,</span>
+                                             <span class="s">&#39;scorecards&#39;</span><span class="p">:</span><span class="n">scorecards</span>
+                                             <span class="p">})</span></div>
+<span class="nd">@session_required</span>   
+<span class="k">def</span> <span class="nf">game_board</span><span class="p">(</span><span class="n">request</span><span class="p">,):</span>
+    <span class="sd">&quot;&quot;&quot;The Game Board view is the primary view for the application. It dislpays player&#39;s</span>
+<span class="sd">    scores for each frame and tallies up their total game score. This view also highlights which player</span>
+<span class="sd">    and frame are active and ready to bowl.&quot;&quot;&quot;</span>
+    
+    <span class="c">#get the active game and all the scorecards for the game</span>
+    <span class="n">game</span> <span class="o">=</span> <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>    
+    <span class="n">scorecards</span> <span class="o">=</span> <span class="n">ScoreCard</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">players</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
+    
+    <span class="c"># get the current player and frame from the session</span>
+    <span class="n">player_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;player_num&#39;</span><span class="p">])</span>
+    <span class="n">frame_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;frame_num&#39;</span><span class="p">])</span>
+        
+    <span class="c"># pick out the active player&#39;s card from the array </span>
+    <span class="c"># calculated as  order -1 b/c of index 0</span>
+    <span class="n">active_card</span> <span class="o">=</span> <span class="n">scorecards</span><span class="p">[</span><span class="n">player_num</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c"># retrieve the requested frame from the db and mark it as active</span>
+    <span class="n">active_frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">score_card</span> <span class="o">=</span> <span class="n">active_card</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">frame_num</span><span class="p">)</span>
+    <span class="n">active_frame</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">active_frame</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+  
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        
+        <span class="n">form</span> <span class="o">=</span> <span class="n">BowlForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,)</span>
+        
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">active_frame</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">active_frame</span><span class="p">)</span>
+            
+            <span class="c"># if there&#39;s a strike or a spare in the 10th frame, we&#39;ll have to create</span>
+            <span class="c"># a bonus frame to calculate the final score            </span>
+            <span class="k">if</span> <span class="n">frame_num</span> <span class="o">==</span> <span class="mi">10</span> <span class="ow">or</span> <span class="n">frame_num</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">active_frame</span><span class="o">.</span><span class="n">is_strike</span><span class="p">:</span>
+                    <span class="n">Frame</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_bonus_frame</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">,</span> <span class="n">active_card</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">active_frame</span><span class="o">.</span><span class="n">is_spare</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">frame_num</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+                        <span class="n">Frame</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_bonus_frame</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">active_frame</span><span class="p">,</span> <span class="n">active_card</span><span class="p">)</span>
+                                            
+            <span class="n">Frame</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">calculate_frames</span><span class="p">(</span><span class="n">active_frame</span><span class="p">)</span> 
+            
+            <span class="c"># find out which player and which frame number come next in the game</span>
+            <span class="n">player_count</span> <span class="o">=</span> <span class="n">ScoreCard</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">player_count</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>                       
+            <span class="n">session_context</span> <span class="o">=</span> <span class="n">Frame</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">next_player_and_frame</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">player_count</span><span class="p">,</span> <span class="n">active_card</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">session_context</span><span class="p">[</span><span class="s">&#39;last_frame&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="c"># calculate the rankings and flush the session</span>
+                <span class="n">ScoreCard</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">calc_rankings</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
+                
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">&#39;gamestats&#39;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">&#39;gameboard&#39;</span><span class="p">))</span>    
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">form</span> <span class="o">=</span> <span class="n">BowlForm</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s">&#39;gameboard.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;scorecards&#39;</span><span class="p">:</span><span class="n">scorecards</span><span class="p">,</span>
+                                             <span class="s">&#39;form&#39;</span><span class="p">:</span><span class="n">form</span><span class="p">,</span>
+                                             <span class="p">})</span>
+<span class="nd">@session_required</span>    
+<span class="k">def</span> <span class="nf">game_stats</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays final score and rankings for the game that just completed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">scorecards</span> <span class="o">=</span> <span class="n">ScoreCard</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">player_ranking</span><span class="p">(</span>
+                                                  <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+                                                  <span class="p">)</span>
+    <span class="c"># flush the current session</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s">&#39;gamestats.html&#39;</span><span class="p">,{</span><span class="s">&#39;scorecards&#39;</span><span class="p">:</span><span class="n">scorecards</span><span class="p">})</span>
+        
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">ZebraBowl 0.0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Scott Crespo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
