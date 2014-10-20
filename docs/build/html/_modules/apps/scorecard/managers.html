@@ -58,18 +58,25 @@
 <div class="viewcode-block" id="GameManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.GameManager">[docs]</a><span class="k">class</span> <span class="nc">GameManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Provides table-level functionality to the Game model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="GameManager.active"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.GameManager.active">[docs]</a>    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the current (active) game being played. This is kind of a cheap</span>
-<span class="sd">        trick because the active game is determined by the most recently created game in the database,</span>
-<span class="sd">        which leverages the built-in last() manager function. In the future, a better implementation is</span>
-<span class="sd">        to tie a game to a particular user and cache that game and a unique ID in the session.</span>
+<div class="viewcode-block" id="GameManager.active"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.GameManager.active">[docs]</a>    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the current (active) game being played. The function first attempts</span>
+<span class="sd">        to pull the game_hash from the session. If that fails then it falls back to pulling the most-recently</span>
+<span class="sd">        created game in the database. For a more fail-safe implementation, a better approach is</span>
+<span class="sd">        to tie a game to a particular user and cache the game and user in the session. But, it goes beyond the</span>
+<span class="sd">        scope of this exercise.</span>
+<span class="sd">        </span>
+<span class="sd">        :param request: HTTP request</span>
+<span class="sd">        :request type: object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
-        <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">active_game</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">active_game</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">game_hash</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">])</span>
+        
+        <span class="k">return</span> <span class="n">active_game</span>
     
 </div></div>
 <div class="viewcode-block" id="ScoreCardManager"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.managers.ScoreCardManager">[docs]</a><span class="k">class</span> <span class="nc">ScoreCardManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>

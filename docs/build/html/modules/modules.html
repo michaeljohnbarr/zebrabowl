@@ -191,11 +191,22 @@ be active. Save these values to the session.</p>
 <dd><p>Provides table-level functionality to the Game model.</p>
 <dl class="method">
 <dt id="apps.scorecard.managers.GameManager.active">
-<tt class="descname">active</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#GameManager.active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.GameManager.active" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the current (active) game being played. This is kind of a cheap
-trick because the active game is determined by the most recently created game in the database,
-which leverages the built-in last() manager function. In the future, a better implementation is
-to tie a game to a particular user and cache that game and a unique ID in the session.</p>
+<tt class="descname">active</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/managers.html#GameManager.active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.managers.GameManager.active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current (active) game being played. The function first attempts
+to pull the game_hash from the session. If that fails then it falls back to pulling the most-recently
+created game in the database. For a more fail-safe implementation, a better approach is
+to tie a game to a particular user and cache the game and user in the session. But, it goes beyond the
+scope of this exercise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> &#8211; HTTP request</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Request type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -280,7 +291,15 @@ to tie a game to a particular user and cache that game and a unique ID in the se
 <li>gameboard &#8211; the view for active games, which direct users to take turns</li>
 <li>gamestats &#8211; a ranking board that is displayed when the game is complete</li>
 </ul>
-<span class="target" id="module-apps.scorecard.views"></span><span class="target" id="module-views.py"></span></div>
+<span class="target" id="module-apps.scorecard.views"></span><span class="target" id="module-views.py"></span><dl class="function">
+<dt id="apps.scorecard.views.add_players">
+<tt class="descclassname">apps.scorecard.views.</tt><tt class="descname">add_players</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/views.html#add_players"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.views.add_players" title="Permalink to this definition">¶</a></dt>
+<dd><p>View that enables users to enter the players of the game.
+An infinite number of players can be added to the game. once at least one player
+is added to the game, the game is ready to start.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="module-apps.scorecard.forms">
 <span id="forms-py"></span><h1>Forms.py<a class="headerlink" href="#module-apps.scorecard.forms" title="Permalink to this headline">¶</a></h1>
 <dl class="class">

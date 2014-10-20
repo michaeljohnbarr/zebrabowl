@@ -73,6 +73,12 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;player_num&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;frame_num&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            
+        <span class="k">try</span><span class="p">:</span> 
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">game</span> <span class="o">=</span> <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">game_hash</span> 
         
         <span class="k">return</span> <span class="n">_view</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_wrap</span>
