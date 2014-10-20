@@ -28,7 +28,9 @@ Local Installation on Unix
 We're using SQLite3 for portability. To get the db running, simply enter
 ```$ python manage.py syncdb```
  
+### Static Files
 
+```$ python manage.py collectstatic```
 ### Start the Development Server
 - at the command prompt:
 ``` $ python manage.py runserver```
