@@ -214,6 +214,53 @@ to tie a game to a particular user and cache that game and a unique ID in the se
 </dd></dl>
 
 </div>
+<div class="section" id="module-apps.scorecard.views">
+<span id="views-py"></span><h1>Views.py<a class="headerlink" href="#module-apps.scorecard.views" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-views.py"></span></div>
+<div class="section" id="forms-py">
+<h1>Forms.py<a class="headerlink" href="#forms-py" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>..automodule:: apps.scorecard.forms</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">members:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="module-apps.scorecard.decorators">
+<span id="decorators-py"></span><h1>Decorators.py<a class="headerlink" href="#module-apps.scorecard.decorators" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="apps.scorecard.decorators.flush_session">
+<tt class="descclassname">apps.scorecard.decorators.</tt><tt class="descname">flush_session</tt><big>(</big><em>_view</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/decorators.html#flush_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.decorators.flush_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures session is wiped out before entering a particular view.</p>
+<p>:param _view:the view function to be wrapped
+:type _view: function
+:returns: wrapper function</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="apps.scorecard.decorators.session_required">
+<tt class="descclassname">apps.scorecard.decorators.</tt><tt class="descname">session_required</tt><big>(</big><em>_view</em><big>)</big><a class="reference internal" href="_modules/apps/scorecard/decorators.html#session_required"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.decorators.session_required" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that the proper session data exists. If if doesn&#8217;t,
+this decorator will create the initial session data required for the game.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_view</strong> &#8211; the view function to be wrapped</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">wrapper function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 
 
           </div>
@@ -227,6 +274,9 @@ to tie a game to a particular user and cache that game and a unique ID in the se
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 <li><a class="reference internal" href="#module-apps.scorecard.models">Models.py</a></li>
 <li><a class="reference internal" href="#module-apps.scorecard.managers">Managers.py</a></li>
+<li><a class="reference internal" href="#module-apps.scorecard.views">Views.py</a></li>
+<li><a class="reference internal" href="#forms-py">Forms.py</a></li>
+<li><a class="reference internal" href="#module-apps.scorecard.decorators">Decorators.py</a></li>
 </ul>
 
   <h3>This Page</h3>

@@ -11,8 +11,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-
-
 Indices and tables
 ==================
 +
@@ -32,4 +30,19 @@ Managers.py
 
 .. automodule:: apps.scorecard.managers
 	:members:	
+	
+Views.py
+==============
+.. automodule:: apps.scorecard.views
+	:members:
+	
 
+Forms.py
+========
+..automodule:: apps.scorecard.forms
+	:members:
+
+Decorators.py
+=============
+.. automodule:: apps.scorecard.decorators
+	:members:

@@ -1,6 +1,6 @@
 """
 .. module:: decorators.py
-    :synopsis:: A module containing custom view decorators.
+    :Synopsis: A module containing custom view decorators.
 """
 
 from .models import Game
