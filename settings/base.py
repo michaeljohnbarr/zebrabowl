@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+DEFAULT_INDEX_TABLESPACE = ''
+
 WSGI_APPLICATION = 'apache.wsgi.application'
 
 SECRET_KEY = '^=!2f^ywtf9^mdoah#o_=@5q=z=x$gl#886-l9g-ujn-rqvoq4'
