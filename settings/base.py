@@ -55,13 +55,8 @@ WSGI_APPLICATION = 'zebrabowl.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'zebrabowl',
-        'USER': 'root',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'3306',
-        
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'zebrabowldb',
     }
 }
 LANGUAGE_CODE = 'en-us'
