@@ -25,27 +25,9 @@ Local Installation on Unix
 
 ### Database Access and Syncdb
 
-**If your local MySQL installation allows root access without a passowrd:**
-
-- Make nukedb script executable
-``` chmod ug+x ./sbin/nukedb.sh ```
-- Run nukedb script
-``` $ ./sbin/nukedb.sh ```
-
-**Otherwise...**
-
-- Modify mysql database settings in the django setting module
-- Then, run:
-```$ python manage.py syncdb ```
-
-
-**If you don't have MySQL installed**
-
-- Change Django settings module to use the Django.db.backends.sqlite.
-- run syncdb
-```$ python ./manage.py syncdb``` 
+We're using SQLite3 for portability. To get the db running, simply enter
+```$ python manage.py syncdb```
  
-
 
 ### Start the Development Server
 - at the command prompt:
