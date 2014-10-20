@@ -17,3 +17,6 @@ _templates
 
 #the database
 zebrabowldb
+
+#static collections
+staticcol/
