@@ -13,8 +13,10 @@ Managers.py
 	
 Views.py
 ==============
-.. 	automodule:: apps.scorecard.views
-	:members:
+
+..	automodule:: apps.scorecard.views
+	:members:	
+
 	
 
 Forms.py
