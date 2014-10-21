@@ -56,10 +56,16 @@ WSGI_APPLICATION = 'zebrabowl.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'zebrabowldb',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'zebrabowl',                         
+        'USER': 'scott',
+        'PASSWORD': '',
+        'HOST': 'localhost',                 
+        'PORT': '',                      
     }
 }
+
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
