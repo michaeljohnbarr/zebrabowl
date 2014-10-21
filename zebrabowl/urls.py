@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^$', 'apps.scorecard.views.new_game', name='roothome'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^scorecard/',include('apps.scorecard.urls')),
+    url(r'^accounts/',include('registration.urls')),
 )

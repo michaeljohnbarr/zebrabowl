@@ -33,9 +33,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'apps.scorecard',
     'crispy_forms',
-    'django_tables2'
-    
+    'registration',    
 )
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
