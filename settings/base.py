@@ -58,7 +58,15 @@ INSTALLED_APPS = (
     'registration',    
 )
 
+
+########################## REGISTRATION ###################################
+
 ACCOUNT_ACTIVATION_DAYS = 7
+
+LOGIN_REDIRECT_URL = '/'
+
+
+############################################################################
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
