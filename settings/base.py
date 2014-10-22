@@ -55,7 +55,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'apps.scorecard',
     'crispy_forms',
-    'registration',    
+    'apps.accounts',  
 )
 
 
