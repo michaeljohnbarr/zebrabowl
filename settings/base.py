@@ -53,17 +53,33 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'apps.scorecard',
     'crispy_forms',
-    'apps.accounts',  
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+    'accounts',
+    'apps.scorecard',      
 )
 
 
-########################## REGISTRATION ###################################
+########################## USERENA ###################################
 
-ACCOUNT_ACTIVATION_DAYS = 7
+USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+USERENA_WITHOUT_USERNAMES = True
+USERENA_ACTIVATION_REQUIRED = True
+######################### AUTHENTICATION ##################################
 
-LOGIN_REDIRECT_URL = '/'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+ANONYMOUS_USER_ID = -1
+
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 
 ############################################################################
