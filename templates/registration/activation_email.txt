@@ -1,0 +1,5 @@
+Here's your activation key to register for Zebra Bowl
+
+<a href="{{site.doman}}/accounts/activate/{{activation_key}}">Click Here</a>
+
+This activation key will expire in {{expiration_days}}. So hury up!
