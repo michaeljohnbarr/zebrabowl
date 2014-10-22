@@ -6,6 +6,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from .decorators import session_required, flush_session
@@ -13,6 +14,7 @@ from hashlib import sha1
 import random
 
 @flush_session
+@login_required
 def new_game(request):
     """Creates a new game object in the database
     that is ready to be populated with players.    
@@ -29,6 +31,7 @@ def new_game(request):
     
     return render(request,'newgame.html')
 
+@login_required
 def add_players(request):
     """View that enables users to enter the players of the game.
     An infinite number of players can be added to the game. once at least one player
@@ -50,7 +53,8 @@ def add_players(request):
     return render(request,'addplayers.html',{'form':form,
                                              'scorecards':scorecards
                                              })
-@session_required   
+@session_required
+@login_required   
 def game_board(request,):
     """The Game Board view is the primary view for the application. It dislpays player's
     scores for each frame and tallies up their total game score. This view also highlights which player
@@ -108,7 +112,8 @@ def game_board(request,):
     return render(request,'gameboard.html', {'scorecards':scorecards,
                                              'form':form,
                                              })
-@session_required    
+@session_required
+@login_required    
 def game_stats(request):
     """
     Displays final score and rankings for the game that just completed.

@@ -36,6 +36,13 @@ DATABASES = {
     }
 }
 
+############################# EMAIL #####################################
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/home/scott/Documents/zebrabowl/app-messages'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+
 ############################# APPS ######################################
 
 INSTALLED_APPS = (
