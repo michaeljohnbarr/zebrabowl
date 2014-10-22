@@ -15,13 +15,8 @@ Local Installation on Unix
 ``` $ virtualenv env```
 - activate the environment
 ``` source env/bin/activate```
-- make dependency installation script executable:
-``` $ chmod ug+x sbin/mkenv.sh ```
-- run dependency installation script
-``` $ ./sbin/mkenv.sh ```
-
-*(the mkenv script is a more fail-safe way to install dependencies)*
-
+- Install requirements via pip:
+```$ pip install -r requirements.txt```
 
 ### Database Access and Syncdb
 
