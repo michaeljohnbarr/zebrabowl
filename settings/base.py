@@ -24,6 +24,20 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+############################ DATABASES ###############################
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'zebrabowl',                         
+        'USER': 'scott',
+        'PASSWORD': 'pass',
+        'HOST': 'localhost',                 
+        'PORT': '',                      
+    }
+}
+
+############################# APPS ######################################
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,19 +66,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'zebrabowl.urls'
 
 WSGI_APPLICATION = 'zebrabowl.wsgi.application'
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'zebrabowl',                         
-        'USER': 'scott',
-        'PASSWORD': '',
-        'HOST': 'localhost',                 
-        'PORT': '',                      
-    }
-}
-
 
 LANGUAGE_CODE = 'en-us'
 
