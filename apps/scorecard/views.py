@@ -46,7 +46,7 @@ def add_players(request, username ):
         if form.is_valid():
             score_card =  form.save(game, len(scorecards)+1)
             Frame.objects.make_frames(score_card)      
-            return redirect(reverse('addplayers'))
+            return redirect(reverse('addplayers', kwargs={'username':username}))
      
     else:
         form = NewScoreCardForm()        
