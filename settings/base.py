@@ -135,6 +135,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'accounts.context_processors',
 )
 TEMPLATE_DIRS = (
     #always use absolute URLs
