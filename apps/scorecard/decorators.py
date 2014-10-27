@@ -35,9 +35,10 @@ def session_required(_view):
     return _wrap
 
 
-def flush_session(_view):
+def new_game_session(_view):
     """
-    Ensures session is wiped out before entering a particular view.
+    Ensures any previous game's session variables
+    are re-set to None before starting a new game.
     
     :param _view:the view function to be wrapped
     :type _view: function
@@ -45,7 +46,9 @@ def flush_session(_view):
     """
     
     def _wrap(request, *args, **kwargs):
-        request.session.flush()
+        request.session['player_num'] = 1
+        request.session['frame_num'] = 1
+        request.session['game_hash'] = None
         
         return _view(request, *args, **kwargs)
     return _wrap

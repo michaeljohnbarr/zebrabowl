@@ -9,13 +9,13 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
-from .decorators import session_required, flush_session
+from .decorators import session_required, new_game_session
 from hashlib import sha1
 from guardian.decorators import permission_required_or_403
 import random
 from django.contrib.auth.models import User
 
-
+@new_game_session
 def new_game(request):
     """Creates a new game object in the database
     that is ready to be populated with players.    
@@ -123,6 +123,5 @@ def game_stats(request):
                                                   Game.objects.active(request)
                                                   )
     # flush the current session
-    request.session.flush()
     return render(request,'gamestats.html',{'scorecards':scorecards})
         
