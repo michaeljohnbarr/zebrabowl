@@ -32,8 +32,8 @@ def new_game(request):
     
     return render(request,'newgame.html')
 
-#@permission_required_or_403('change_user', (User, 'username', 'username'))
-def add_players(request, ):
+@permission_required_or_403('auth.change_user', (User, 'username', 'username'))
+def add_players(request, username ):
     """View that enables users to enter the players of the game.
     An infinite number of players can be added to the game. once at least one player
     is added to the game, the game is ready to start."""
@@ -55,7 +55,8 @@ def add_players(request, ):
                                              'scorecards':scorecards
                                              })
 @session_required
-def game_board(request,):
+@permission_required_or_403('auth.change_user', (User, 'username', 'username'))
+def game_board(request, username):
     """The Game Board view is the primary view for the application. It dislpays player's
     scores for each frame and tallies up their total game score. This view also highlights which player
     and frame are active and ready to bowl."""
@@ -100,12 +101,12 @@ def game_board(request,):
             session_context = Frame.objects.next_player_and_frame(request, player_count, active_card)
             
             if session_context['last_frame'] is True:
-                # calculate the rankings and flush the session
+                # calculate the rankings 
                 ScoreCard.objects.calc_rankings(game)
                 
                 return redirect(reverse('gamestats'))
             else:
-                return redirect(reverse('gameboard'))    
+                return redirect(reverse('gameboard', kwargs={'username':username}))    
     else: 
         form = BowlForm()
     
