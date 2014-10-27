@@ -15,7 +15,7 @@ from guardian.decorators import permission_required_or_403
 import random
 from django.contrib.auth.models import User
 
-@flush_session
+
 def new_game(request):
     """Creates a new game object in the database
     that is ready to be populated with players.    
@@ -32,8 +32,8 @@ def new_game(request):
     
     return render(request,'newgame.html')
 
-@permission_required_or_403('change_user', (User, 'username', 'username'))
-def add_players(request):
+#@permission_required_or_403('change_user', (User, 'username', 'username'))
+def add_players(request, ):
     """View that enables users to enter the players of the game.
     An infinite number of players can be added to the game. once at least one player
     is added to the game, the game is ready to start."""
