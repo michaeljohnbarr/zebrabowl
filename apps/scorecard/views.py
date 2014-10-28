@@ -54,8 +54,9 @@ def add_players(request, username ):
     return render(request,'addplayers.html',{'form':form,
                                              'scorecards':scorecards
                                              })
-@session_required
+
 @permission_required_or_403('auth.change_user', (User, 'username', 'username'))
+@session_required
 def game_board(request, username):
     """The Game Board view is the primary view for the application. It dislpays player's
     scores for each frame and tallies up their total game score. This view also highlights which player
