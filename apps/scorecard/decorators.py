@@ -46,9 +46,31 @@ def new_game_session(_view):
     """
     
     def _wrap(request, *args, **kwargs):
-        del request.session['player_num']
-        del request.session['frame_num']
-        del request.session['game_hash']
+        
+        # player_num
+        try:
+            request.session['player_num']
+        except KeyError:
+            pass
+        else:
+            del request.session['player_num']
+        
+        # frame_num
+        try:
+            request.session['frame_num']
+        except KeyError:
+            pass
+        else:
+            del request.session['frame_num']
+        
+        # game_hash
+        try:
+            request.session['game_hash']
+        except KeyError:
+            pass
+        else:
+            del request.session['game_hash']
+            
         
         return _view(request, *args, **kwargs)
     return _wrap
