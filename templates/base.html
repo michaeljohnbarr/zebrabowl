@@ -21,12 +21,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
+        {% if user.is_authenticated %}
         <a class="navbar-brand" href="{% url 'roothome' %}">Zebra Bowl</a>
+        {% else %}
+        <a class="navbar-brand" href="{% url 'userena_signin' %}">Zebra Bowl</a>
+        {% endif %}                
     </div>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'newgame' %}">New Game</a></li>
-            </ul>     
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'newgame' %}">New Game</a></li>                                
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li><a href="{% url 'userena_profile_detail' username=user.username %}">Profile</a></li>
+                <li><a href="{% url 'userena_signout' %}">Sign Out</a></li>                                
+            </ul>
+            {% endif %}     
         </div>
 </div>
 <div class="container">
