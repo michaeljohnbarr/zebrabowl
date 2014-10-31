@@ -27,16 +27,17 @@
         <a class="navbar-brand" href="{% url 'userena_signin' %}">Zebra Bowl</a>
         {% endif %}                
     </div>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <div class="navbar-collapse collapse navbar-responsive-collapse">            
             <ul class="nav navbar-nav">
-                {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
                 <li><a href="{% url 'newgame' %}">New Game</a></li>                                
-            </ul>
-            <ul class="nav navbar-nav pull-right">
                 <li><a href="{% url 'userena_profile_detail' username=user.username %}">Profile</a></li>
-                <li><a href="{% url 'userena_signout' %}">Sign Out</a></li>                                
-            </ul>
+                <li><a href="{% url 'userena_signout' %}">Log Out</a></li>
+            {% else %}
+                <li><a href="{% url 'userena_signin' %}">Log In</a></li>                
+                <li><a href="{% url 'userena_signup' %}">Register</a></li>                                                
             {% endif %}     
+            </ul>            
         </div>
 </div>
 <div class="container">
