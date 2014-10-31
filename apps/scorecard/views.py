@@ -11,10 +11,12 @@ from .models import *
 from .forms import *
 from .decorators import session_required, new_game_session
 from hashlib import sha1
-from guardian.decorators import permission_required_or_403
+from guardian.decorators import permission_required
+from django.contrib.auth.decorators import login_required
 import random
 from django.contrib.auth.models import User
 
+@login_required
 @new_game_session
 def new_game(request):
     """Creates a new game object in the database
@@ -32,7 +34,7 @@ def new_game(request):
     
     return render(request,'newgame.html')
 
-@permission_required_or_403('auth.change_user', (User, 'username', 'username'))
+@login_required
 def add_players(request, username ):
     """View that enables users to enter the players of the game.
     An infinite number of players can be added to the game. once at least one player
@@ -55,7 +57,7 @@ def add_players(request, username ):
                                              'scorecards':scorecards
                                              })
 
-@permission_required_or_403('auth.change_user', (User, 'username', 'username'))
+@login_required
 @session_required
 def game_board(request, username):
     """The Game Board view is the primary view for the application. It dislpays player's
@@ -114,6 +116,7 @@ def game_board(request, username):
     return render(request,'gameboard.html', {'scorecards':scorecards,
                                              'form':form,
                                              })
+@login_required
 @session_required    
 def game_stats(request):
     """
