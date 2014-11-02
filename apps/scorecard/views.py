@@ -21,17 +21,9 @@ from django.contrib.auth.models import User
 def new_game(request):
     """Creates a new game object in the database
     that is ready to be populated with players.    
-    """
-    
-    # craete a game_hash and ensure it's unique
-    while True:
-        game_hash = sha1(str(random.random())).hexdigest()
-        try: 
-            Game.objects.get(game_hash = game_hash)
-        except Game.DoesNotExist:                
-            new_game = Game.objects.create(game_hash=game_hash).save()
-            request.session['game_hash'] = game_hash
-            break              
+    """    
+    g = Game.objects.create().save()
+    request.session['game_hash'] = g.game_hash              
     
     return render(request,'newgame.html')
 
