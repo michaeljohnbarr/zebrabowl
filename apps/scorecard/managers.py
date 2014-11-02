@@ -5,6 +5,8 @@
 """
 
 from django.db import models
+import datetime,
+from hashlib import sha1
 
 class GameManager(models.Manager):
     """ Provides table-level functionality to the Game model.
@@ -28,7 +30,6 @@ class GameManager(models.Manager):
             active_game = self.get(game_hash = request.session['game_hash'])
         
         return active_game
-    
 
 class ScoreCardManager(models.Manager):
     """Provides table-level functionality to the ScoreCard model.    
