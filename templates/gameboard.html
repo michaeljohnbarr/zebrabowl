@@ -37,9 +37,10 @@
         <tr>
         {% for frame in card.frame_set.all %}
         <td>
-        {% if frame.is_active %}
+                {% if frame.is_active %}
                 <h3>Bowl!</h3>
-        {% endif %}
+                {% endif %}
+                
                 First: {{frame.down_pins1}}<br>
                 Second: {{frame.down_pins2}}<br>
                 <strong>Points: {{frame.score}} </strong>

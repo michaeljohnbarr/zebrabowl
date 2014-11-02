@@ -91,11 +91,11 @@ def game_board(request, username):
             
             # if there's a strike or a spare in the 10th frame, we'll have to create
             # a bonus frame to calculate the final score            
-            if frame_num == 10 or frame_num == 11:
+            if active_frame.number == 10 or active_frame.number == 11:
                 if active_frame.is_strike:
                     Frame.objects.create_bonus_frame(request, active_frame, active_card)
                 elif active_frame.is_spare:
-                    if frame_num == 10:
+                    if active_frame.number == 10:
                         Frame.objects.create_bonus_frame(request, active_frame, active_card)
                                             
             Frame.objects.calculate_frames(active_frame) 
@@ -106,9 +106,9 @@ def game_board(request, username):
             
             if session_context['last_frame'] is True:
                 # calculate the rankings 
-                ScoreCard.objects.calc_rankings(game)
-                
+                ScoreCard.objects.calc_rankings(game)                
                 return redirect(reverse('gamestats'))
+            
             else:
                 return redirect(reverse('gameboard', kwargs={'username':username}))    
     else: 
