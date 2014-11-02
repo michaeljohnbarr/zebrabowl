@@ -22,7 +22,8 @@ def new_game(request):
     """Creates a new game object in the database
     that is ready to be populated with players.    
     """    
-    g = Game.objects.create().save()
+    g = Game.objects.create()
+    g.save()
     request.session['game_hash'] = g.game_hash              
     
     return render(request,'newgame.html')
