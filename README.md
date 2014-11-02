@@ -4,6 +4,13 @@ ZebraBowl
 Zebra Bowl is a cool bowling scorecard!
 
 
+Documentation
+-----------------
+
+Documentation is located at ReadTheDocs.org
+
+[Click Here](http://www.zebrabowl.readthedocs.org)
+
 Local Installation on Unix
 --------------------
 
