@@ -293,7 +293,7 @@ scope of this exercise.</p>
 </ul>
 <span class="target" id="module-apps.scorecard.views"></span><span class="target" id="module-views.py"></span><dl class="function">
 <dt id="apps.scorecard.views.add_players">
-<tt class="descclassname">apps.scorecard.views.</tt><tt class="descname">add_players</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/views.html#add_players"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.views.add_players" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">apps.scorecard.views.</tt><tt class="descname">add_players</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/views.html#add_players"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.views.add_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>View that enables users to enter the players of the game.
 An infinite number of players can be added to the game. once at least one player
 is added to the game, the game is ready to start.</p>
@@ -396,9 +396,10 @@ the form&#8217;s display logic be handled in Form.__init__(). For more info, che
 <div class="section" id="module-apps.scorecard.decorators">
 <span id="decorators-py"></span><h1>Decorators.py<a class="headerlink" href="#module-apps.scorecard.decorators" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-decorators.py"></span><dl class="function">
-<dt id="apps.scorecard.decorators.flush_session">
-<tt class="descclassname">apps.scorecard.decorators.</tt><tt class="descname">flush_session</tt><big>(</big><em>_view</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/decorators.html#flush_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.decorators.flush_session" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ensures session is wiped out before entering a particular view.</p>
+<dt id="apps.scorecard.decorators.new_game_session">
+<tt class="descclassname">apps.scorecard.decorators.</tt><tt class="descname">new_game_session</tt><big>(</big><em>_view</em><big>)</big><a class="reference internal" href="../_modules/apps/scorecard/decorators.html#new_game_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apps.scorecard.decorators.new_game_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures any previous game&#8217;s session variables
+are re-set to None before starting a new game.</p>
 <p>:param _view:the view function to be wrapped
 :type _view: function
 :returns: wrapper function</p>

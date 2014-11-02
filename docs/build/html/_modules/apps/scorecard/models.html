@@ -105,7 +105,8 @@
     <span class="n">score</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveSmallIntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">objects</span> <span class="o">=</span> <span class="n">FrameManager</span><span class="p">()</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;scorecard_frame&#39;</span></div>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;scorecard_frame&#39;</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;number&#39;</span><span class="p">]</span></div>
 </pre></div>
 
           </div>

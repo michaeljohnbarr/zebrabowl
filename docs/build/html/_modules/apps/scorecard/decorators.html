@@ -84,9 +84,10 @@
     <span class="k">return</span> <span class="n">_wrap</span>
 
 </div>
-<div class="viewcode-block" id="flush_session"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.decorators.flush_session">[docs]</a><span class="k">def</span> <span class="nf">flush_session</span><span class="p">(</span><span class="n">_view</span><span class="p">):</span>
+<div class="viewcode-block" id="new_game_session"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.decorators.new_game_session">[docs]</a><span class="k">def</span> <span class="nf">new_game_session</span><span class="p">(</span><span class="n">_view</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Ensures session is wiped out before entering a particular view.</span>
+<span class="sd">    Ensures any previous game&#39;s session variables</span>
+<span class="sd">    are re-set to None before starting a new game.</span>
 <span class="sd">    </span>
 <span class="sd">    :param _view:the view function to be wrapped</span>
 <span class="sd">    :type _view: function</span>
@@ -94,7 +95,31 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        
+        <span class="c"># player_num</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;player_num&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;player_num&#39;</span><span class="p">]</span>
+        
+        <span class="c"># frame_num</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;frame_num&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;frame_num&#39;</span><span class="p">]</span>
+        
+        <span class="c"># game_hash</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span>
+            
         
         <span class="k">return</span> <span class="n">_view</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_wrap</span></div>
