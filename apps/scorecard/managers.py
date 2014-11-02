@@ -5,8 +5,6 @@
 """
 
 from django.db import models
-import datetime,
-from hashlib import sha1
 
 class GameManager(models.Manager):
     """ Provides table-level functionality to the Game model.
