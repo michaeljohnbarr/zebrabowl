@@ -9,7 +9,7 @@ Documentation
 
 Documentation is located at ReadTheDocs.org
 
-[Click Here](http://www.zebrabowl.readthedocs.org)
+[Click Here](http://zebrabowl.readthedocs.org)
 
 Local Installation on Unix
 --------------------
