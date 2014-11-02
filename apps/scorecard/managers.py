@@ -28,7 +28,6 @@ class GameManager(models.Manager):
             active_game = self.get(game_hash = request.session['game_hash'])
         
         return active_game
-    
 
 class ScoreCardManager(models.Manager):
     """Provides table-level functionality to the ScoreCard model.    

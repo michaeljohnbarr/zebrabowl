@@ -5,6 +5,8 @@
 
 from django.db import models
 from .managers import *
+import datetime
+from hashlib import sha1
 
 class Game(models.Model):
     """The game model is essentially the root model of the application, and represents 
@@ -14,9 +16,15 @@ class Game(models.Model):
     game_hash = models.CharField(max_length=255L, unique=True,)
     objects = GameManager()    
     class Meta:
-        db_table = 'scorecard_game'    
-    
-    
+        db_table = 'scorecard_game'        
+
+    def save(self, *args, **kwargs):
+        """Overrides the save method to generate a hash based on the current
+        timestamp"""
+        self.game_hash = sha1(str(datetime.datetime.now())).hexdigest()
+        
+        super(Game, self).save(*args, **kwargs)
+        
 class ScoreCard(models.Model):
     """Represents a score card (i.e.player) with aggregated metrics about a player's
     performance in a game"""
