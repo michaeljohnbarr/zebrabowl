@@ -5,3 +5,5 @@ from userena.models import UserenaBaseProfile
 
 class UserProfile(UserenaBaseProfile):
     user = models.OneToOneField(User, unique=True,)
+    
+    
