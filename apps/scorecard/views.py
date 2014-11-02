@@ -74,7 +74,7 @@ def game_board(request, username):
     frame_num = int(request.session['frame_num'])
         
     # pick out the active player's card from the array 
-    # calculated as  order -1 b/c of index 0
+    # calculated as  player_num -1 b/c of index 0
     active_card = scorecards[player_num-1]
     
     # retrieve the requested frame from the db and mark it as active
