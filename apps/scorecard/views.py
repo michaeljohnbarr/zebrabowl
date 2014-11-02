@@ -6,18 +6,24 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
-from .decorators import session_required, flush_session
+from .decorators import session_required, new_game_session
 from hashlib import sha1
+from guardian.decorators import permission_required
+from django.contrib.auth.decorators import login_required
 import random
+from django.contrib.auth.models import User
 
-@flush_session
+@login_required
+@new_game_session
 def new_game(request):
     """Creates a new game object in the database
     that is ready to be populated with players.    
     """
     
+    # craete a game_hash and ensure it's unique
     while True:
         game_hash = sha1(str(random.random())).hexdigest()
         try: 
@@ -29,7 +35,8 @@ def new_game(request):
     
     return render(request,'newgame.html')
 
-def add_players(request):
+@login_required
+def add_players(request, username ):
     """View that enables users to enter the players of the game.
     An infinite number of players can be added to the game. once at least one player
     is added to the game, the game is ready to start."""
@@ -42,7 +49,7 @@ def add_players(request):
         if form.is_valid():
             score_card =  form.save(game, len(scorecards)+1)
             Frame.objects.make_frames(score_card)      
-            return redirect(reverse('addplayers'))
+            return redirect(reverse('addplayers', kwargs={'username':username}))
      
     else:
         form = NewScoreCardForm()        
@@ -50,8 +57,10 @@ def add_players(request):
     return render(request,'addplayers.html',{'form':form,
                                              'scorecards':scorecards
                                              })
-@session_required   
-def game_board(request,):
+
+@login_required
+@session_required
+def game_board(request, username):
     """The Game Board view is the primary view for the application. It dislpays player's
     scores for each frame and tallies up their total game score. This view also highlights which player
     and frame are active and ready to bowl."""
@@ -65,7 +74,7 @@ def game_board(request,):
     frame_num = int(request.session['frame_num'])
         
     # pick out the active player's card from the array 
-    # calculated as  order -1 b/c of index 0
+    # calculated as  player_num -1 b/c of index 0
     active_card = scorecards[player_num-1]
     
     # retrieve the requested frame from the db and mark it as active
@@ -82,11 +91,11 @@ def game_board(request,):
             
             # if there's a strike or a spare in the 10th frame, we'll have to create
             # a bonus frame to calculate the final score            
-            if frame_num == 10 or frame_num == 11:
+            if active_frame.number == 10 or active_frame.number == 11:
                 if active_frame.is_strike:
                     Frame.objects.create_bonus_frame(request, active_frame, active_card)
                 elif active_frame.is_spare:
-                    if frame_num == 10:
+                    if active_frame.number == 10:
                         Frame.objects.create_bonus_frame(request, active_frame, active_card)
                                             
             Frame.objects.calculate_frames(active_frame) 
@@ -96,18 +105,19 @@ def game_board(request,):
             session_context = Frame.objects.next_player_and_frame(request, player_count, active_card)
             
             if session_context['last_frame'] is True:
-                # calculate the rankings and flush the session
-                ScoreCard.objects.calc_rankings(game)
-                
+                # calculate the rankings 
+                ScoreCard.objects.calc_rankings(game)                
                 return redirect(reverse('gamestats'))
+            
             else:
-                return redirect(reverse('gameboard'))    
+                return redirect(reverse('gameboard', kwargs={'username':username}))    
     else: 
         form = BowlForm()
     
     return render(request,'gameboard.html', {'scorecards':scorecards,
                                              'form':form,
                                              })
+@login_required
 @session_required    
 def game_stats(request):
     """
@@ -118,6 +128,5 @@ def game_stats(request):
                                                   Game.objects.active(request)
                                                   )
     # flush the current session
-    request.session.flush()
     return render(request,'gamestats.html',{'scorecards':scorecards})
         

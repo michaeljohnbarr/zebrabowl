@@ -57,3 +57,4 @@ class Frame(models.Model):
     objects = FrameManager()
     class Meta:
         db_table = 'scorecard_frame'
+        ordering = ['number']

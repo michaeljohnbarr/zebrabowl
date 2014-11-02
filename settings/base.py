@@ -24,6 +24,27 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+############################ DATABASES ###############################
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'zebrabowl',                         
+        'USER': 'scott',
+        'PASSWORD': 'pass',
+        'HOST': 'localhost',                 
+        'PORT': '',                      
+    }
+}
+
+############################# EMAIL #####################################
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/home/scott/Documents/zebrabowl/app-messages'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+
+############################# APPS ######################################
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,9 +52,37 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.scorecard',
+    'django.contrib.sites',
     'crispy_forms',
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+    'accounts',
+    'apps.scorecard',      
 )
+
+
+########################## USERENA ###################################
+
+USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+USERENA_WITHOUT_USERNAMES = True
+USERENA_ACTIVATION_REQUIRED = True
+######################### AUTHENTICATION ##################################
+
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+ANONYMOUS_USER_ID = -1
+
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+############################################################################
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
@@ -50,13 +99,6 @@ ROOT_URLCONF = 'zebrabowl.urls'
 
 WSGI_APPLICATION = 'zebrabowl.wsgi.application'
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'zebrabowldb',
-    }
-}
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -93,6 +135,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'accounts.context_processors.profile',
 )
 TEMPLATE_DIRS = (
     #always use absolute URLs
