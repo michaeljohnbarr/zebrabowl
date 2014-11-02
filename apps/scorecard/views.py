@@ -23,6 +23,7 @@ def new_game(request):
     that is ready to be populated with players.    
     """
     
+    # craete a game_hash and ensure it's unique
     while True:
         game_hash = sha1(str(random.random())).hexdigest()
         try: 
