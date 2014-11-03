@@ -37,6 +37,8 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         
     def test_add_players(self):
+        
+        
         self.signin()                
         path = (reverse('addplayers', kwargs={'username':self.username}))        
         # Get and Post Requests
@@ -45,3 +47,4 @@ class ViewsTestCase(TestCase):
         # Assertions
         self.assertEqual(response_get.status_code, 200)        
         self.assertEqual(response_post.status_code, 302)
+        self.assertRedirects(response_post, path)
