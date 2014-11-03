@@ -1,0 +1,15 @@
+[
+{
+    "pk": 1, 
+    "model": "userena.userenasignup", 
+    "fields": {
+        "email_unconfirmed": "", 
+        "activation_key": "ALREADY_ACTIVATED", 
+        "last_active": null, 
+        "email_confirmation_key_created": null, 
+        "activation_notification_send": false, 
+        "email_confirmation_key": "", 
+        "user": 1
+    }
+}
+]
