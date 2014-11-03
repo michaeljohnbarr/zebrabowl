@@ -25,8 +25,7 @@ class ViewsTestCase(TestCase):
         response = self.signin()
         
         self.assertRedirects(response, reverse('userena_profile_detail',
-                                               kwargs={'username': self.username}))
-        
+                                               kwargs={'username': self.username}))        
         
     def test_new_game(self):
         
@@ -37,14 +36,31 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         
     def test_add_players(self):
-        
-        
+        """Tests GET and POST requests for the add_players view"""        
         self.signin()                
-        path = (reverse('addplayers', kwargs={'username':self.username}))        
+        path = reverse('addplayers', kwargs={'username':self.username})        
         # Get and Post Requests
         response_get = self.client.get(path)        
         response_post = self.client.post(path, data= {'player_name':'Socrates'})
-        # Assertions
-        self.assertEqual(response_get.status_code, 200)        
+        # GET Assertions
+        self.assertEqual(response_get.status_code, 200)                
+        # POST Assertions
         self.assertEqual(response_post.status_code, 302)
         self.assertRedirects(response_post, path)
+    
+    def test_game_board(self):
+        """Tests GET and POST requests for the gameboard view"""
+        
+        self.signin()
+        path = reverse('gameboard', kwargs={'username':self.username})
+        # Get and Post Requests
+        response_get = self.client.get(path)
+        response_post = self.client.post(path, data={'down_pins1':'10',
+                                                     'down_pins2':'0'})
+        # GET Assertions
+        self.assertEqual(response_get.status_code, 200)
+        # POST Assertions
+        self.assertEqual(response_post.status_code,302)
+        self.assertRedirects(response_post, path)
+        
+        
