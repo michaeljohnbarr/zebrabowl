@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
-from .models import *
+from ..models import *
 
 class TestCaseHelper(TestCase):
     fixtures = ['accounts_views_testdata.json',
