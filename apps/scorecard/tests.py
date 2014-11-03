@@ -49,7 +49,7 @@ class ViewsTestCase(TestCase):
         self.assertRedirects(response_post, path)
     
     def test_game_board(self):
-        """Tests GET and POST requests for the gameboard view"""
+        """Tests GET and POST requests for the game_board view"""
         
         self.signin()
         path = reverse('gameboard', kwargs={'username':self.username})
@@ -62,5 +62,7 @@ class ViewsTestCase(TestCase):
         # POST Assertions
         self.assertEqual(response_post.status_code,302)
         self.assertRedirects(response_post, path)
-        
-        
+        # Check on Session Data
+        self.assertEqual(self.client.session['player_num'], 1)
+        self.assertEqual(self.client.session['frame_num'], 2)
+    
