@@ -54,6 +54,8 @@
 
 <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="kn">from</span> <span class="nn">.managers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>
 
 <div class="viewcode-block" id="Game"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.models.Game">[docs]</a><span class="k">class</span> <span class="nc">Game</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The game model is essentially the root model of the application, and represents </span>
@@ -63,9 +65,15 @@
     <span class="n">game_hash</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="il">255L</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,)</span>
     <span class="n">objects</span> <span class="o">=</span> <span class="n">GameManager</span><span class="p">()</span>    
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;scorecard_game&#39;</span>    
-    
-    </div>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;scorecard_game&#39;</span>        
+
+<div class="viewcode-block" id="Game.save"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.models.Game.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overrides the save method to generate a hash based on the current</span>
+<span class="sd">        timestamp&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_hash</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        
+        <span class="nb">super</span><span class="p">(</span><span class="n">Game</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        </div></div>
 <div class="viewcode-block" id="ScoreCard"><a class="viewcode-back" href="../../../modules/modules.html#apps.scorecard.models.ScoreCard">[docs]</a><span class="k">class</span> <span class="nc">ScoreCard</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Represents a score card (i.e.player) with aggregated metrics about a player&#39;s</span>
 <span class="sd">    performance in a game&quot;&quot;&quot;</span>

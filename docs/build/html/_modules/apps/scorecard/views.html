@@ -70,17 +70,10 @@
 <span class="k">def</span> <span class="nf">new_game</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates a new game object in the database</span>
 <span class="sd">    that is ready to be populated with players.    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c"># craete a game_hash and ensure it&#39;s unique</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="n">game_hash</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-        <span class="k">try</span><span class="p">:</span> 
-            <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">game_hash</span> <span class="o">=</span> <span class="n">game_hash</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">Game</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>                
-            <span class="n">new_game</span> <span class="o">=</span> <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">game_hash</span><span class="o">=</span><span class="n">game_hash</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">game_hash</span>
-            <span class="k">break</span>              
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">g</span> <span class="o">=</span> <span class="n">Game</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s">&#39;game_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">game_hash</span>              
     
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="s">&#39;newgame.html&#39;</span><span class="p">)</span>
 
