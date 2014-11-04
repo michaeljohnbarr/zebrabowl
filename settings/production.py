@@ -2,6 +2,11 @@ from base import *
 
 WSGI_APPLICATION = 'apache.wsgi.application'
 
+DEBUG = False
+
+
+BASE_URL = 'zebrabowl.scottcrespo.com'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
