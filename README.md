@@ -8,6 +8,13 @@ so prospective employers and clients can evaluate my coding abilities.
 Feel free to puruse the source code, as well as check out the [documentation](http://zebrabowl.readthedocs.org).   
 
 
+Features
+---------
+
+- Tracks the scores of you and your friends in real time
+- Review stats on each player's performance
+- Secure login and user profile, integrated with Gravatar (courtesy of [Django Userena](http://django-userena.readthedocs.org/en/latest/))
+
 Documentation
 -----------------
 
