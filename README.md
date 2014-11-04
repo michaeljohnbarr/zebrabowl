@@ -1,7 +1,11 @@
 ZebraBowl
 ==========
 
-Zebra Bowl is a cool bowling scorecard!
+Zebra Bowl is a cool bowling application, much like the scoring applications you see at your local bowling alley. 
+I created Zebra Bowl as part of a developer test for a technology company, and have continued to iterate on the application
+so prospective employers and clients can evaluate my coding abilities.
+
+Feel free to puruse the source code, as well as check out the [documentation](http://zebrabowl.readthedocs.org).   
 
 
 Documentation
