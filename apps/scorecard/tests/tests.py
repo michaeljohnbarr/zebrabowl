@@ -1,9 +1,12 @@
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
-from ..models import *
+from ..models import ScoreCard
 
 class TestCaseHelper(TestCase):
+    """Contains commmon functionality for testing the bowling application.
+    Please note, this module does not contain any tests itself.
+    """ 
     fixtures = ['accounts_views_testdata.json',
                 'auth_views_testdata.json',
                 'scorecard_views_testdata.json',
@@ -16,22 +19,31 @@ class TestCaseHelper(TestCase):
     game_board_path = reverse('gameboard', kwargs={'username':username})
     
     def signin(self):
-        
+        """Sign in the user"""
         response = self.client.post(reverse('userena_signin'),
             {'identification': self.identification,'password': self.password})
     
         return response
     
     def newgame(self):
-        
+        """Create new game"""
         self.client.get(reverse('newgame'))
         
-    def add_players(self):
-                        
-        path = reverse('addplayers', kwargs={'username':self.username})                
-        self.client.post(path, data= {'player_name':'Socrates'})
+    def add_players(self, players=None):
+        """Adds a list of players to a game
+        :param players: the names of players to be added
+        :players type: list
+        :returns: response object for final POST request"""
+        path = reverse('addplayers', kwargs={'username':self.username})
         
-
+        if players is None:
+            players = ['Socrates']
+        
+        for player in players:                
+            response = self.client.post(path, data= {'player_name':player})
+        
+        return response
+    
 class ViewsTestCase(TestCaseHelper):
     
     def test_signin(self):
@@ -55,7 +67,7 @@ class ViewsTestCase(TestCaseHelper):
         path = reverse('addplayers', kwargs={'username':self.username})        
         # Get and Post Requests
         response_get = self.client.get(path)        
-        response_post = self.client.post(path, data= {'player_name':'Socrates'})
+        response_post = self.add_players(['Socrates', 'Carl Marx'])
         # GET Assertions
         self.assertEqual(response_get.status_code, 200)                
         # POST Assertions
@@ -79,6 +91,14 @@ class ViewsTestCase(TestCaseHelper):
         # Check on Session Data
         self.assertEqual(self.client.session['player_num'], 1)
         self.assertEqual(self.client.session['frame_num'], 2)
+        
+    def test_game_stats(self):
+        """Tests GET requests for the game_stats view"""
+        self.signin()
+        path = reverse("gamestats")
+        
+        response = self.client.get(path)
+        self.assertEqual(response.status_code, 200)
         
 class GameTestCase(TestCaseHelper):
 
