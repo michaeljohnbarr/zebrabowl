@@ -8,7 +8,14 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 """
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.base")
+import socket
+
+hostname = socket.gethostname()
+    
+if hostname is "highcorner1":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.production")
+else: 
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.base")
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

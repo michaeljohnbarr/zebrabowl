@@ -14,8 +14,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DEFAULT_INDEX_TABLESPACE = ''
 
-WSGI_APPLICATION = 'apache.wsgi.application'
-
 SECRET_KEY = '^=!2f^ywtf9^mdoah#o_=@5q=z=x$gl#886-l9g-ujn-rqvoq4'
 
 DEBUG = True
@@ -58,9 +56,8 @@ INSTALLED_APPS = (
     'guardian',
     'easy_thumbnails',
     'accounts',
-    'apps.scorecard',      
+    'apps.scorecard',
 )
-
 
 ########################## USERENA ###################################
 
@@ -97,7 +94,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'zebrabowl.urls'
 
-WSGI_APPLICATION = 'zebrabowl.wsgi.application'
+WSGI_APPLICATION = 'apache.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
 
