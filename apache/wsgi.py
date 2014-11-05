@@ -13,7 +13,7 @@ import socket
 
 hostname = socket.gethostname()
     
-if hostname is "highcorner1":
+if hostname == "highcorner1":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.production")
 else:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.base")
