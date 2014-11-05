@@ -1,4 +1,4 @@
-from base import *
+from .base import *
 
 WSGI_APPLICATION = 'apache.wsgi.application'
 
