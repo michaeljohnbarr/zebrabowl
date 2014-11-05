@@ -15,7 +15,7 @@ hostname = socket.gethostname()
     
 if hostname == "highcorner1":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.production")
-    sys.path.append('/home/scott/zebrabowl')
+    sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 else:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.base")
 
