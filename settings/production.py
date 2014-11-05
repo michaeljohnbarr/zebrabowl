@@ -4,16 +4,23 @@ WSGI_APPLICATION = 'apache.wsgi.application'
 
 DEBUG = False
 
-
-BASE_URL = 'zebrabowl.scottcrespo.com'
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'zebrabowl',                         
         'USER': 'scott',
-        'PASSWORD': '',
+        'PASSWORD': 'DBSAFE789',
         'HOST': 'localhost',                 
         'PORT': '',                      
     }
 }
+
+BASE_URL = 'zebrabowl.scottcrespo.com'
+
+ALLOWED_HOSTS = ['.scottcrespo.com',
+                 '.localhost',
+                 '.104.236.49.119',]
+
+EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
+BANDIT_EMAIL = 'scott@scottcrespo.com'
+EMAIL_FILE_PATH = False
