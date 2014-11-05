@@ -2,7 +2,7 @@ from base import *
 
 WSGI_APPLICATION = 'apache.wsgi.application'
 
-DEBUG = False
+DEBUG = True
 
 DATABASES = {
     'default': {
