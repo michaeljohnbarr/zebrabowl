@@ -24,3 +24,6 @@ ALLOWED_HOSTS = ['.scottcrespo.com',
 EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
 BANDIT_EMAIL = 'scott@scottcrespo.com'
 EMAIL_FILE_PATH = False
+
+STATIC_ROOT = '/var/www/zebrabowl/static'
+MEDIA_ROOT = '/var/www/zebrabowl/media'
