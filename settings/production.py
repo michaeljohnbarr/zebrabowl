@@ -27,3 +27,7 @@ EMAIL_FILE_PATH = False
 
 STATIC_ROOT = '/var/www/zebrabowl/static'
 MEDIA_ROOT = '/var/www/zebrabowl/media'
+
+INSTALLED_APPS += (
+        'bandit',
+)
