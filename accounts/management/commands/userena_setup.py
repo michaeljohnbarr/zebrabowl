@@ -11,7 +11,7 @@ class Command(NoArgsCommand):
         ############## Site Setup ####################
         # change site to the appropriate URL        
         
-        site_params = {"domain":"localhost:8000",
+        site_params = {"domain":"zebrabowl.scottcrespo.com",
                        "name":"zebrabowl",
                        }
         

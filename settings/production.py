@@ -21,13 +21,14 @@ ALLOWED_HOSTS = ['.scottcrespo.com',
                  '.localhost',
                  '.104.236.49.119',]
 
-EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
-BANDIT_EMAIL = 'scott@scottcrespo.com'
-EMAIL_FILE_PATH = False
+# EMAIL_BACKEND = 'bandit.backends.smtp.HijackSMTPBackend'
+EMAIL_BACKEND =  'django.core.mail.backends.smtp.EmailBackend'
+#BANDIT_EMAIL = 'scott@scottcrespo.com'
+#EMAIL_FILE_PATH = False
 
 STATIC_ROOT = '/var/www/zebrabowl/static'
 MEDIA_ROOT = '/var/www/zebrabowl/media'
 
-INSTALLED_APPS += (
-        'bandit',
-)
+#INSTALLED_APPS += (
+#        'bandit',
+#)
