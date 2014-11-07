@@ -32,3 +32,6 @@ MEDIA_ROOT = '/var/www/zebrabowl/media'
 #INSTALLED_APPS += (
 #        'bandit',
 #)
+
+USERENA_ACTIVATION_REQUIRED = False
+USERENA_SIGNIN_AFTER_SIGNUP = True
