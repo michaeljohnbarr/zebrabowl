@@ -85,6 +85,9 @@ class BowlForm(forms.ModelForm):
         p1 = cleaned_data.get('down_pins1')
         p2 = cleaned_data.get('down_pins2')
         
+        if p1 is None or p2 is None:
+            raise forms.ValidationError("Can't have null values.")
+        
         if (p1 + p2) > 10:
             raise forms.ValidationError ("Can't knock down more than 10 pins in a frame")
         
