@@ -79,14 +79,16 @@ class BowlForm(forms.ModelForm):
         exceed 10
         
         :param self: The form
-        """
-        p1 = self.cleaned_data['down_pins1']
-        p2 = self.cleaned_data['down_pins2']
+        """        
+        cleaned_data = super(BowlForm, self).clean()
+
+        p1 = cleaned_data.get('down_pins1')
+        p2 = cleaned_data.get('down_pins2')
         
         if (p1 + p2) > 10:
             raise forms.ValidationError ("Can't knock down more than 10 pins in a frame")
         
-        return self.cleaned_data
+        return cleaned_data
         
     def save(self, active_frame):
         """
